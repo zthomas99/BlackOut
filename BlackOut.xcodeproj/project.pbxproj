@@ -1,0 +1,583 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B32DE08521487EF400803776 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE08421487EF400803776 /* AppDelegate.swift */; };
+		B32DE08721487EF400803776 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE08621487EF400803776 /* ViewController.swift */; };
+		B32DE08A21487EF400803776 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B32DE08821487EF400803776 /* Main.storyboard */; };
+		B32DE08C21487F0200803776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B32DE08B21487F0200803776 /* Assets.xcassets */; };
+		B32DE08F21487F0200803776 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B32DE08D21487F0200803776 /* LaunchScreen.storyboard */; };
+		B32DE09A21487F0300803776 /* BlackOutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE09921487F0300803776 /* BlackOutTests.swift */; };
+		B32DE0A521487F0300803776 /* BlackOutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DE0A421487F0300803776 /* BlackOutUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B32DE09621487F0300803776 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B32DE07921487EF300803776 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B32DE08021487EF400803776;
+			remoteInfo = BlackOut;
+		};
+		B32DE0A121487F0300803776 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B32DE07921487EF300803776 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B32DE08021487EF400803776;
+			remoteInfo = BlackOut;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B32DE08121487EF400803776 /* BlackOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B32DE08421487EF400803776 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B32DE08621487EF400803776 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B32DE08921487EF400803776 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B32DE08B21487F0200803776 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B32DE08E21487F0200803776 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B32DE09021487F0200803776 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B32DE09521487F0300803776 /* BlackOutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackOutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B32DE09921487F0300803776 /* BlackOutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackOutTests.swift; sourceTree = "<group>"; };
+		B32DE09B21487F0300803776 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B32DE0A021487F0300803776 /* BlackOutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackOutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B32DE0A421487F0300803776 /* BlackOutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackOutUITests.swift; sourceTree = "<group>"; };
+		B32DE0A621487F0300803776 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B32DE07E21487EF400803776 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B32DE09221487F0300803776 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B32DE09D21487F0300803776 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B32DE07821487EF300803776 = {
+			isa = PBXGroup;
+			children = (
+				B32DE08321487EF400803776 /* BlackOut */,
+				B32DE09821487F0300803776 /* BlackOutTests */,
+				B32DE0A321487F0300803776 /* BlackOutUITests */,
+				B32DE08221487EF400803776 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B32DE08221487EF400803776 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B32DE08121487EF400803776 /* BlackOut.app */,
+				B32DE09521487F0300803776 /* BlackOutTests.xctest */,
+				B32DE0A021487F0300803776 /* BlackOutUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B32DE08321487EF400803776 /* BlackOut */ = {
+			isa = PBXGroup;
+			children = (
+				B32DE08421487EF400803776 /* AppDelegate.swift */,
+				B32DE08621487EF400803776 /* ViewController.swift */,
+				B32DE08821487EF400803776 /* Main.storyboard */,
+				B32DE08B21487F0200803776 /* Assets.xcassets */,
+				B32DE08D21487F0200803776 /* LaunchScreen.storyboard */,
+				B32DE09021487F0200803776 /* Info.plist */,
+			);
+			path = BlackOut;
+			sourceTree = "<group>";
+		};
+		B32DE09821487F0300803776 /* BlackOutTests */ = {
+			isa = PBXGroup;
+			children = (
+				B32DE09921487F0300803776 /* BlackOutTests.swift */,
+				B32DE09B21487F0300803776 /* Info.plist */,
+			);
+			path = BlackOutTests;
+			sourceTree = "<group>";
+		};
+		B32DE0A321487F0300803776 /* BlackOutUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B32DE0A421487F0300803776 /* BlackOutUITests.swift */,
+				B32DE0A621487F0300803776 /* Info.plist */,
+			);
+			path = BlackOutUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B32DE08021487EF400803776 /* BlackOut */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B32DE0A921487F0300803776 /* Build configuration list for PBXNativeTarget "BlackOut" */;
+			buildPhases = (
+				B32DE07D21487EF400803776 /* Sources */,
+				B32DE07E21487EF400803776 /* Frameworks */,
+				B32DE07F21487EF400803776 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BlackOut;
+			productName = BlackOut;
+			productReference = B32DE08121487EF400803776 /* BlackOut.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B32DE09421487F0300803776 /* BlackOutTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B32DE0AC21487F0300803776 /* Build configuration list for PBXNativeTarget "BlackOutTests" */;
+			buildPhases = (
+				B32DE09121487F0300803776 /* Sources */,
+				B32DE09221487F0300803776 /* Frameworks */,
+				B32DE09321487F0300803776 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B32DE09721487F0300803776 /* PBXTargetDependency */,
+			);
+			name = BlackOutTests;
+			productName = BlackOutTests;
+			productReference = B32DE09521487F0300803776 /* BlackOutTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B32DE09F21487F0300803776 /* BlackOutUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B32DE0AF21487F0300803776 /* Build configuration list for PBXNativeTarget "BlackOutUITests" */;
+			buildPhases = (
+				B32DE09C21487F0300803776 /* Sources */,
+				B32DE09D21487F0300803776 /* Frameworks */,
+				B32DE09E21487F0300803776 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B32DE0A221487F0300803776 /* PBXTargetDependency */,
+			);
+			name = BlackOutUITests;
+			productName = BlackOutUITests;
+			productReference = B32DE0A021487F0300803776 /* BlackOutUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B32DE07921487EF300803776 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = FervorWare;
+				TargetAttributes = {
+					B32DE08021487EF400803776 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					B32DE09421487F0300803776 = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = B32DE08021487EF400803776;
+					};
+					B32DE09F21487F0300803776 = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = B32DE08021487EF400803776;
+					};
+				};
+			};
+			buildConfigurationList = B32DE07C21487EF300803776 /* Build configuration list for PBXProject "BlackOut" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B32DE07821487EF300803776;
+			productRefGroup = B32DE08221487EF400803776 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B32DE08021487EF400803776 /* BlackOut */,
+				B32DE09421487F0300803776 /* BlackOutTests */,
+				B32DE09F21487F0300803776 /* BlackOutUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B32DE07F21487EF400803776 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B32DE08F21487F0200803776 /* LaunchScreen.storyboard in Resources */,
+				B32DE08C21487F0200803776 /* Assets.xcassets in Resources */,
+				B32DE08A21487EF400803776 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B32DE09321487F0300803776 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B32DE09E21487F0300803776 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B32DE07D21487EF400803776 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B32DE08721487EF400803776 /* ViewController.swift in Sources */,
+				B32DE08521487EF400803776 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B32DE09121487F0300803776 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B32DE09A21487F0300803776 /* BlackOutTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B32DE09C21487F0300803776 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B32DE0A521487F0300803776 /* BlackOutUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B32DE09721487F0300803776 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B32DE08021487EF400803776 /* BlackOut */;
+			targetProxy = B32DE09621487F0300803776 /* PBXContainerItemProxy */;
+		};
+		B32DE0A221487F0300803776 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B32DE08021487EF400803776 /* BlackOut */;
+			targetProxy = B32DE0A121487F0300803776 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B32DE08821487EF400803776 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B32DE08921487EF400803776 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B32DE08D21487F0200803776 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B32DE08E21487F0200803776 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B32DE0A721487F0300803776 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B32DE0A821487F0300803776 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B32DE0AA21487F0300803776 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BlackOut/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.FervorWare.BlackOut;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B32DE0AB21487F0300803776 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BlackOut/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.FervorWare.BlackOut;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B32DE0AD21487F0300803776 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BlackOutTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.FervorWare.BlackOutTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlackOut.app/BlackOut";
+			};
+			name = Debug;
+		};
+		B32DE0AE21487F0300803776 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BlackOutTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.FervorWare.BlackOutTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlackOut.app/BlackOut";
+			};
+			name = Release;
+		};
+		B32DE0B021487F0300803776 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BlackOutUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.FervorWare.BlackOutUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BlackOut;
+			};
+			name = Debug;
+		};
+		B32DE0B121487F0300803776 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BlackOutUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.FervorWare.BlackOutUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BlackOut;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B32DE07C21487EF300803776 /* Build configuration list for PBXProject "BlackOut" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B32DE0A721487F0300803776 /* Debug */,
+				B32DE0A821487F0300803776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B32DE0A921487F0300803776 /* Build configuration list for PBXNativeTarget "BlackOut" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B32DE0AA21487F0300803776 /* Debug */,
+				B32DE0AB21487F0300803776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B32DE0AC21487F0300803776 /* Build configuration list for PBXNativeTarget "BlackOutTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B32DE0AD21487F0300803776 /* Debug */,
+				B32DE0AE21487F0300803776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B32DE0AF21487F0300803776 /* Build configuration list for PBXNativeTarget "BlackOutUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B32DE0B021487F0300803776 /* Debug */,
+				B32DE0B121487F0300803776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B32DE07921487EF300803776 /* Project object */;
+}
