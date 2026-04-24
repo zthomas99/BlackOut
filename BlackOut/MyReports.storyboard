@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3j0-Qc-F0E">
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--My Reports-->
+        <scene sceneID="Fby-jj-Uf2">
+            <objects>
+                <tableViewController id="3j0-Qc-F0E" customClass="ProfileReportTableViewController" customModule="BlackOut" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" contentViewInsetsToSafeArea="NO" id="GjZ-yc-Y1b">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <inset key="scrollIndicatorInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileReportTitle" rowHeight="114" id="fSr-CI-8j2" customClass="ProfileReportTitleCell" customModule="BlackOut" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="114"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fSr-CI-8j2" id="jRQ-eM-qWt">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="114"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Account's" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QqP-aN-5nq">
+                                            <rect key="frame" x="16" y="16" width="288" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="hU6-C9-P2t"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Rockwell-Bold" family="Rockwell" pointSize="21"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                            <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reports" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvQ-9E-y0g">
+                                            <rect key="frame" x="16" y="48" width="288" height="35"/>
+                                            <fontDescription key="fontDescription" name="ZapfDingbatsITC" family="Zapf Dingbats" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="QqP-aN-5nq" firstAttribute="top" secondItem="jRQ-eM-qWt" secondAttribute="topMargin" constant="5" id="808-MD-baS"/>
+                                        <constraint firstItem="QqP-aN-5nq" firstAttribute="leading" secondItem="jRQ-eM-qWt" secondAttribute="leadingMargin" id="Cfe-Sw-8ya"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="tvQ-9E-y0g" secondAttribute="bottom" constant="20" id="OIC-Xa-SfM"/>
+                                        <constraint firstItem="tvQ-9E-y0g" firstAttribute="leading" secondItem="jRQ-eM-qWt" secondAttribute="leadingMargin" id="Yii-UG-CdK"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="tvQ-9E-y0g" secondAttribute="trailing" id="ZlN-lg-kex"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="QqP-aN-5nq" secondAttribute="trailing" id="hbf-vp-XL9"/>
+                                        <constraint firstItem="tvQ-9E-y0g" firstAttribute="top" secondItem="QqP-aN-5nq" secondAttribute="bottom" constant="2" id="kIs-z2-Km1"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="lblUserAccount" destination="QqP-aN-5nq" id="Qpi-oH-kv9"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileReport" rowHeight="225" translatesAutoresizingMaskIntoConstraints="NO" id="cjC-1y-ORu" customClass="ProfileReportCell" customModule="BlackOut" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="169.5" width="320" height="225"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cjC-1y-ORu" id="vJm-aa-eJY">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="225"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title of Report" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mL8-7e-WTv" userLabel="lblReportTitle">
+                                            <rect key="frame" x="5" y="0.0" width="315" height="54"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="54" id="VHP-24-2Hl"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <color key="textColor" red="0.99607843137254903" green="0.81568627450980391" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <size key="shadowOffset" width="1" height="1"/>
+                                            <variation key="heightClass=regular-widthClass=regular">
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Description of the repoort" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pOa-Wr-lGk" userLabel="lblReportDescription">
+                                            <rect key="frame" x="5" y="62" width="315" height="100"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="highlightedColor" red="0.25976226166122318" green="0.25976226166122318" blue="0.25976226166122318" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="shadowColor" red="0.14115123060000001" green="0.14115123060000001" blue="0.14115123060000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <size key="shadowOffset" width="1" height="1"/>
+                                            <variation key="heightClass=regular-widthClass=regular">
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Advice 0 Comments" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aan-vf-5Dj">
+                                            <rect key="frame" x="5" y="200.5" width="150" height="14.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="150" id="2qa-vS-56o">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="250"/>
+                                                </constraint>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="heightClass=regular-widthClass=regular">
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                            </variation>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xed-7j-1ma" userLabel="Comment Button">
+                                            <rect key="frame" x="235" y="192" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="3jR-Fd-6an"/>
+                                                <constraint firstAttribute="height" constant="30" id="N2u-tz-VA3"/>
+                                            </constraints>
+                                            <state key="normal" image="profileComment.png">
+                                                <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vUI-2X-CsP" userLabel="Report Button">
+                                            <rect key="frame" x="280" y="192" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="ULf-Fi-m7G"/>
+                                                <constraint firstAttribute="width" constant="30" id="Zmn-Zw-vc6"/>
+                                            </constraints>
+                                            <state key="normal" image="profileReport.png">
+                                                <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K4N-m4-7Fz">
+                                            <rect key="frame" x="181" y="192" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="kRq-ow-Bzh"/>
+                                                <constraint firstAttribute="height" constant="30" id="taF-Ci-1wb"/>
+                                            </constraints>
+                                            <state key="normal" image="edit.png"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.69172480720212193" green="0.7000588410238342" blue="0.7000588410238342" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="mL8-7e-WTv" secondAttribute="trailing" id="2Tf-lz-KCD"/>
+                                        <constraint firstItem="Aan-vf-5Dj" firstAttribute="top" secondItem="pOa-Wr-lGk" secondAttribute="bottom" constant="38.670000000000002" id="7g8-BG-jym"/>
+                                        <constraint firstItem="pOa-Wr-lGk" firstAttribute="top" secondItem="mL8-7e-WTv" secondAttribute="bottom" constant="8" id="EZE-tP-w1x"/>
+                                        <constraint firstItem="vUI-2X-CsP" firstAttribute="leading" secondItem="Xed-7j-1ma" secondAttribute="trailing" constant="15" id="PwR-U9-id6"/>
+                                        <constraint firstAttribute="bottom" secondItem="vUI-2X-CsP" secondAttribute="bottom" constant="3" id="RI8-tz-Vik"/>
+                                        <constraint firstItem="pOa-Wr-lGk" firstAttribute="top" secondItem="mL8-7e-WTv" secondAttribute="bottom" constant="8" id="RRL-Fx-aZk"/>
+                                        <constraint firstItem="mL8-7e-WTv" firstAttribute="leading" secondItem="vJm-aa-eJY" secondAttribute="leading" constant="5" id="UNi-lR-yoH"/>
+                                        <constraint firstAttribute="bottom" secondItem="K4N-m4-7Fz" secondAttribute="bottom" constant="3" id="UYI-Zw-fdR"/>
+                                        <constraint firstAttribute="bottom" secondItem="Xed-7j-1ma" secondAttribute="bottom" constant="3" id="Viz-l2-fWR"/>
+                                        <constraint firstAttribute="bottom" secondItem="Aan-vf-5Dj" secondAttribute="bottom" constant="10" id="XQR-It-h9X"/>
+                                        <constraint firstItem="mL8-7e-WTv" firstAttribute="top" secondItem="vJm-aa-eJY" secondAttribute="top" id="Zz4-ba-0Nv"/>
+                                        <constraint firstAttribute="trailing" secondItem="pOa-Wr-lGk" secondAttribute="trailing" id="am0-Vh-P9t"/>
+                                        <constraint firstItem="pOa-Wr-lGk" firstAttribute="leading" secondItem="vJm-aa-eJY" secondAttribute="leading" constant="5" id="bj6-Sl-ENA"/>
+                                        <constraint firstAttribute="trailing" secondItem="vUI-2X-CsP" secondAttribute="trailing" constant="10" id="eH9-9P-02t"/>
+                                        <constraint firstItem="Xed-7j-1ma" firstAttribute="leading" secondItem="K4N-m4-7Fz" secondAttribute="trailing" constant="24" id="fui-J9-Eis"/>
+                                        <constraint firstItem="Aan-vf-5Dj" firstAttribute="leading" secondItem="vJm-aa-eJY" secondAttribute="leading" constant="5" id="wSX-sr-eXL"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="btnComment" destination="Xed-7j-1ma" id="dJp-b3-vGc"/>
+                                    <outlet property="btnEdit" destination="K4N-m4-7Fz" id="ELR-vB-7M5"/>
+                                    <outlet property="btnReport" destination="vUI-2X-CsP" id="LtS-iX-CBt"/>
+                                    <outlet property="lblCommentCount" destination="Aan-vf-5Dj" id="Rce-vM-93D"/>
+                                    <outlet property="lblReportDescription" destination="pOa-Wr-lGk" id="3kF-hN-cwk"/>
+                                    <outlet property="lblReportTitle" destination="mL8-7e-WTv" id="AAk-VB-8Qv"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3j0-Qc-F0E" id="1f5-LH-zb1"/>
+                            <outlet property="delegate" destination="3j0-Qc-F0E" id="3ct-Uv-8WI"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="My Reports" image="reports.png" id="N92-WH-QXm"/>
+                    <connections>
+                        <segue destination="wnn-qM-1Si" kind="custom" identifier="ShowIncidentView" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="jjE-eg-sNx"/>
+                        <segue destination="HBB-Ia-UhV" kind="custom" identifier="ShowSlimIncidentView" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="hpg-DC-JAI"/>
+                        <segue destination="j9U-0E-ZHJ" kind="custom" identifier="ShowComments" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="0oh-OW-of3"/>
+                        <segue destination="bfm-ey-drg" kind="custom" identifier="ShowReportEdit" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="fiQ-Lc-5VY"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gyb-WL-j4C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-418.39999999999998" y="450.73891625615767"/>
+        </scene>
+        <!--IncidentView-->
+        <scene sceneID="gTc-FT-LEi">
+            <objects>
+                <viewControllerPlaceholder storyboardName="IncidentView" id="wnn-qM-1Si" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pXE-um-2ps" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="234" y="259"/>
+        </scene>
+        <!--SlimIncidentView-->
+        <scene sceneID="64B-dP-cvl">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SlimIncidentView" id="HBB-Ia-UhV" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jHX-Um-clb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="251" y="301"/>
+        </scene>
+        <!--Comments-->
+        <scene sceneID="10H-HB-psF">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Comments" id="j9U-0E-ZHJ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kl6-um-cpM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="232" y="360"/>
+        </scene>
+        <!--EditReport-->
+        <scene sceneID="ub7-g7-839">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EditReport" id="bfm-ey-drg" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ydx-OY-uAf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-419" y="1049"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="edit.png" width="25" height="25"/>
+        <image name="profileComment.png" width="25" height="25"/>
+        <image name="profileReport.png" width="25" height="25"/>
+        <image name="reports.png" width="25" height="25"/>
+    </resources>
+</document>

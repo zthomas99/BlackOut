@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WAB-1Z-9YF">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Guide Policy View Controller-->
+        <scene sceneID="XEw-El-31A">
+            <objects>
+                <viewController id="WAB-1Z-9YF" customClass="GuidePolicyViewController" customModule="BlackOut" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Osz-fg-O18">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ybf-dl-0LH">
+                                <rect key="frame" x="0.0" y="0.0" width="712" height="98"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="awb-AU-DpF">
+                                        <rect key="frame" x="8" y="60" width="64" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="34" id="7qY-TU-REQ">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="64"/>
+                                            </constraint>
+                                            <constraint firstAttribute="height" constant="30" id="V9w-gd-xwy">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="30"/>
+                                            </constraint>
+                                        </constraints>
+                                        <state key="normal" title="Back">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="GudiePolicyBackTapped:" destination="WAB-1Z-9YF" eventType="touchUpInside" id="dkr-Wr-AJ9"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.9384416937828064" green="0.93565088510513306" blue="0.95562607049942017" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="awb-AU-DpF" firstAttribute="leading" secondItem="Ybf-dl-0LH" secondAttribute="leading" constant="8" id="1yL-hR-v6s"/>
+                                    <constraint firstAttribute="bottom" secondItem="awb-AU-DpF" secondAttribute="bottom" constant="8" id="GPa-Kj-2Cv"/>
+                                    <constraint firstAttribute="height" constant="98" id="pfn-2b-P9P"/>
+                                </constraints>
+                            </view>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kaa-MI-EIr">
+                                <rect key="frame" x="0.0" y="98" width="712" height="886"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Kaa-MI-EIr" firstAttribute="trailing" secondItem="tt3-sM-Sma" secondAttribute="trailing" id="3UI-EA-sJI"/>
+                            <constraint firstItem="Kaa-MI-EIr" firstAttribute="leading" secondItem="tt3-sM-Sma" secondAttribute="leading" id="HSV-P8-u0x"/>
+                            <constraint firstItem="Ybf-dl-0LH" firstAttribute="leading" secondItem="tt3-sM-Sma" secondAttribute="leading" id="LxT-vv-aXr"/>
+                            <constraint firstItem="Ybf-dl-0LH" firstAttribute="trailing" secondItem="tt3-sM-Sma" secondAttribute="trailing" id="V8c-Ea-6CQ"/>
+                            <constraint firstItem="Kaa-MI-EIr" firstAttribute="bottom" secondItem="tt3-sM-Sma" secondAttribute="bottom" id="uJN-IP-X7g"/>
+                            <constraint firstItem="Kaa-MI-EIr" firstAttribute="top" secondItem="Ybf-dl-0LH" secondAttribute="bottom" id="wkG-cz-QxJ"/>
+                            <constraint firstItem="Ybf-dl-0LH" firstAttribute="top" secondItem="Osz-fg-O18" secondAttribute="top" id="zPf-P4-cSN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="tt3-sM-Sma"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Bsv-fY-xPZ"/>
+                    <connections>
+                        <outlet property="guidePolicyWebView" destination="Kaa-MI-EIr" id="mdh-D7-W4E"/>
+                        <outlet property="navigationView" destination="Ybf-dl-0LH" id="bLb-8j-2MX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Izk-ng-UzJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2399" y="2834"/>
+        </scene>
+    </scenes>
+</document>

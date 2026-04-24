@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hff-6h-ca6">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--NavigationStoryboard-->
+        <scene sceneID="Bs5-0u-MEM">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Navigation" referencedIdentifier="NavigationStoryboard" id="zWd-f4-9KX" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="EgQ-ve-3me"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ede-5V-kAF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-946" y="242"/>
+        </scene>
+        <!--Launch Screen View Controller-->
+        <scene sceneID="Yz3-1z-VCA">
+            <objects>
+                <viewController storyboardIdentifier="LaunchScreenMainStory" id="hff-6h-ca6" customClass="LaunchScreenViewController" customModule="BlackOut" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ao6-we-gQg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2019 FervorWare. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCE-fn-ccA">
+                                <rect key="frame" x="0.0" y="796.5" width="414" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20.5" id="clR-U4-C4D"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchSreenFade-Tween.gif" translatesAutoresizingMaskIntoConstraints="NO" id="srj-sA-cOs" customClass="FLAnimatedImageView">
+                                <rect key="frame" x="0.0" y="113" width="414" height="683.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="PAO-or-kze" firstAttribute="trailing" secondItem="srj-sA-cOs" secondAttribute="trailing" id="18f-4x-kIx"/>
+                            <constraint firstItem="dCE-fn-ccA" firstAttribute="leading" secondItem="ao6-we-gQg" secondAttribute="leading" id="81t-ha-Qrl"/>
+                            <constraint firstItem="srj-sA-cOs" firstAttribute="leading" secondItem="PAO-or-kze" secondAttribute="leading" id="NxY-Kn-Nu8"/>
+                            <constraint firstItem="srj-sA-cOs" firstAttribute="top" secondItem="PAO-or-kze" secondAttribute="top" constant="69" id="dBS-dx-7od"/>
+                            <constraint firstAttribute="trailing" secondItem="dCE-fn-ccA" secondAttribute="trailing" id="wCu-7O-3dg"/>
+                            <constraint firstItem="PAO-or-kze" firstAttribute="bottom" secondItem="dCE-fn-ccA" secondAttribute="bottom" constant="45" id="zaT-b6-xJs"/>
+                            <constraint firstItem="dCE-fn-ccA" firstAttribute="top" secondItem="srj-sA-cOs" secondAttribute="bottom" id="zzE-OT-1Jy"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="PAO-or-kze"/>
+                    </view>
+                    <connections>
+                        <outlet property="launchGifView" destination="srj-sA-cOs" id="poN-60-ezW"/>
+                        <segue destination="fbY-g9-yoE" kind="presentation" identifier="LaunchToLogin" animates="NO" modalPresentationStyle="fullScreen" id="wwq-FG-QNR"/>
+                        <segue destination="zWd-f4-9KX" kind="presentation" identifier="SplashToNavigation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="oIR-vj-PVx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2hl-zW-7eg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1629.375" y="115.14084507042254"/>
+        </scene>
+        <!--MainStory-->
+        <scene sceneID="I7W-W0-jfa">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="MainStory" storyboardName="Main" referencedIdentifier="MainStory" id="fbY-g9-yoE" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="khD-Tc-DAr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-946" y="17"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LaunchSreenFade-Tween.gif" width="720" height="1280"/>
+    </resources>
+</document>
