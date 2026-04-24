@@ -1,5 +1,9 @@
 # Secret API keys — never commit
-Secrets.xcconfig
+*.xcconfig
+*.xcconfig.template
+*.cer
+*.p12
+*.mobileprovision
 .DS_Store
 xcuserdata/
 DerivedData/
