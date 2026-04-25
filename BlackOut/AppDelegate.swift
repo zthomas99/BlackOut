@@ -62,7 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configureAppearance() {
         let gold = UIColor(red: 0.929, green: 0.807, blue: 0.041, alpha: 1)
-        let unselectedGray = UIColor(white: 0.55, alpha: 1)
 
         // Navigation bar — black background, white title, gold buttons
         let navAppearance = UINavigationBarAppearance()

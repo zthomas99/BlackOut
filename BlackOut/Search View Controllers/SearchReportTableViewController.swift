@@ -35,7 +35,8 @@ class SearchReportTableViewController: UITableViewController {
 
     func retrieveReports()
     {
-        for incident in incidents!
+        guard let incidents = incidents else { return }
+        for incident in incidents
         {
             FireDatabaseService.shared.incidentReference.child(incident).observeSingleEvent(of: .value)
             {
@@ -114,60 +115,34 @@ class SearchReportTableViewController: UITableViewController {
 	
 	func downloadNavigationImage()
 	{
-		if businessPhotoNames != nil
-		{
-			if businessPhotoNames!.count > 0
-			{
-				let number : Int = Int.random(in: 0 ..< (businessPhotoNames?.count ?? 0))
-				
-				if(businessPhotoNames!.count > 0)
-				{
-					let fileName = businessPhotoNames![number]
-					storage.mediaReference.child(fileName).getData(maxSize: 1 * 100000 * 100000, completion: {(data, error)
-						in
-						if(error != nil)
-						{
-							print("The following error was thrown when attempting to download \(fileName) error: \(String(describing: error!))")
-						}
-						else
-						{
-							DispatchQueue.main.async {
-								let image = UIImage(data: data!)
-								self.headerImageView.image = image
-							}
-						}
-					})
-				}
+		guard let businessPhotoNames = businessPhotoNames, businessPhotoNames.count > 0 else { return }
+		let number = Int.random(in: 0 ..< businessPhotoNames.count)
+		let fileName = businessPhotoNames[number]
+		storage.mediaReference.child(fileName).getData(maxSize: 1 * 100000 * 100000, completion: {(data, error) in
+			if let error = error {
+				print("The following error was thrown when attempting to download \(fileName) error: \(error.localizedDescription)")
+				return
 			}
-		}
+			guard let data = data, let image = UIImage(data: data) else { return }
+			DispatchQueue.main.async {
+				self.headerImageView.image = image
+			}
+		})
 	}
 	
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
 		selectedReport = reports[indexPath.row]
-		if(reports[indexPath.row].incidentMedia == nil)
-		{
-			self.performSegue(withIdentifier: "SearchTableToSlimIncidentView", sender: nil)
-		}
-		else
-		{
-			self.performSegue(withIdentifier: "SearchTableToIncidentView", sender: self)
-		}
-		
+		self.performSegue(withIdentifier: "SearchTableToIncidentView", sender: self)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        if(segue.identifier == "SearchTableToIncidentView")
+        if segue.identifier == "SearchTableToIncidentView",
+           let incidentView = segue.destination as? IncidentViewController
         {
-            let incidentView:IncidentViewController = (segue.destination as? IncidentViewController)!
             incidentView.incident = selectedReport
         }
-		else
-		{
-			let slimIncidentView:SlimIncidentViewController = (segue.destination as? SlimIncidentViewController)!
-				slimIncidentView.incident = selectedReport
-		}
     }
 
 }

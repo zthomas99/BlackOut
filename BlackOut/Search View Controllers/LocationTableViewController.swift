@@ -19,7 +19,7 @@ class LocationTableViewController: UITableViewController {
 
     var isFirstSearch : Bool = true
     var locations = [LocationReport]()
-    var reportViewContainer: ReportContainerViewController?
+    var searchReportTableViewController: SearchReportTableViewController?
     var locationName : String?
     var incidents:[String]?
     var businessPhotos: [String] = []
@@ -38,29 +38,21 @@ class LocationTableViewController: UITableViewController {
 		{
 			row = button.tag
 		}
-	
+
 		if let tapGesture = sender as? UITapGestureRecognizer
 		{
-			row = tapGesture.view!.tag
+			row = tapGesture.view?.tag ?? 0
 		}
-		
+
 		let location = locations[row]
-		
-		if location.profilePhotos != nil
-		{
-			businessPhotos = location.profilePhotos!
-		}
-		else
-		{
-			businessPhotos = []
-		}
-		
-        if(segue.identifier == "LocationToReport")
+		businessPhotos = location.profilePhotos ?? []
+
+        if segue.identifier == "LocationToReport",
+           let reportVC = segue.destination as? SearchReportTableViewController
         {
-            reportViewContainer = segue.destination as? ReportContainerViewController
-			reportViewContainer?.reports = location.incidentReports
-			reportViewContainer?.locationName = location.businessName
-			reportViewContainer?.businessPhotoFileNames = businessPhotos
+			reportVC.incidents = location.incidentReports
+			reportVC.locationName = location.businessName
+			reportVC.businessPhotoNames = businessPhotos
         }
     }
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -102,28 +94,28 @@ class LocationTableViewController: UITableViewController {
     
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let location = locations[section]
-		if location.hasMediaFiles && mediaList[location] != nil && mediaList[location]!.count > 0
+		if location.hasMediaFiles, let mediaFiles = mediaList[location], mediaFiles.count > 0,
+		   let headerCell = tableView.dequeueReusableCell(withIdentifier: "MediaCell") as? MediaLocationCell
 		{
-			let headerCell = tableView.dequeueReusableCell(withIdentifier: "MediaCell") as? MediaLocationCell
-			headerCell?.lblLocationTitle.text = location.businessName.uppercased()
-			headerCell?.imageList = mediaList[location]!
-			headerCell?.topMediaBtn.tag = section
-			headerCell?.bottomMediaBtn.tag = section
-			headerCell?.topMediaBtn.addTarget(self, action: #selector(didSelectSection(sender:)), for: .touchUpInside)
-			headerCell?.bottomMediaBtn.addTarget(self, action: #selector(didSelectSection(sender:)), for: .touchUpInside)
-			headerCell?.lblAddress.text = location.businessLocation
-			headerCell?.lblReportCount.text = "\(String(describing: location.incidentReports.count )) \( (location.incidentReports.count > 1 ) ? " reports" : " report")"
-			headerCell?.imageCollectionView.tag = section
-			headerCell?.imageCollectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didSelectSection(sender:))))
-			return headerCell!
+			headerCell.lblLocationTitle.text = location.businessName.uppercased()
+			headerCell.imageList = mediaFiles
+			headerCell.topMediaBtn.tag = section
+			headerCell.bottomMediaBtn.tag = section
+			headerCell.topMediaBtn.addTarget(self, action: #selector(didSelectSection(sender:)), for: .touchUpInside)
+			headerCell.bottomMediaBtn.addTarget(self, action: #selector(didSelectSection(sender:)), for: .touchUpInside)
+			headerCell.lblAddress.text = location.businessLocation
+			headerCell.lblReportCount.text = "\(location.incidentReports.count) \(location.incidentReports.count > 1 ? "reports" : "report")"
+			headerCell.imageCollectionView.tag = section
+			headerCell.imageCollectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didSelectSection(sender:))))
+			return headerCell
 		}
-		let noMediaCell = tableView.dequeueReusableCell(withIdentifier: "NoMediaCell") as? NoMediaTableViewCell
-		noMediaCell?.lblLocationTitle.text = location.businessName.uppercased()
-		noMediaCell?.lblAddress.text = location.businessLocation
-		noMediaCell?.btnSelect.tag = section
-		noMediaCell?.btnSelect.addTarget(self, action: #selector(didSelectSection(sender:)), for: .touchUpInside)
-		noMediaCell?.lblNumberOfReports.text = "\(String(describing: location.incidentReports.count )) \( (location.incidentReports.count > 1 ) ? " reports" : " report")"
-		return noMediaCell!
+		guard let noMediaCell = tableView.dequeueReusableCell(withIdentifier: "NoMediaCell") as? NoMediaTableViewCell else { return nil }
+		noMediaCell.lblLocationTitle.text = location.businessName.uppercased()
+		noMediaCell.lblAddress.text = location.businessLocation
+		noMediaCell.btnSelect.tag = section
+		noMediaCell.btnSelect.addTarget(self, action: #selector(didSelectSection(sender:)), for: .touchUpInside)
+		noMediaCell.lblNumberOfReports.text = "\(location.incidentReports.count) \(location.incidentReports.count > 1 ? "reports" : "report")"
+		return noMediaCell
 	}
 	
 	
@@ -150,32 +142,24 @@ class LocationTableViewController: UITableViewController {
 // MARK: - Spinner Functions
 	func createSpinner()
 	{
-		if spinnerView == nil
-		{
+		guard let parentVC = self.parent else { return }
+		if spinnerView == nil {
 			spinnerView = SpinnerViewController()
-			self.parent!.addChildViewController(spinnerView!)
-			spinnerView!.view.frame = self.parent!.view.frame
-			self.parent!.view.addSubview(spinnerView!.view)
-			spinnerView?.didMove(toParentViewController: self.parent!)
 		}
-		else
-		{
-			self.parent!.addChildViewController(spinnerView!)
-			spinnerView!.view.frame = self.parent!.view.frame
-			self.parent!.view.addSubview(spinnerView!.view)
-			spinnerView?.didMove(toParentViewController: self.parent!)
-		}
+		guard let spinner = spinnerView else { return }
+		parentVC.addChildViewController(spinner)
+		spinner.view.frame = parentVC.view.frame
+		parentVC.view.addSubview(spinner.view)
+		spinner.didMove(toParentViewController: parentVC)
 	}
-	
+
 	func removeSpinner()
 	{
-		if spinnerView != nil
-		{
-			spinnerView?.willMove(toParentViewController: nil)
-			spinnerView?.view.removeFromSuperview()
-			spinnerView?.removeFromParentViewController()
-			spinnerView = nil
-		}
+		guard let spinner = spinnerView else { return }
+		spinner.willMove(toParentViewController: nil)
+		spinner.view.removeFromSuperview()
+		spinner.removeFromParentViewController()
+		spinnerView = nil
 	}
 	
 // MARK: - Download Functions

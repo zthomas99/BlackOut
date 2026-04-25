@@ -157,15 +157,10 @@ class UserProfileReportTableViewController: UITableViewController {
 			 commentView!.postUsername = tappedReport!.username
 			 commentView!.reportTitle = tappedReport!.reportTitle
 		 }
-		 else if(segue.identifier == "ShowIncidentView")
+		 else if segue.identifier == "ShowIncidentView"
 		 {
-			 let incidentView = (segue.destination as? IncidentViewController)
+			 let incidentView = segue.destination as? IncidentViewController
 			 incidentView?.incident = tappedReport
-		 }
-		 else if(segue.identifier == "ShowSlimIncidentView")
-		 {
-			 let slimIncidentView = (segue.destination as? SlimIncidentViewController)
-			 slimIncidentView?.incident = tappedReport
 		 }
 	 }
 	 
@@ -175,14 +170,7 @@ class UserProfileReportTableViewController: UITableViewController {
 		 let row = indexPath.row
 		 let report = reports[row]
 		 tappedReport = report
-		 if report.incidentMedia != nil
-		 {
-			 self.performSegue(withIdentifier: "ShowIncidentView", sender: self)
-		 }
-		 else
-		 {
-			 self.performSegue(withIdentifier: "ShowSlimIncidentView", sender: self)
-		 }
+		 self.performSegue(withIdentifier: "ShowIncidentView", sender: self)
 	 }
 	 
 	@IBAction func CancelButtonWasTapped(_ sender: Any) {
@@ -205,14 +193,7 @@ class UserProfileReportTableViewController: UITableViewController {
 			report = reports[row]
 			tappedReport = report
 		}
-		if report!.incidentMedia != nil
-		{
-			self.performSegue(withIdentifier: "ShowIncidentView", sender: self)
-		}
-		else
-		{
-			self.performSegue(withIdentifier: "ShowSlimIncidentView", sender: self)
-		}
+		self.performSegue(withIdentifier: "ShowIncidentView", sender: self)
 	 }
 	 
 	 @objc func ViewCommentsButtonTapped(sender: Any)

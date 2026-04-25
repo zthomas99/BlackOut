@@ -208,7 +208,6 @@
                     <tabBarItem key="tabBarItem" title="My Reports" image="reports.png" id="exe-7S-2Fv"/>
                     <connections>
                         <segue destination="BJO-BD-jkk" kind="presentation" identifier="ShowIncidentView" modalPresentationStyle="overCurrentContext" id="Zbj-Pi-hzz"/>
-                        <segue destination="yTF-DM-PQL" kind="presentation" identifier="ShowSlimIncidentView" modalPresentationStyle="overCurrentContext" id="x94-pw-USL"/>
                         <segue destination="aQD-Ce-Xjb" kind="presentation" identifier="ShowComments" modalPresentationStyle="overCurrentContext" id="eUC-6t-LgE"/>
                     </connections>
                 </tableViewController>
@@ -223,14 +222,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zSR-Mf-iKf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="234" y="259"/>
-        </scene>
-        <!--SlimIncidentView-->
-        <scene sceneID="88i-et-2Ti">
-            <objects>
-                <viewControllerPlaceholder storyboardName="SlimIncidentView" id="yTF-DM-PQL" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8Jz-tl-OVl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="251" y="301"/>
         </scene>
         <!--Comments-->
         <scene sceneID="IFM-R7-hbj">

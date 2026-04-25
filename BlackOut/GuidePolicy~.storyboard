@@ -1268,44 +1268,12 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="bhn-xT-xaE" kind="presentation" identifier="LocationToReport" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="w5Y-Uz-SH4"/>
+                        <segue destination="tlf-TJ-V5f" kind="presentation" identifier="LocationToReport" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="w5Y-Uz-SH4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LR3-ji-XRQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2725.5999999999999" y="-798.35082458770626"/>
-        </scene>
-        <!--Report Container View Controller-->
-        <scene sceneID="Vsv-CR-rM4">
-            <objects>
-                <viewController id="bhn-xT-xaE" customClass="ReportContainerViewController" customModule="BlackOut" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="KTs-Iw-hRj">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="841"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cyv-rs-hwl">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="841"/>
-                                <viewLayoutGuide key="safeArea" id="DXs-Vx-I5Z"/>
-                                <connections>
-                                    <segue destination="tlf-TJ-V5f" kind="embed" identifier="EmbedSearchReportTable" id="EtO-9Z-QKe"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Cyv-rs-hwl" firstAttribute="leading" secondItem="2Xe-PT-TbO" secondAttribute="leading" id="6JD-B7-Seu"/>
-                            <constraint firstAttribute="bottom" secondItem="Cyv-rs-hwl" secondAttribute="bottom" id="EGL-Pb-fjp"/>
-                            <constraint firstItem="Cyv-rs-hwl" firstAttribute="top" secondItem="KTs-Iw-hRj" secondAttribute="top" id="Fgg-Ci-2mi"/>
-                            <constraint firstItem="Cyv-rs-hwl" firstAttribute="trailing" secondItem="2Xe-PT-TbO" secondAttribute="trailing" id="cC6-Ev-YIv"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="2Xe-PT-TbO"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="MT8-TV-wNW"/>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="800"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3OG-oA-Whe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3512.8000000000002" y="-814.54272863568224"/>
         </scene>
         <!--Search Report Table View Controller-->
         <scene sceneID="TrK-YU-9wf">
@@ -1472,7 +1440,6 @@
                         <outlet property="businessNameLabel" destination="Kct-cu-lKC" id="7dc-3Q-3sq"/>
                         <outlet property="headerImageView" destination="Kxc-zb-TUU" id="Szd-PU-Bec"/>
                         <segue destination="aIx-Ag-nbb" kind="presentation" identifier="SearchTableToIncidentView" modalPresentationStyle="fullScreen" id="Fwv-1E-Xhm"/>
-                        <segue destination="8WK-Dp-661" kind="presentation" identifier="SearchTableToSlimIncidentView" modalPresentationStyle="fullScreen" id="3X3-Or-bhQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IVn-Df-YlS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1591,7 +1558,6 @@
                         <outlet property="companyNameLabel" destination="kUo-YT-DA9" id="nbZ-aL-J26"/>
                         <outlet property="dateLabel" destination="fZa-Pa-1gl" id="d1g-xU-pVc"/>
                         <outlet property="doneButton" destination="7kb-pg-mxa" id="c8X-KR-wf4"/>
-                        <outlet property="incidentScrollView" destination="DqI-Po-p6M" id="X6T-jM-AKF"/>
                         <outlet property="navigationView" destination="SUs-TA-hzA" id="c1b-Uu-a5e"/>
                         <outlet property="userNameLabel" destination="1Xh-pN-8NL" id="x3Z-VX-wgc"/>
                         <segue destination="O1z-wT-R9q" kind="presentation" identifier="ToVideo" modalPresentationStyle="overFullScreen" id="Jnv-9o-5UL"/>
@@ -3443,83 +3409,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KlN-kj-RdC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3092" y="524"/>
-        </scene>
-        <!--Slim Incident View Controller-->
-        <scene sceneID="QaD-mB-J4m">
-            <objects>
-                <viewController id="8WK-Dp-661" customClass="SlimIncidentViewController" customModule="BlackOut" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="KP2-wZ-6Dg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="800"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ywA-Xg-IVe" customClass="UIImageView">
-                                <rect key="frame" x="0.0" y="0.0" width="369" height="194"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="JQ1-FU-dpp" userLabel="NavigationView" customClass="UIImageView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="194"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xyi-jM-csi">
-                                        <rect key="frame" x="303" y="153" width="53" height="33"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="33" id="gJH-fR-FS7"/>
-                                            <constraint firstAttribute="width" constant="53" id="spV-UT-c5o"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Done">
-                                            <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="DoneButtonHasBeenTapped:" destination="8WK-Dp-661" eventType="touchUpInside" id="abh-w9-N15"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Xyi-jM-csi" secondAttribute="bottom" constant="8" id="GBK-AE-8SP"/>
-                                    <constraint firstAttribute="trailing" secondItem="Xyi-jM-csi" secondAttribute="trailing" constant="19" id="gDK-HY-IVJ"/>
-                                </constraints>
-                            </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5uj-tS-cxJ">
-                                <rect key="frame" x="0.0" y="194" width="375" height="606"/>
-                                <connections>
-                                    <segue destination="AhJ-de-Q7t" kind="embed" identifier="SlimIncidentViewToIncidentDetails" id="Zso-Fu-Yj6"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.1235297248" green="0.12862658499999999" blue="0.13849115370000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="5uj-tS-cxJ" firstAttribute="trailing" secondItem="Gyu-k7-yd2" secondAttribute="trailing" id="3IZ-TI-qa8"/>
-                            <constraint firstItem="5uj-tS-cxJ" firstAttribute="top" secondItem="KP2-wZ-6Dg" secondAttribute="top" constant="194" id="CR3-Dt-Q09"/>
-                            <constraint firstItem="5uj-tS-cxJ" firstAttribute="leading" secondItem="Gyu-k7-yd2" secondAttribute="leading" id="IH2-9z-Nnx"/>
-                            <constraint firstItem="ywA-Xg-IVe" firstAttribute="leading" secondItem="Gyu-k7-yd2" secondAttribute="leading" id="MTs-1K-qVV"/>
-                            <constraint firstItem="JQ1-FU-dpp" firstAttribute="leading" secondItem="Gyu-k7-yd2" secondAttribute="leading" id="UFc-vj-0Ix"/>
-                            <constraint firstItem="5uj-tS-cxJ" firstAttribute="top" secondItem="JQ1-FU-dpp" secondAttribute="bottom" id="dzp-fX-Gc5"/>
-                            <constraint firstAttribute="bottom" secondItem="5uj-tS-cxJ" secondAttribute="bottom" id="gNV-Vw-Vha"/>
-                            <constraint firstItem="JQ1-FU-dpp" firstAttribute="top" secondItem="KP2-wZ-6Dg" secondAttribute="top" id="ipz-D5-XZ7"/>
-                            <constraint firstItem="JQ1-FU-dpp" firstAttribute="trailing" secondItem="Gyu-k7-yd2" secondAttribute="trailing" id="oOT-FU-3D3"/>
-                            <constraint firstItem="5uj-tS-cxJ" firstAttribute="top" secondItem="ywA-Xg-IVe" secondAttribute="bottom" id="pKS-OD-WlI"/>
-                            <constraint firstItem="ywA-Xg-IVe" firstAttribute="top" secondItem="KP2-wZ-6Dg" secondAttribute="top" id="ujf-7g-rpC"/>
-                            <constraint firstItem="Gyu-k7-yd2" firstAttribute="trailing" secondItem="ywA-Xg-IVe" secondAttribute="trailing" constant="6" id="vvy-WX-WNn"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Gyu-k7-yd2"/>
-                    </view>
-                    <size key="freeformSize" width="375" height="800"/>
-                    <connections>
-                        <outlet property="addressLabel" destination="yJm-61-SMo" id="NdR-Zo-20c"/>
-                        <outlet property="backgroundView" destination="ywA-Xg-IVe" id="fvl-GM-Ucl"/>
-                        <outlet property="companyNameLabel" destination="kUo-YT-DA9" id="0aQ-8l-1En"/>
-                        <outlet property="dateLabel" destination="fZa-Pa-1gl" id="0GM-eH-Y0w"/>
-                        <outlet property="doneButton" destination="Xyi-jM-csi" id="L5i-Fr-8Ve"/>
-                        <outlet property="incidentScrollView" destination="KP2-wZ-6Dg" id="urO-jC-l2Y"/>
-                        <outlet property="navigationView" destination="JQ1-FU-dpp" id="0LU-4n-FMq"/>
-                        <outlet property="userNameLabel" destination="1Xh-pN-8NL" id="VOI-TY-425"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xdv-ct-5F3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4240.8000000000002" y="-55.772113943028494"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

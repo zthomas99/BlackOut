@@ -19,8 +19,6 @@ class IncidentDetailsTableViewController: UITableViewController{
 	@IBOutlet weak var lblReportTitle: UILabel!
 	
 	var incident : IncidentReport?
-	var flagViewTableViewController : FlagTableViewController!
-	var commentTableViewController : CommentsTableViewController!
 	
 	@IBOutlet weak var commentCell: UITableViewCell!
 	
@@ -39,16 +37,19 @@ class IncidentDetailsTableViewController: UITableViewController{
         dateFormatter.locale = Locale(identifier: "en_US")
 		
 		let calendar = Calendar.current
-		if calendar.isDate(incident!.date, inSameDayAs: Date())
-		{
-			incidentDate?.text = Date().timeAgo(compare: incident!.date)
-		}
-		else
-		{
-			 incidentDate?.text = dateFormatter.string(from: incident!.date)
+		if let incidentDate = incident?.date {
+			if calendar.isDate(incidentDate, inSameDayAs: Date())
+			{
+				self.incidentDate?.text = Date().timeAgo(compare: incidentDate)
+			}
+			else
+			{
+				self.incidentDate?.text = dateFormatter.string(from: incidentDate)
+			}
 		}
 
 		tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+		tableView.estimatedRowHeight = 100
 		commentCell.separatorInset = UIEdgeInsetsMake(0, 0, 0, .greatestFiniteMagnitude)
 		commentCell.layoutMargins = .zero
     }
@@ -60,30 +61,34 @@ class IncidentDetailsTableViewController: UITableViewController{
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 5
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 4 {
+            return UITableViewAutomaticDimension
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
     }
 	
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		
-        if(segue.identifier == "IncidentToFlag")
+        if segue.identifier == "IncidentToFlag",
+           let flagVC = segue.destination as? FlagTableViewController
         {
-            flagViewTableViewController = segue.destination as? FlagTableViewController
-            flagViewTableViewController.incidentReport = incident;
+            flagVC.incidentReport = incident
         }
-		else if (segue.identifier == "ShowComments")
+		else if segue.identifier == "ShowComments",
+		        let commentVC = segue.destination as? CommentsTableViewController
 		{
-			commentTableViewController = segue.destination as? CommentsTableViewController
-			commentTableViewController.postComment = incident?.descriptionMessage
-			commentTableViewController.postDate = incidentDate.text
-			commentTableViewController.postId = incident?.postId
-			commentTableViewController.postUsername = incident?.username
-			commentTableViewController.reportTitle = incident?.reportTitle
+			commentVC.postComment = incident?.descriptionMessage
+			commentVC.postDate = incidentDate.text
+			commentVC.postId = incident?.postId
+			commentVC.postUsername = incident?.username
+			commentVC.reportTitle = incident?.reportTitle
 		}
     }
 	@IBAction func CommentButtonTapped(_ sender: Any) {

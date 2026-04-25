@@ -171,7 +171,6 @@
                     <tabBarItem key="tabBarItem" title="My Reports" image="reports.png" id="N92-WH-QXm"/>
                     <connections>
                         <segue destination="wnn-qM-1Si" kind="custom" identifier="ShowIncidentView" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="jjE-eg-sNx"/>
-                        <segue destination="HBB-Ia-UhV" kind="custom" identifier="ShowSlimIncidentView" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="hpg-DC-JAI"/>
                         <segue destination="j9U-0E-ZHJ" kind="custom" identifier="ShowComments" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="0oh-OW-of3"/>
                         <segue destination="bfm-ey-drg" kind="custom" identifier="ShowReportEdit" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="fiQ-Lc-5VY"/>
                     </connections>
@@ -187,14 +186,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pXE-um-2ps" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="234" y="259"/>
-        </scene>
-        <!--SlimIncidentView-->
-        <scene sceneID="64B-dP-cvl">
-            <objects>
-                <viewControllerPlaceholder storyboardName="SlimIncidentView" id="HBB-Ia-UhV" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jHX-Um-clb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="251" y="301"/>
         </scene>
         <!--Comments-->
         <scene sceneID="10H-HB-psF">

@@ -118,7 +118,6 @@
                         <outlet property="PicVideoCollectionView" destination="UEv-5L-IKQ" id="kzr-ib-4Yp"/>
                         <outlet property="backgroundView" destination="Qvt-P8-QqP" id="h1Z-dz-Klz"/>
                         <outlet property="doneButton" destination="7kb-pg-mxa" id="c8X-KR-wf4"/>
-                        <outlet property="incidentScrollView" destination="DqI-Po-p6M" id="X6T-jM-AKF"/>
                         <outlet property="navigationView" destination="SUs-TA-hzA" id="c1b-Uu-a5e"/>
                         <segue destination="0E1-23-Xr7" kind="presentation" identifier="ToVideo" modalPresentationStyle="overCurrentContext" id="lqv-VT-Uwg"/>
                     </connections>

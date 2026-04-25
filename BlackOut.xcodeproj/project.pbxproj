@@ -69,7 +69,6 @@
 		EE27147B2F9670A4007C6FE4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE27147A2F9670A4007C6FE4 /* SceneDelegate.swift */; };
 		EE27147E2F96C768007C6FE4 /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = EE27147D2F96C768007C6FE4 /* GooglePlaces */; };
 		EE2714802F97CDDE007C6FE4 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE27147F2F97CDDE007C6FE4 /* MainTabBarController.swift */; };
-		EE4399C2249324E700356307 /* SlimIncidentView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4399C1249324E700356307 /* SlimIncidentView.storyboard */; };
 		EE4399C4249325FA00356307 /* IncidentView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4399C3249325FA00356307 /* IncidentView.storyboard */; };
 		EE4399C624932A3B00356307 /* Comments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4399C524932A3B00356307 /* Comments.storyboard */; };
 		EE4399CC249336B000356307 /* reports.png in Resources */ = {isa = PBXBuildFile; fileRef = EE4399CB249336B000356307 /* reports.png */; };
@@ -149,8 +148,6 @@
 		EEC3125923BAEB7C00841A94 /* LocationSnapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC3125823BAEB7C00841A94 /* LocationSnapHelper.swift */; };
 		EEC3125B23BAEBBD00841A94 /* LocationReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC3125A23BAEBBD00841A94 /* LocationReport.swift */; };
 		EEC3125D23BB1A3F00841A94 /* PreviewUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC3125C23BB1A3F00841A94 /* PreviewUIImage.swift */; };
-		EEC5071823C2DD3C00C7C7BA /* SlimIncidentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC5071723C2DD3C00C7C7BA /* SlimIncidentViewController.swift */; };
-		EED0157123BD4CCE00AA3215 /* ReportContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED0157023BD4CCE00AA3215 /* ReportContainerViewController.swift */; };
 		EED05DE32485C6FF00E4E096 /* commentsend.png in Resources */ = {isa = PBXBuildFile; fileRef = EED05DE22485C6FE00E4E096 /* commentsend.png */; };
 		EED509D1239492AC0014A345 /* DKPickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED509D0239492AC0014A345 /* DKPickViewController.swift */; };
 		EED509D9239763710014A345 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED509D8239763710014A345 /* UIButtonExtension.swift */; };
@@ -240,7 +237,6 @@
 		EE2714782F941160007C6FE4 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		EE27147A2F9670A4007C6FE4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		EE27147F2F97CDDE007C6FE4 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		EE4399C1249324E700356307 /* SlimIncidentView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SlimIncidentView.storyboard; sourceTree = "<group>"; };
 		EE4399C3249325FA00356307 /* IncidentView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IncidentView.storyboard; sourceTree = "<group>"; };
 		EE4399C524932A3B00356307 /* Comments.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Comments.storyboard; sourceTree = "<group>"; };
 		EE4399CB249336B000356307 /* reports.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reports.png; sourceTree = "<group>"; };
@@ -333,8 +329,6 @@
 		EEC3125823BAEB7C00841A94 /* LocationSnapHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSnapHelper.swift; sourceTree = "<group>"; };
 		EEC3125A23BAEBBD00841A94 /* LocationReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationReport.swift; sourceTree = "<group>"; };
 		EEC3125C23BB1A3F00841A94 /* PreviewUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewUIImage.swift; sourceTree = "<group>"; };
-		EEC5071723C2DD3C00C7C7BA /* SlimIncidentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlimIncidentViewController.swift; sourceTree = "<group>"; };
-		EED0157023BD4CCE00AA3215 /* ReportContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportContainerViewController.swift; sourceTree = "<group>"; };
 		EED05DE22485C6FE00E4E096 /* commentsend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commentsend.png; sourceTree = "<group>"; };
 		EED509D0239492AC0014A345 /* DKPickViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DKPickViewController.swift; sourceTree = "<group>"; };
 		EED509D8239763710014A345 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
@@ -434,7 +428,6 @@
 				EE4399CD24933C6500356307 /* Search.storyboard */,
 				EE4399C524932A3B00356307 /* Comments.storyboard */,
 				EE4399C3249325FA00356307 /* IncidentView.storyboard */,
-				EE4399C1249324E700356307 /* SlimIncidentView.storyboard */,
 				EE64FFC6248D524B00F6C99F /* Flag.storyboard */,
 				EE64FFC4248D507800F6C99F /* GuidePolicy.storyboard */,
 				24EDF3932177FBCD000FC219 /* GoogleService-Info.plist */,
@@ -585,8 +578,6 @@
 				EE478E6F23805F100048A191 /* FlagTableViewController.swift */,
 				EED509DC2399D1DA0014A345 /* VideoViewController.swift */,
 				EEC3125223B28B0E00841A94 /* LocationTableViewController.swift */,
-				EED0157023BD4CCE00AA3215 /* ReportContainerViewController.swift */,
-				EEC5071723C2DD3C00C7C7BA /* SlimIncidentViewController.swift */,
 				EE45599A23C97E1D00C17621 /* PlacesViewController.swift */,
 			);
 			path = "Search View Controllers";
@@ -809,7 +800,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE4399CC249336B000356307 /* reports.png in Resources */,
-				EE4399C2249324E700356307 /* SlimIncidentView.storyboard in Resources */,
 				EE6DBB1624831FA000E679E0 /* image_thumb.jpg in Resources */,
 				EE4399E92496EF8E00356307 /* UserReports.storyboard in Resources */,
 				EE9362FE24831ADC0037FB84 /* up.png in Resources */,
@@ -995,9 +985,7 @@
 				EE4399E1249561D400356307 /* CommentStat.swift in Sources */,
 				EE0216BB24A169580035A78B /* NoMediaTableViewCell.swift in Sources */,
 				EE478E7223805F4F0048A191 /* FlagViewController.swift in Sources */,
-				EED0157123BD4CCE00AA3215 /* ReportContainerViewController.swift in Sources */,
 				EE2714802F97CDDE007C6FE4 /* MainTabBarController.swift in Sources */,
-				EEC5071823C2DD3C00C7C7BA /* SlimIncidentViewController.swift in Sources */,
 				EE84FBB023D5F66100EAA89B /* RightToLeftTransition.swift in Sources */,
 				EE483358238AED53002920F3 /* IncidentDetailsTableViewController.swift in Sources */,
 				EE48A88324662A770050D949 /* ReplyCell.swift in Sources */,

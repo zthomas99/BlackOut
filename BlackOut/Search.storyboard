@@ -265,44 +265,12 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="bhn-xT-xaE" kind="presentation" identifier="LocationToReport" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="w5Y-Uz-SH4"/>
+                        <segue destination="tlf-TJ-V5f" kind="presentation" identifier="LocationToReport" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="w5Y-Uz-SH4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LR3-ji-XRQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2729.4964028776981" y="-812.0603015075377"/>
-        </scene>
-        <!--Report Container View Controller-->
-        <scene sceneID="Vsv-CR-rM4">
-            <objects>
-                <viewController id="bhn-xT-xaE" customClass="ReportContainerViewController" customModule="BlackOut" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="KTs-Iw-hRj">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1049"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cyv-rs-hwl">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1049"/>
-                                <viewLayoutGuide key="safeArea" id="DXs-Vx-I5Z"/>
-                                <connections>
-                                    <segue destination="tlf-TJ-V5f" kind="embed" identifier="EmbedSearchReportTable" id="EtO-9Z-QKe"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="2Xe-PT-TbO"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Cyv-rs-hwl" firstAttribute="leading" secondItem="2Xe-PT-TbO" secondAttribute="leading" id="6JD-B7-Seu"/>
-                            <constraint firstAttribute="bottom" secondItem="Cyv-rs-hwl" secondAttribute="bottom" id="EGL-Pb-fjp"/>
-                            <constraint firstItem="Cyv-rs-hwl" firstAttribute="top" secondItem="KTs-Iw-hRj" secondAttribute="top" id="Fgg-Ci-2mi"/>
-                            <constraint firstItem="Cyv-rs-hwl" firstAttribute="trailing" secondItem="2Xe-PT-TbO" secondAttribute="trailing" id="cC6-Ev-YIv"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="MT8-TV-wNW"/>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="800"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3OG-oA-Whe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3512.8000000000002" y="-814.54272863568224"/>
         </scene>
         <!--Search Report Table View Controller-->
         <scene sceneID="TrK-YU-9wf">
@@ -482,7 +450,6 @@
                         <outlet property="businessNameLabel" destination="Kct-cu-lKC" id="7dc-3Q-3sq"/>
                         <outlet property="headerImageView" destination="Kxc-zb-TUU" id="Szd-PU-Bec"/>
                         <segue destination="lOW-Ca-VD4" kind="custom" identifier="SearchTableToIncidentView" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="Fwv-1E-Xhm"/>
-                        <segue destination="w4X-Dv-vmU" kind="custom" identifier="SearchTableToSlimIncidentView" customClass="SlideInSegue" customModule="BlackOut" customModuleProvider="target" id="3X3-Or-bhQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IVn-Df-YlS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -590,14 +557,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aeg-P4-bNq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2743" y="-81"/>
-        </scene>
-        <!--SlimIncidentView-->
-        <scene sceneID="Bgb-rZ-gWo">
-            <objects>
-                <viewControllerPlaceholder storyboardName="SlimIncidentView" id="w4X-Dv-vmU" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="efC-l9-x2h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4303" y="-427"/>
         </scene>
         <!--IncidentView-->
         <scene sceneID="BFe-r3-Gr9">

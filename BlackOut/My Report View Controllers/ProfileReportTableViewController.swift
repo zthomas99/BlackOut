@@ -124,15 +124,10 @@ class ProfileReportTableViewController: UITableViewController {
 			commentView!.postUsername = tappedReport!.username
 			commentView!.reportTitle = tappedReport!.reportTitle
 		}
-		else if(segue.identifier == "ShowIncidentView")
+		else if segue.identifier == "ShowIncidentView"
 		{
-			let incidentView = (segue.destination as? IncidentViewController)
+			let incidentView = segue.destination as? IncidentViewController
 			incidentView?.incident = tappedReport
-		}
-		else if(segue.identifier == "ShowSlimIncidentView")
-		{
-			let slimIncidentView = (segue.destination as? SlimIncidentViewController)
-			slimIncidentView?.incident = tappedReport
 		}
 		else if (segue.identifier == "ShowReportEdit")
 		{
@@ -150,16 +145,9 @@ class ProfileReportTableViewController: UITableViewController {
 		let row = indexPath.row
 		let report = reports[row]
 		tappedReport = report
-		if report.incidentMedia != nil
-		{
-			self.performSegue(withIdentifier: "ShowIncidentView", sender: self)
-		}
-		else
-		{
-			self.performSegue(withIdentifier: "ShowSlimIncidentView", sender: self)
-		}
+		self.performSegue(withIdentifier: "ShowIncidentView", sender: self)
 	}
-	
+
 	@objc func RefreshTable()
 	{
 		let fireDatabaseService = FireDatabaseService()
@@ -201,14 +189,7 @@ class ProfileReportTableViewController: UITableViewController {
 		let row  = button?.tag
 		let report = reports[row!]
 		tappedReport = report
-		if report.incidentMedia != nil
-		{
-			self.performSegue(withIdentifier: "ShowIncidentView", sender: self)
-		}
-		else
-		{
-			self.performSegue(withIdentifier: "ShowSlimIncidentView", sender: self)
-		}
+		self.performSegue(withIdentifier: "ShowIncidentView", sender: self)
 	}
 	
 

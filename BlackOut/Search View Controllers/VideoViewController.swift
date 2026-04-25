@@ -14,61 +14,47 @@ import AVKit
 
 class VideoViewController: UIViewController {
 
-    let player:AVPlayer = AVPlayer(playerItem: nil)
-    var avpController:AVPlayerViewController?
-    var mediaFileName:String?
-    var storage:FireStorage = FireStorage()
-    
+    let player: AVPlayer = AVPlayer(playerItem: nil)
+    var avpController: AVPlayerViewController?
+    var mediaFileName: String?
+    var storage: FireStorage = FireStorage()
+
     @IBOutlet weak var playerView: UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let alphaDimBlack = UIColor.black.withAlphaComponent(0.75)
-        self.view.backgroundColor = alphaDimBlack
-        
-        //Configure AV Player and Layer
-        avpController = AVPlayerViewController()
-        avpController!.player = player
-		player.isMuted = true
-        avpController!.view.frame = playerView.bounds
-        avpController!.showsPlaybackControls = true
-        playerView.addSubview(avpController!.view)
+
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+
+        let controller = AVPlayerViewController()
+        controller.player = player
+        controller.view.frame = playerView.bounds
+        controller.showsPlaybackControls = true
+        playerView.addSubview(controller.view)
         playerView.autoresizesSubviews = true
-        
-		do{
+        avpController = controller
+
+		do {
 			try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-		}
-		catch{
+		} catch {
 			print("Unable to set audio session category to playback.")
 		}
-        storage.mediaReference.child(mediaFileName!).downloadURL { (URL, Error) in
-            if(Error == nil)
-            {
-                self.avpController?.player?.replaceCurrentItem(with: AVPlayerItem(url: URL!))
-                self.avpController?.player?.play()
+
+        guard let fileName = mediaFileName else { return }
+        storage.mediaReference.child(fileName).downloadURL { (url, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
             }
-            else
-            {
-                print(Error?.localizedDescription)
-            }
+            guard let url = url else { return }
+            self.avpController?.player?.replaceCurrentItem(with: AVPlayerItem(url: url))
+            self.avpController?.player?.play()
         }
     }
-    
-    
+
     @IBAction func DoneButtonTapped(_ sender: Any)
     {
         avpController?.player?.replaceCurrentItem(with: nil)
         dismiss(animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

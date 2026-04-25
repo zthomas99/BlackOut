@@ -16,11 +16,7 @@ class IncidentViewController: UIViewController, UICollectionViewDelegate, UIColl
    
     //MARK: - Outlet variables
     @IBOutlet var PicVideoCollectionView: UICollectionView!
-
     @IBOutlet var navigationView: UIImageView!
-  
-    @IBOutlet var incidentScrollView: UIScrollView!
-    
 	@IBOutlet weak var backgroundView: UIImageView!
 	@IBOutlet weak var doneButton: UIButton!
 	//MARK: - Variables
@@ -33,65 +29,65 @@ class IncidentViewController: UIViewController, UICollectionViewDelegate, UIColl
     var imageDictionary: [Int:UIImageView] = [:]
     var blackBackGroundView:UIView?
     var startingFrame: CGRect?
-	var selectedRow : Int!
+	var selectedRow : Int = 0
     var mediaFileName:String?
 	var minimumBorderSpace : CGFloat = 0.5
     //MARK: - ViewDidLoad Function
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         collectMedia()
-        
+
 		doneButton.backgroundColor = UIColor.black.withAlphaComponent(0.3)
 		let borderFrame = CGRect(x: 0, y: navigationView.bounds.size.height - minimumBorderSpace, width: navigationView.frame.width, height: navigationView.frame.height)
 		let borderView = UIView(frame: borderFrame)
 		borderView.backgroundColor = UIColor(displayP3Red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.3)
 		navigationView.addSubview(borderView)
-        PicVideoCollectionView.delegate = self
-        PicVideoCollectionView.dataSource = self
-		
+
+        if mediaArry.count > 0 {
+            PicVideoCollectionView.delegate = self
+            PicVideoCollectionView.dataSource = self
+        } else {
+            PicVideoCollectionView.isHidden = true
+            for constraint in PicVideoCollectionView.constraints {
+                if constraint.firstAttribute == .height {
+                    constraint.constant = 0
+                }
+            }
+        }
     }
     
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		if(incident?.businessPhoto != "default.JPG")
-			   {
-				   storage.mediaReference.child((incident?.businessPhoto)!).getData(maxSize: 100000000 * 10000000) { (Data, Error) in
-					   if(Error == nil)
-					{
-						let backgroundImage:UIImage = UIImage(data: Data!)!
-						self.navigationView.image = backgroundImage
-						self.navigationView.contentMode = .scaleAspectFit
-						self.backgroundView.image = backgroundImage
-						self.backgroundView.contentMode = .scaleAspectFill
-						self.backgroundView.addBlurToView()
-					}
-					   else
-					   {
-						   print(Error?.localizedDescription)
-					   }
-				   }
-			   }
-			   else
-			   {
-				navigationView.contentMode = .scaleAspectFit
-				navigationView.backgroundColor = .black
-				navigationView.image = UIImage(named: "NavigationView.png")
-			   }
+		guard let businessPhoto = incident?.businessPhoto, businessPhoto != "default.JPG" else {
+			navigationView.contentMode = .scaleAspectFit
+			navigationView.backgroundColor = .black
+			navigationView.image = UIImage(named: "NavigationView.png")
+			return
+		}
+		storage.mediaReference.child(businessPhoto).getData(maxSize: 100000000 * 10000000) { (data, error) in
+			if let error = error {
+				print(error.localizedDescription)
+				return
+			}
+			guard let data = data, let backgroundImage = UIImage(data: data) else { return }
+			self.navigationView.image = backgroundImage
+			self.navigationView.contentMode = .scaleAspectFit
+			self.backgroundView.image = backgroundImage
+			self.backgroundView.contentMode = .scaleAspectFill
+			self.backgroundView.addBlurToView()
+		}
 	}
 	
     func collectMedia()
     {
-        if(incident?.incidentMedia != nil)
+        guard let media = incident?.incidentMedia else { return }
+        for (_, value) in media
         {
-            for (_,value) in incident!.incidentMedia!
+            if value.count > 0
             {
-                if(value.count > 0)
-                {
-                    mediaArry.append(value[0])
-                }
+                mediaArry.append(value[0])
             }
-            
         }
     }
     //Mark: Navigation Function
@@ -134,13 +130,12 @@ class IncidentViewController: UIViewController, UICollectionViewDelegate, UIColl
     {
         let mediaFileName:String = (mediaArry[indexPath.row])
 		let extensionName = FireStorage.shared.RetrieveExtension(fileName: mediaFileName)
-        let cellAttributes = collectionView.layoutAttributesForItem(at: indexPath)
-
-        let zoomImage:UIImageView = imageDictionary[indexPath.row]!
-		let zoomImageInSuperView = collectionView.convert(cellAttributes!.frame, to: zoomImage.superview)
+        guard let cellAttributes = collectionView.layoutAttributesForItem(at: indexPath),
+              let zoomImage = imageDictionary[indexPath.row] else { return }
+		let zoomImageInSuperView = collectionView.convert(cellAttributes.frame, to: zoomImage.superview)
 
 		zoomImage.frame = CGRect(x: zoomImageInSuperView.origin.x, y: zoomImageInSuperView.origin.y, width: zoomImageInSuperView.width, height: zoomImageInSuperView.height)
-		
+
 		selectedRow = indexPath.row
         if(extensionName == "JPG")
         {
@@ -207,9 +202,8 @@ class IncidentViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func RetrieveExtension(fileName:String) ->String
     {
-        let ext = fileName.split(separator: ".").last
-        let extensionName:String = String(ext!)
-        return extensionName
+        guard let ext = fileName.split(separator: ".").last else { return "" }
+        return String(ext)
     }
   
     @objc func HandlePlayClicks(sender:UIButton)
@@ -234,52 +228,41 @@ class IncidentViewController: UIViewController, UICollectionViewDelegate, UIColl
  
 	func performStartingZoomInForImageView(startingImageView: UIImageView)
     {
-        
 		startingFrame = startingImageView.convert(startingImageView.frame, to: nil)
-        let zoomingImageView = UIImageView(frame: startingFrame!)
+        guard let frame = startingFrame, frame.width > 0 else { return }
+        let zoomingImageView = UIImageView(frame: frame)
 		zoomingImageView.backgroundColor = UIColor.clear
         zoomingImageView.image = startingImageView.image
         zoomingImageView.isUserInteractionEnabled = true
         zoomingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
-        
-        if let keyWindow = UIApplication.shared.keyWindow
-        {
-            blackBackGroundView = UIView(frame: keyWindow.frame)
-            blackBackGroundView?.backgroundColor = UIColor.black
-            blackBackGroundView?.alpha = 0
-            keyWindow.addSubview(blackBackGroundView!)
-            
-            keyWindow.addSubview(zoomingImageView)
-            
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations:
-                {
-                self.blackBackGroundView?.alpha = 1
-                
-                let height = self.startingFrame!.height / self.startingFrame!.width * keyWindow.frame.width
-                
-                zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
-                zoomingImageView.center = keyWindow.center
-            }, completion: {(completed) in
-                //do nothing
-            })
-                
-        }
+
+        guard let window = self.view.window else { return }
+        blackBackGroundView = UIView(frame: window.frame)
+        blackBackGroundView?.backgroundColor = UIColor.black
+        blackBackGroundView?.alpha = 0
+        window.addSubview(blackBackGroundView!)
+        window.addSubview(zoomingImageView)
+
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.blackBackGroundView?.alpha = 1
+            let height = frame.height / frame.width * window.frame.width
+            zoomingImageView.frame = CGRect(x: 0, y: 0, width: window.frame.width, height: height)
+            zoomingImageView.center = window.center
+        }, completion: nil)
     }
     
     @objc func handleZoomOut(tapGesture:UITapGestureRecognizer)
     {
-		let cell = PicVideoCollectionView.cellForItem(at: IndexPath(row: selectedRow, section: 0))
-		let relativePos = self.view.convert((cell?.frame)!, from: PicVideoCollectionView)
-		if let zoomingOutImageView = tapGesture.view
-		{
-			UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
-				zoomingOutImageView.frame = relativePos
-				zoomingOutImageView.layer.cornerRadius = 10.0
-				self.blackBackGroundView?.alpha = 0
-			}, completion:{(completed) in
-				zoomingOutImageView.removeFromSuperview()
-			})
-		}
+		guard let cell = PicVideoCollectionView.cellForItem(at: IndexPath(row: selectedRow, section: 0)),
+		      let zoomingOutImageView = tapGesture.view else { return }
+		let relativePos = self.view.convert(cell.frame, from: PicVideoCollectionView)
+		UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
+			zoomingOutImageView.frame = relativePos
+			zoomingOutImageView.layer.cornerRadius = 10.0
+			self.blackBackGroundView?.alpha = 0
+		}, completion:{(completed) in
+			zoomingOutImageView.removeFromSuperview()
+		})
 	}
 }
 extension UICollectionView {
