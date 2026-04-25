@@ -17,11 +17,11 @@ class AddViewController: UIViewController {
         view.subviews.forEach { $0.isHidden = true }
 
         let reportVC = AddReportViewController()
-        addChildViewController(reportVC)
+        addChild(reportVC)
         reportVC.view.frame = view.bounds
         reportVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(reportVC.view)
-        reportVC.didMove(toParentViewController: self)
+        reportVC.didMove(toParent: self)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle

@@ -13,7 +13,7 @@ struct UserAccount {
 	var blockedUsers = [String]()
 	var fcmTokens = [String]()
 	
-	static var shared = UserAccount()
+	nonisolated(unsafe) static var shared = UserAccount()
 	
 	init?(id:String, dict:[String:Any])
 	{

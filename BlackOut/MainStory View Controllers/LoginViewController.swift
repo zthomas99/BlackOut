@@ -51,22 +51,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 				return
 			}
 			let fireDatabaseService = FireDatabaseService()
-			fireDatabaseService.RetrieveCurrentUser(completion: {
-				(error)
-				in
-				if error != nil
-				{
-					AlertController.showAlert(self, title: "User Retrieval Error", message: "BlackOut is having difficulty retrieving your user info, please try again.")
-					self.signOut()
-					self.txtEmailLogin.text = ""
-					self.txtPasswordLogin.text = ""
-				}
-				else
-				{
-					self.txtEmailLogin.text = ""
-					self.txtPasswordLogin.text = ""
-					
-					self.performSegue(withIdentifier: "LoginToNavigation", sender: nil)
+			fireDatabaseService.RetrieveCurrentUser(completion: { [weak self] error in
+				Task { @MainActor in
+					guard let self = self else { return }
+					if error != nil
+					{
+						AlertController.showAlert(self, title: "User Retrieval Error", message: "BlackOut is having difficulty retrieving your user info, please try again.")
+						self.signOut()
+						self.txtEmailLogin.text = ""
+						self.txtPasswordLogin.text = ""
+					}
+					else
+					{
+						self.txtEmailLogin.text = ""
+						self.txtPasswordLogin.text = ""
+
+						self.performSegue(withIdentifier: "LoginToNavigation", sender: nil)
+					}
 				}
 			})
 			

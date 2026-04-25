@@ -50,13 +50,13 @@ class IncidentDetailsTableViewController: UITableViewController{
 
 		tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
 		tableView.estimatedRowHeight = 100
-		commentCell.separatorInset = UIEdgeInsetsMake(0, 0, 0, .greatestFiniteMagnitude)
+		commentCell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
 		commentCell.layoutMargins = .zero
     }
 
 	 override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		incidentDescription.selectedRange = NSMakeRange(0, 0)
+		incidentDescription.selectedRange = NSRange(location: 0, length: 0)
 	}
     // MARK: - Table view data source
 
@@ -70,7 +70,7 @@ class IncidentDetailsTableViewController: UITableViewController{
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 4 {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
         return super.tableView(tableView, heightForRowAt: indexPath)
     }

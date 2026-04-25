@@ -59,12 +59,10 @@ class AddReplyTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 3
     }
 
@@ -73,33 +71,35 @@ class AddReplyTableViewController: UITableViewController {
 		if isReplyToAdvice
 		{
 			let firebaseDatabaseService = FireDatabaseService()
-			firebaseDatabaseService.SubmitReply(postId: postId, comment: replyTextView.text, advice: advice!, completion: {
-				(error)
-				in
-				if let error = error
-				{
-					AlertController.showAlert(self, title: "Add Commennt Error, Try again. ", message: "Unable to add comment to the advice, due to the following error \(error) ")
-				}
-				else
-				{
-					self.instanceOfCommentTableViewController?.ReloadByIndex(index: self.tag!)
-					self.dismiss(animated: true, completion: nil)
+			firebaseDatabaseService.SubmitReply(postId: postId, comment: replyTextView.text, advice: advice!, completion: { [weak self] error in
+				Task { @MainActor in
+					guard let self = self else { return }
+					if let error = error
+					{
+						AlertController.showAlert(self, title: "Add Commennt Error, Try again. ", message: "Unable to add comment to the advice, due to the following error \(error) ")
+					}
+					else
+					{
+						self.instanceOfCommentTableViewController?.ReloadByIndex(index: self.tag!)
+						self.dismiss(animated: true, completion: nil)
+					}
 				}
 			})
 		}
 		else {
 			let fireDatabaseService = FireDatabaseService()
-			fireDatabaseService.SubmitReplyToReply(postId: postId, comment: replyTextView.text, advice: advice!, reply: reply!, completion: {
-				(error)
-				in
-				if let error = error
-				{
-					AlertController.showAlert(self, title: "Add Commennt Error, Try again. ", message: "Unable to add comment to the reply, due to the following error \(error) ")
-				}
-				else
-				{
-					self.instanceOfCommentTableViewController?.ReloadByIndex(index: self.tag!)
-					self.dismiss(animated: true, completion: nil)
+			fireDatabaseService.SubmitReplyToReply(postId: postId, comment: replyTextView.text, advice: advice!, reply: reply!, completion: { [weak self] error in
+				Task { @MainActor in
+					guard let self = self else { return }
+					if let error = error
+					{
+						AlertController.showAlert(self, title: "Add Commennt Error, Try again. ", message: "Unable to add comment to the reply, due to the following error \(error) ")
+					}
+					else
+					{
+						self.instanceOfCommentTableViewController?.ReloadByIndex(index: self.tag!)
+						self.dismiss(animated: true, completion: nil)
+					}
 				}
 			})
 		}
@@ -110,7 +110,7 @@ class AddReplyTableViewController: UITableViewController {
 		{
 			return 300
 		}
-		return UITableViewAutomaticDimension
+		return UITableView.automaticDimension
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

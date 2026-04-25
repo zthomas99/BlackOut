@@ -182,7 +182,7 @@ class IncidentViewController: UIViewController, UICollectionViewDelegate, UIColl
     
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 		print(section)
-		return UIEdgeInsetsMake(0, 0, 0, 0)
+		return .zero
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

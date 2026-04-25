@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-let imageCache = NSCache<AnyObject, AnyObject>()
-let fullImageCache = NSCache<AnyObject, AnyObject>()
+nonisolated(unsafe) let imageCache = NSCache<AnyObject, AnyObject>()
+nonisolated(unsafe) let fullImageCache = NSCache<AnyObject, AnyObject>()
 
 extension UIImageView{
 	

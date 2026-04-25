@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import Firebase
+@preconcurrency import Firebase
 import Photos
 
-class FireStorage{
-    static let storage = Storage.storage()
+class FireStorage: @unchecked Sendable {
+    nonisolated(unsafe) static let storage = Storage.storage()
 	static let shared = FireStorage()
     init(){}
     let mediaReference = storage.reference().child("media")
@@ -64,7 +64,7 @@ class FireStorage{
 					let imageGenerator = AVAssetImageGenerator(asset: asset)
 					do
 					{
-						let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(1, 60), actualTime: nil)
+						let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60), actualTime: nil)
 						let cgImage = UIImage(cgImage: thumbnailCGImage)
 						images.append(cgImage)
 						fileCounter += 1
@@ -146,7 +146,7 @@ class FireStorage{
 						let imageGenerator = AVAssetImageGenerator(asset: asset)
 						do
 						{
-							let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(1, 60), actualTime: nil)
+							let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60), actualTime: nil)
 							let cgImage = UIImage(cgImage: thumbnailCGImage)
 							images.append(cgImage)
 							fileCounter += 1
@@ -180,7 +180,7 @@ class FireStorage{
 			}
         }
     }
-	func downloadThumbImage(file: String, completion: @escaping (Data?,Error?) -> ())
+	func downloadThumbImage(file: String, completion: @Sendable @escaping (Data?,Error?) -> ())
 	{
 		
 		let newFileName = RetrieveMovieThumbNailName(fileName: file)
@@ -210,7 +210,7 @@ class FireStorage{
 		}
 	}
 	
-	func downloadImage(file: String, completion: @escaping (Data?,Error?) -> ())
+	func downloadImage(file: String, completion: @Sendable @escaping (Data?,Error?) -> ())
 	{
 		mediaReference.child(file).getData(maxSize: 1 * 100000 * 100000)
 		{ (data, error) in
@@ -251,126 +251,86 @@ class FireStorage{
 		return thumbName
 	}
 		
-	func UploadSelectedPhotos(reference: DatabaseReference, pickerController: DKPickViewController, completion: @escaping (_ error : Error?) -> ())
-    {
-		let assetCount = pickerController.selectedAssets.count
-        var errorCount :Int  = 0;
-		var assetIncrementCount : Int = 0;
-		for asset in (pickerController.selectedAssets)
-        {
-            var fileName: String?
-            if let phAsset = asset.originalAsset
-            {
-                let identifier = NSUUID.init().uuidString
-                switch phAsset.mediaType
-                {
-                case .image:
-                    fileName = identifier + ".JPG"
-                    let options: PHImageRequestOptions = PHImageRequestOptions()
-                    options.version = .original
-                    
-					asset.fetchImageData(options: options) { (data, _: [AnyHashable : Any]?) in
-                        let uploadImageRef = FireStorage.init().mediaReference.child(fileName!)
-                        DispatchQueue.main.async
-                            {
-                                let uploadTask = uploadImageRef.putData(data!, metadata: nil)
-                                { (metadata, error) in
-                                    if(error != nil)
-                                    {
-                                        //increment the error count and check to see if the number of errors is equal to the number media items selected. If they are equal, then no media was uploaded successfully. Therefore, a NoMedia child needs to be added to the firebase incident entry to trigger the Cloud functions to add a location entry to Firestore.
-                                        print(error!)
-                                        errorCount += 1
-										assetIncrementCount += 1
-                                        if(errorCount == assetCount)
-                                        {
-											FireDatabaseService.shared.InsertNoMediaChild(reference: reference, completion: {
-												()
-												in
-												if assetIncrementCount == assetCount
-												{
-													pickerController.deselectAll()
-													completion(error)
-												}
-											})
-                                        }
-                                    }
-                                    else
-                                    {
-										assetIncrementCount += 1
-										FireDatabaseService.shared.AddMediaToReference(reference: reference, media:fileName!, completion: {
-											()
-											in
-											
-											if assetIncrementCount == assetCount
-											{
-												pickerController.deselectAll()
-												completion(error)
-											}
-										})
-                                        
-                                    }
-                                }
-                                uploadTask.resume()
-                        }
-                    }
-                case .video:
-                    fileName = identifier + ".MOV"
-                    asset.fetchAVAsset(completeBlock: {video, info in
-                        if let urlAsset = video as? AVURLAsset
-                        {
-                            do
-                            {
-                                let videoData = try Data(contentsOf: urlAsset.url)
-                                DispatchQueue.main.async
-                                    {
-                                        FireStorage.init().mediaReference.child(fileName!).putData(videoData, metadata: nil, completion: {(metadata, error) in
-                                            if(error != nil)
-                                            {
-                                                //increment the error count and check to see if the number of errors is equal to the number media items selected. If they are equal, then no media was uploaded successfully. Therefore, a NoMedia child needs to be added to the firebase incident entry to trigger the Cloud functions to add a location entry to Firestore.
-                                                print(error!)
-                                                errorCount += 1
-												assetIncrementCount += 1
-                                                if(errorCount == assetCount)
-                                                {
-													FireDatabaseService.shared.InsertNoMediaChild(reference: reference, completion: {
-														()
-														
-														in
-														
-														if assetIncrementCount == assetCount
-														{
-															pickerController.deselectAll()
-															completion(error)
-														}
-													})
-                                                }
-                                            }
-                                            else
-                                            {
-												assetIncrementCount += 1
-												FireDatabaseService.shared.AddMediaToReference(reference: reference, media: fileName!, completion: {
-													()
-													
-													in
-													if assetIncrementCount == assetCount
-													{
-														pickerController.deselectAll()
-														completion(error)
-													}
-													
-												})
-                                            }
-                                        })
-                                }
-                            }
-                            catch {print("error in video upload")}
-                        }
-                    })
-                default:
-                    print("neither video or image")
-                }
-            }
-        }
-        
-    }
+	private final class UploadProgress: @unchecked Sendable {
+		var errorCount = 0
+		var completedCount = 0
+	}
+
+	@MainActor
+	func UploadSelectedPhotos(reference: DatabaseReference, pickerController: DKPickViewController, completion: @Sendable @escaping (_ error: Error?) -> ()) {
+		let assets = pickerController.selectedAssets
+		let assetCount = assets.count
+		let progress = UploadProgress()
+
+		for asset in assets {
+			guard let phAsset = asset.originalAsset else { continue }
+			let identifier = NSUUID().uuidString
+			switch phAsset.mediaType {
+			case .image:
+				let fileName = identifier + ".JPG"
+				let options = PHImageRequestOptions()
+				options.version = .original
+
+				asset.fetchImageData(options: options) { (data, _: [AnyHashable: Any]?) in
+					guard let data = data else { return }
+					let uploadImageRef = FireStorage.shared.mediaReference.child(fileName)
+					let uploadTask = uploadImageRef.putData(data, metadata: nil) { metadata, error in
+						if error != nil {
+							print(error!)
+							progress.errorCount += 1
+							progress.completedCount += 1
+							if progress.errorCount == assetCount {
+								FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
+									if progress.completedCount == assetCount {
+										Task { @MainActor in pickerController.deselectAll() }
+										completion(error)
+									}
+								}
+							}
+						} else {
+							progress.completedCount += 1
+							FireDatabaseService.shared.AddMediaToReference(reference: reference, media: fileName) {
+								if progress.completedCount == assetCount {
+									Task { @MainActor in pickerController.deselectAll() }
+									completion(error)
+								}
+							}
+						}
+					}
+					uploadTask.resume()
+				}
+			case .video:
+				let fileName = identifier + ".MOV"
+				asset.fetchAVAsset(completeBlock: { video, info in
+					guard let urlAsset = video as? AVURLAsset,
+						  let videoData = try? Data(contentsOf: urlAsset.url) else { return }
+					FireStorage.shared.mediaReference.child(fileName).putData(videoData, metadata: nil) { metadata, error in
+						if error != nil {
+							print(error!)
+							progress.errorCount += 1
+							progress.completedCount += 1
+							if progress.errorCount == assetCount {
+								FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
+									if progress.completedCount == assetCount {
+										Task { @MainActor in pickerController.deselectAll() }
+										completion(error)
+									}
+								}
+							}
+						} else {
+							progress.completedCount += 1
+							FireDatabaseService.shared.AddMediaToReference(reference: reference, media: fileName) {
+								if progress.completedCount == assetCount {
+									Task { @MainActor in pickerController.deselectAll() }
+									completion(error)
+								}
+							}
+						}
+					}
+				})
+			default:
+				break
+			}
+		}
+	}
 }

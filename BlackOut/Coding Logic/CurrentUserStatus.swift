@@ -8,7 +8,7 @@
 
 import Foundation
 import FirebaseAuth
-public class CurrentUserStatus
+public class CurrentUserStatus: @unchecked Sendable
 {
 	static let  shared = CurrentUserStatus()
 	var user : User?

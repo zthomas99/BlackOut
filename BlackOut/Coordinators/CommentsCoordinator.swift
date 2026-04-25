@@ -15,7 +15,7 @@ protocol CommentsCoordinating {
     func dismiss(from viewController: UIViewController)
 }
 
-final class CommentsCoordinator: CommentsCoordinating {
+final class CommentsCoordinator: CommentsCoordinating, @unchecked Sendable {
 
     static let shared = CommentsCoordinator()
 

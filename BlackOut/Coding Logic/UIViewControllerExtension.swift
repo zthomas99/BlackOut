@@ -55,20 +55,19 @@ extension UIViewController{
 	{
 		let transition = CATransition()
 		transition.duration = 0.25
-		transition.type = kCATransitionPush
-		transition.subtype = kCATransitionFromRight
-		self.view.window!.layer.add(transition, forKey: kCATransition)
+		transition.type = .push
+		transition.subtype = .fromRight
+		self.view.window?.layer.add(transition, forKey: "transition")
 		present(viewControllerToPresent, animated: false)
 	}
-	
+
 	func transitionOutController()
 	{
 		let transition = CATransition()
 		transition.duration = 0.5
-		transition.type = kCATransitionPush
-		transition.subtype = kCATransitionFromLeft
-		transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseOut)
-		view.window!.layer.add(transition, forKey: kCATransition)
-		//dismiss(animated: false, completion: nil)
+		transition.type = .push
+		transition.subtype = .fromLeft
+		transition.timingFunction = CAMediaTimingFunction(name: .easeOut)
+		view.window?.layer.add(transition, forKey: "transition")
 	}
 }

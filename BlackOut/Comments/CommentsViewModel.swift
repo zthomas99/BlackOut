@@ -9,14 +9,22 @@ import Foundation
 import FirebaseAuth
 
 protocol CommentsViewModelServicing {
-    func RetrieveBlockedUsers(completion: @escaping ([String]) -> Void)
-    func AddBlockedUser(username: String, completion: @escaping (Error?) -> Void)
-    func SetVoters(postId: String, adviceId: String, upVoters: [String], downVoters:[String], completion: @escaping (Error?) -> Void)
+    func RetrieveBlockedUsers(completion: @Sendable @escaping ([String]) -> Void)
+    func AddBlockedUser(username: String, completion: @Sendable @escaping (Error?) -> Void)
+    func SetVoters(postId: String, adviceId: String, upVoters: [String], downVoters:[String], completion: @Sendable @escaping (Error?) -> Void)
 }
 
 extension FireDatabaseService: CommentsViewModelServicing {}
 
-final class CommentsViewModel {
+final class CommentsViewModel: @unchecked Sendable {
+
+    private final class SyncArray<T>: @unchecked Sendable {
+        private let lock: NSLock
+        private var _values = [T]()
+        var values: [T] { lock.withLock { _values } }
+        init(lock: NSLock) { self.lock = lock }
+        func append(_ element: T) { lock.withLock { _values.append(element) } }
+    }
 
     private let databaseService: CommentsViewModelServicing
     private let firestoreService: FireDatabaseService
@@ -28,11 +36,11 @@ final class CommentsViewModel {
         self.firestoreService = firestoreService
     }
 
-    func retrieveBlockedUsers(completion: @escaping ([String]) -> Void) {
+    func retrieveBlockedUsers(completion: @Sendable @escaping ([String]) -> Void) {
         databaseService.RetrieveBlockedUsers(completion: completion)
     }
 
-    func addBlockedUser(username: String, completion: @escaping (Error?) -> Void) {
+    func addBlockedUser(username: String, completion: @Sendable @escaping (Error?) -> Void) {
         databaseService.AddBlockedUser(username: username, completion: completion)
     }
 
@@ -42,7 +50,7 @@ final class CommentsViewModel {
 
     func applyUpVote(to advice: inout Advice, userId: String) {
         if advice.downVoters?.contains(userId) == true {
-            let removalIndex = advice.downVoters?.index(of: userId)
+            let removalIndex = advice.downVoters?.firstIndex(of: userId)
             if removalIndex != nil {
                 advice.downVoters?.remove(at: removalIndex!)
             }
@@ -55,7 +63,7 @@ final class CommentsViewModel {
 
     func applyDownVote(to advice: inout Advice, userId: String) {
         if advice.upVoters?.contains(userId) == true {
-            let removalIndex = advice.upVoters?.index(of: userId)
+            let removalIndex = advice.upVoters?.firstIndex(of: userId)
             if removalIndex != nil {
                 advice.upVoters?.remove(at: removalIndex!)
             }
@@ -66,13 +74,13 @@ final class CommentsViewModel {
         }
     }
 
-    func setVoters(postId: String, advice: Advice, completion: @escaping (Error?) -> Void) {
+    func setVoters(postId: String, advice: Advice, completion: @Sendable @escaping (Error?) -> Void) {
         let newUpVoters = advice.upVoters ?? []
         let newDownVoters = advice.downVoters ?? []
         databaseService.SetVoters(postId: postId, adviceId: advice.id, upVoters: newUpVoters, downVoters: newDownVoters, completion: completion)
     }
 
-    func retrieveAdvice(postId: String, adviceId: String, blockedUsers: [String], completion: @escaping (Advice?) -> Void) {
+    func retrieveAdvice(postId: String, adviceId: String, blockedUsers: [String], completion: @Sendable @escaping (Advice?) -> Void) {
         firestoreService.commentReference.document(postId).collection("Advices").document(adviceId).getDocument(completion: {
             (document, error)
             in
@@ -82,31 +90,32 @@ final class CommentsViewModel {
                 return
             }
 
-            guard let document = document, let data = document.data(), var advice = Advice(id: document.documentID, dict: data) else {
+            guard let document = document, let data = document.data(), let adviceData = Advice(id: document.documentID, dict: data) else {
                 completion(nil)
                 return
             }
 
-            if blockedUsers.contains(advice.user) {
+            if blockedUsers.contains(adviceData.user) {
                 completion(nil)
                 return
             }
 
-            if advice.hasReply {
-                self.retrieveReplies(postId: postId, adviceId: advice.id, blockedUsers: blockedUsers, completion: {
+            if adviceData.hasReply {
+                self.retrieveReplies(postId: postId, adviceId: adviceData.id, blockedUsers: blockedUsers, completion: {
                     (replies)
                     in
+                    var advice = adviceData
                     advice.replies = replies
                     advice.isExpanded = true
                     completion(advice)
                 })
             } else {
-                completion(advice)
+                completion(adviceData)
             }
         })
     }
 
-    func retrieveAdvices(postId: String, blockedUsers: [String], completion: @escaping ([Advice]) -> Void) {
+    func retrieveAdvices(postId: String, blockedUsers: [String], completion: @Sendable @escaping ([Advice]) -> Void) {
         firestoreService.commentReference.document(postId).collection("Advices").getDocuments {
             (snapshot, error)
             in
@@ -126,59 +135,58 @@ final class CommentsViewModel {
                 return
             }
 
-            var collectedAdvices = [Advice]()
+            let collectedAdvices = SyncArray<Advice>(lock: self.syncLock)
             let group = DispatchGroup()
 
             for document in documents {
-                guard var advice = Advice(id: document.documentID, dict: document.data()) else {
+                guard let adviceData = Advice(id: document.documentID, dict: document.data()) else {
                     continue
                 }
 
-                if blockedUsers.contains(advice.user) {
+                if blockedUsers.contains(adviceData.user) {
                     continue
                 }
 
-                if advice.hasReply {
+                if adviceData.hasReply {
                     group.enter()
-                    self.retrieveReplies(postId: postId, adviceId: advice.id, blockedUsers: blockedUsers, completion: {
+                    self.retrieveReplies(postId: postId, adviceId: adviceData.id, blockedUsers: blockedUsers, completion: {
                         (replies)
                         in
+                        var advice = adviceData
                         advice.replies = replies
-                        self.syncLock.lock()
                         collectedAdvices.append(advice)
-                        self.syncLock.unlock()
                         group.leave()
                     })
                 } else {
-                    collectedAdvices.append(advice)
+                    collectedAdvices.append(adviceData)
                 }
             }
 
             group.notify(queue: .main) {
-                let sortedAdvices = collectedAdvices.sorted(by: { $0.date < $1.date })
+                let sortedAdvices = collectedAdvices.values.sorted(by: { $0.date < $1.date })
                 completion(sortedAdvices)
             }
         }
     }
 
-    private func retrieveReplies(postId: String, adviceId: String, blockedUsers: [String], completion: @escaping ([Reply]) -> Void) {
+    private func retrieveReplies(postId: String, adviceId: String, blockedUsers: [String], completion: @Sendable @escaping ([Reply]) -> Void) {
         let replyReference = firestoreService.commentReference.document(postId).collection("Advices").document(adviceId).collection("Replies")
-        var replies = [Reply]()
 
         replyReference.getDocuments() {
             (snapshot, err)
             in
             if let err = err {
                 print("Failed to retrieve reply documents with the following error \(err)")
-                completion(replies)
+                completion([])
                 return
             }
 
             guard let documents = snapshot?.documents else {
-                completion(replies)
+                completion([])
                 return
             }
 
+            var replies = [Reply]()
             for document in documents {
                 let reply = Reply(id: document.documentID, reference: document.reference, dict: document.data())
                 if reply != nil && !blockedUsers.contains(reply!.user) {

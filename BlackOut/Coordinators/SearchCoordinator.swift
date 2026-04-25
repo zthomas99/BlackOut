@@ -14,7 +14,7 @@ protocol SearchCoordinating {
                        transitioningDelegate: UIViewControllerTransitioningDelegate?)
 }
 
-final class SearchCoordinator: SearchCoordinating {
+final class SearchCoordinator: SearchCoordinating, @unchecked Sendable {
 
     static let shared = SearchCoordinator()
 

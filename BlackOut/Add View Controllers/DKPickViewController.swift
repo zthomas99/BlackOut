@@ -9,7 +9,7 @@
 import UIKit
 import DKImagePickerController
 
-class DKPickViewController: DKImagePickerController{
+class DKPickViewController: DKImagePickerController, @unchecked Sendable {
 
     override func viewDidLoad() {
         super.viewDidLoad()

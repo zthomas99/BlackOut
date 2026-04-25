@@ -65,27 +65,27 @@ class EditReportViewController: UIViewController, UITextViewDelegate {
 		if spinnerView == nil
 		{
 			spinnerView = SpinnerViewController()
-			self.addChildViewController(spinnerView!)
+			self.addChild(spinnerView!)
 			spinnerView!.view.frame = self.view.frame
 			self.view.addSubview(spinnerView!.view)
-			spinnerView?.didMove(toParentViewController: self)
+			spinnerView?.didMove(toParent: self)
 		}
 		else
 		{
-			self.addChildViewController(spinnerView!)
+			self.addChild(spinnerView!)
 			spinnerView!.view.frame = self.view.frame
 			self.view.addSubview(spinnerView!.view)
-			spinnerView?.didMove(toParentViewController: self)
+			spinnerView?.didMove(toParent: self)
 		}
 	}
-	
+
 	func removeSpinner()
 	{
 		if spinnerView != nil
 		{
-			spinnerView?.willMove(toParentViewController: nil)
+			spinnerView?.willMove(toParent: nil)
 			spinnerView?.view.removeFromSuperview()
-			spinnerView?.removeFromParentViewController()
+			spinnerView?.removeFromParent()
 			spinnerView = nil
 		}
 	}
@@ -99,19 +99,17 @@ class EditReportViewController: UIViewController, UITextViewDelegate {
 			{
 				let ref = FireDatabaseService.shared.incidentReference.child(report!.postId)
 				let fireStorage = FireStorage()
-				fireStorage.UploadSelectedPhotos(reference: ref, pickerController: picView!, completion: {
-					(error)
-					in
-					if error == nil
-					{
-						self.removeSpinner()
-						self.picView?.deselectAll()
-						AlertController.showAlert(self, title: "Video Upload Successful", message: "Video Upload Complete!")
-					}
-					else
-					{
-						self.removeSpinner()
-						AlertController.showAlert(self, title: "Video Upload Error", message: "Video Upload was not successful, please try again.")
+				fireStorage.UploadSelectedPhotos(reference: ref, pickerController: picView!, completion: { [weak self] error in
+					Task { @MainActor in
+						guard let self = self else { return }
+						if error == nil {
+							self.removeSpinner()
+							self.picView?.deselectAll()
+							AlertController.showAlert(self, title: "Video Upload Successful", message: "Video Upload Complete!")
+						} else {
+							self.removeSpinner()
+							AlertController.showAlert(self, title: "Video Upload Error", message: "Video Upload was not successful, please try again.")
+						}
 					}
 				})
 			}

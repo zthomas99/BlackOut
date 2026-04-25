@@ -9,140 +9,152 @@
 import UIKit
 import GooglePlaces
 
-class PlacesViewController: UIViewController,UITableViewDelegate, UITextFieldDelegate, UIViewControllerTransitioningDelegate, GMSAutocompleteTableDataSourceDelegate {
+class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIViewControllerTransitioningDelegate {
 	@IBOutlet weak var searchText: UITextField!
-	
 	@IBOutlet weak var resultsTable: UITableView!
-	
-	var delegate : PlacesViewControllerDelegate?
-	
-	//GMS Table DataSource Variable
-    var tableDataSource: GMSAutocompleteTableDataSource?
-	var stateShortName : String = ""
-	var location: String = ""
-	
-	var presentTransition : UIViewControllerAnimatedTransitioning?
-	var dismissTransition : UIViewControllerAnimatedTransitioning?
-	
+
+	var delegate: PlacesViewControllerDelegate?
+
+	private let placesClient = GMSPlacesClient.shared()
+	private var suggestions: [GMSAutocompleteSuggestion] = []
+	private var sessionToken = GMSAutocompleteSessionToken()
+	private var stateShortName: String = ""
+	private var location: String = ""
+
+	var presentTransition: UIViewControllerAnimatedTransitioning?
+	var dismissTransition: UIViewControllerAnimatedTransitioning?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		let filter = GMSAutocompleteFilter()
-			  
-			  filter.type = .region
-			  filter.country = "US"
-		tableDataSource = GMSAutocompleteTableDataSource()
-			   tableDataSource?.autocompleteFilter = filter
-			   tableDataSource?.delegate = self
-		
-		if(traitCollection.userInterfaceStyle == .dark)
-			   {
-				   tableDataSource?.tableCellSeparatorColor = UIColor.yellow
-				   tableDataSource?.tableCellBackgroundColor = UIColor.darkGray
-				   tableDataSource?.primaryTextColor = UIColor.white
-				   tableDataSource?.secondaryTextColor = UIColor.lightText
-			   }
-			   
-		resultsTable?.backgroundColor = UIColor.darkGray
-        resultsTable?.dataSource = tableDataSource
-        resultsTable?.delegate = self
-		
-		resultsTable?.register(UITableViewCell.self, forCellReuseIdentifier: "radiusCell")
-		resultsTable?.separatorInset = .zero
-		resultsTable?.tableFooterView = UIView()
-		resultsTable?.tableFooterView?.backgroundColor = UIColor.lightGray
-		
+		resultsTable.backgroundColor = UIColor.darkGray
+        resultsTable.dataSource = self
+        resultsTable.delegate = self
+
+		resultsTable.register(UITableViewCell.self, forCellReuseIdentifier: "SuggestionCell")
+		resultsTable.separatorInset = .zero
+		resultsTable.tableFooterView = UIView()
+		resultsTable.tableFooterView?.backgroundColor = UIColor.lightGray
+
 		presentTransition = RightToLeftTransition()
 		dismissTransition = LeftToRightTransition()
-		
+
         searchText.delegate = self
 		searchText.dropShadow(color: .black)
 		searchText.becomeFirstResponder()
     }
-    
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
+
+	// MARK: - Autocomplete
+
+	@IBAction func SearchTextChanged(_ sender: Any) {
+		guard let query = searchText.text, !query.isEmpty else {
+			suggestions.removeAll()
+			resultsTable.reloadData()
+			return
+		}
+
+		let filter = GMSAutocompleteFilter()
+		filter.types = ["(regions)"]
+		filter.countries = ["US"]
+
+		let request = GMSAutocompleteRequest(query: query)
+		request.filter = filter
+		request.sessionToken = sessionToken
+
+		placesClient.fetchAutocompleteSuggestions(from: request) { [weak self] results, error in
+			guard let self = self else { return }
+			if let error = error {
+				print("Autocomplete error: \(error.localizedDescription)")
+				return
+			}
+			self.suggestions = results ?? []
+			self.resultsTable.reloadData()
+		}
 	}
-	
+
+	// MARK: - UITableViewDataSource
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return suggestions.count
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestionCell", for: indexPath)
+		if let placeSuggestion = suggestions[indexPath.row].placeSuggestion {
+			cell.textLabel?.attributedText = placeSuggestion.attributedFullText
+		}
+		cell.backgroundColor = UIColor.darkGray
+		cell.textLabel?.textColor = .white
+		return cell
+	}
+
+	// MARK: - UITableViewDelegate
+
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50.0
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableDataSource?.tableView(tableView, didSelectRowAt: indexPath)
+		tableView.deselectRow(at: indexPath, animated: true)
+		guard let placeSuggestion = suggestions[indexPath.row].placeSuggestion else { return }
+
+		searchText.text = placeSuggestion.attributedFullText.string
+		location = placeSuggestion.attributedFullText.string
+		view.endEditing(true)
+
+		fetchPlaceDetails(placeID: placeSuggestion.placeID)
     }
-    
-    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didSelect prediction: GMSAutocompletePrediction) -> Bool
-    {
-        searchText.text = prediction.attributedFullText.string
-		location = prediction.attributedFullText.string
-        view.endEditing(true)
-        return true
-    }
-	
-    func didUpdateAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource)
-    {
-        resultsTable?.reloadData()
-    }
-    
-    func didRequestAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource)
-    {
-        resultsTable?.reloadData()
-    }
-    
-    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWith place: GMSPlace)
-    {
-        for components in place.addressComponents!
-        {
-            for types in components.types
-            {
-                if(types == "administrative_area_level_1")
-                {
-                    stateShortName = components.shortName!
-                }
-            }
-        }
-        resultsTable?.reloadData()
-		BackToSearchViewController()
-    }
-    
-    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: Error)
-    {
-        AlertController.showAlert(self, title: "Google Places Error", message: error.localizedDescription)
-    }
-    
-	@IBAction func SearchTextChanged(_ sender: Any) {
-	tableDataSource?.sourceTextHasChanged(searchText.text)
+
+	private func fetchPlaceDetails(placeID: String) {
+		let placeProperties = [GMSPlaceProperty.addressComponents.rawValue]
+		let request = GMSFetchPlaceRequest(placeID: placeID, placeProperties: placeProperties, sessionToken: sessionToken)
+
+		placesClient.fetchPlace(with: request) { [weak self] place, error in
+			guard let self = self else { return }
+			if let error = error {
+				AlertController.showAlert(self, title: "Google Places Error", message: error.localizedDescription)
+				return
+			}
+			if let components = place?.addressComponents {
+				for component in components {
+					for type in component.types {
+						if type == "administrative_area_level_1" {
+							self.stateShortName = component.shortName ?? component.name
+						}
+					}
+				}
+			}
+			self.sessionToken = GMSAutocompleteSessionToken()
+			self.backToSearchViewController()
+		}
 	}
-	
-	//MARK: - UITextFieldDelegate Functions
-	   func textFieldShouldReturn(_ textField: UITextField) -> Bool
-	   {
-		   view.endEditing(true)
-		   return true
-	   }
+
+	private func backToSearchViewController() {
+		delegate?.sendSearchInfo(place: location, state: stateShortName)
+		self.dismiss(animated: true, completion: nil)
+	}
+
+	// MARK: - UITextFieldDelegate
+
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		view.endEditing(true)
+		return true
+	}
 
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 		return presentTransition
 	}
-	
+
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 		return dismissTransition
 	}
-	
-	func BackToSearchViewController()
-	{
-		delegate?.sendSearchInfo(place: location, state: stateShortName)
-		self.dismiss(animated: true, completion: nil)
-		
-	}
-	
+
 	@IBAction func CancelButtonWasTapped(_ sender: Any) {
 		self.dismiss(animated: true, completion: nil)
 	}
-	
+
 }
 
-protocol PlacesViewControllerDelegate  {
+@MainActor protocol PlacesViewControllerDelegate {
 	func sendSearchInfo(place: String, state: String)
 }

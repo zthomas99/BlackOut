@@ -20,14 +20,10 @@ class BlockedAccountTableViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		let fireDatabaseService = FireDatabaseService()
-		fireDatabaseService.RetrieveBlockedUsers(completion: {
-			(users)
-			in
-			
-			self.blockedUsers = users
-			
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
+		fireDatabaseService.RetrieveBlockedUsers(completion: { [weak self] users in
+			Task { @MainActor in
+				self?.blockedUsers = users
+				self?.tableView.reloadData()
 			}
 		})
 	}
@@ -39,7 +35,6 @@ class BlockedAccountTableViewController: UITableViewController {
 	}
 	
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -59,7 +54,7 @@ class BlockedAccountTableViewController: UITableViewController {
     }
 
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return UITableViewAutomaticDimension
+		return UITableView.automaticDimension
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -74,7 +69,7 @@ class BlockedAccountTableViewController: UITableViewController {
 	
 	func Reload(username: String)
 	{
-		let index = blockedUsers.index(of: username)
+		let index = blockedUsers.firstIndex(of: username)
 		if index! > -1 && index! < blockedUsers.count
 		{
 			blockedUsers.remove(at: index!)
@@ -95,12 +90,12 @@ class BlockedAccountTableViewController: UITableViewController {
 		let index = button!.tag
 		let user = blockedUsers[index]
 		let fireDatabaseService = FireDatabaseService()
-		fireDatabaseService.UnblockUsers(username: user, completion: {
-			(error)
-			in
-			if error == nil
-			{
-				self.Reload(username: user)
+		fireDatabaseService.UnblockUsers(username: user, completion: { [weak self] error in
+			Task { @MainActor in
+				if error == nil
+				{
+					self?.Reload(username: user)
+				}
 			}
 		})
 		

@@ -25,9 +25,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     {
         super.viewDidLoad()
         //Listen for keyboard events
-        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         txtEmailSignUp.layer.borderWidth = 1.0
         txtEmailSignUp.layer.borderColor = UIColor.black.cgColor
@@ -57,9 +57,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 //MARK: - Text View and Keyboard function
     deinit
     {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     @IBAction func SignUpTapped(_ sender: Any)
@@ -113,12 +113,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 	//Kebboard Method
     @objc func KeyboardWillChange(notification: Notification)
     {
-        guard let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             else
         {
             return
         }
-        if(notification.name == Notification.Name.UIKeyboardWillShow || notification.name == Notification.Name.UIKeyboardWillChangeFrame)
+        if(notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification)
         {
             keyboardFrame = keyboardRect
             if(isViewUp == false)
@@ -139,7 +139,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 
             }
         }
-        if(notification.name == Notification.Name.UIKeyboardWillHide)
+        if(notification.name == UIResponder.keyboardWillHideNotification)
         {
             if(isViewUp)
             {

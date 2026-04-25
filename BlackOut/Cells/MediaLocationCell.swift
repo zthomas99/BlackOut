@@ -63,7 +63,7 @@ extension MediaLocationCell: UICollectionViewDelegate, UICollectionViewDataSourc
 		return cell!
 	}
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-		return UIEdgeInsetsMake(0, 10, 0, 10)
+		return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

@@ -124,11 +124,11 @@ class LocationTableViewController: UITableViewController {
 		self.performSegue(withIdentifier: "LocationToReport", sender: sender)
 	}
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return UITableViewAutomaticDimension
+		return UITableView.automaticDimension
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return UITableViewAutomaticDimension
+		return UITableView.automaticDimension
 	}
 	
 	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -147,18 +147,18 @@ class LocationTableViewController: UITableViewController {
 			spinnerView = SpinnerViewController()
 		}
 		guard let spinner = spinnerView else { return }
-		parentVC.addChildViewController(spinner)
+		parentVC.addChild(spinner)
 		spinner.view.frame = parentVC.view.frame
 		parentVC.view.addSubview(spinner.view)
-		spinner.didMove(toParentViewController: parentVC)
+		spinner.didMove(toParent: parentVC)
 	}
 
 	func removeSpinner()
 	{
 		guard let spinner = spinnerView else { return }
-		spinner.willMove(toParentViewController: nil)
+		spinner.willMove(toParent: nil)
 		spinner.view.removeFromSuperview()
-		spinner.removeFromParentViewController()
+		spinner.removeFromParent()
 		spinnerView = nil
 	}
 	
@@ -170,39 +170,24 @@ class LocationTableViewController: UITableViewController {
 		businessPhotos.removeAll()
 		if locations.count > 0
 		{
-			var locationCounter = 0
-			let locationCount = locations.count
+			let group = DispatchGroup()
 			for location in locations
 			{
 				if location.hasMediaFiles
 				{
+					group.enter()
 					let fireDatabaseService = FireDatabaseService()
-					fireDatabaseService.RetrieveMediaList(location: location, completion: {
-						(mediaList)
-						in
-						self.mediaList[location] = mediaList
-						locationCounter += 1
-						
-						if locationCounter == locationCount
-						{
-							DispatchQueue.main.async {
-								self.removeSpinner()
-								self.tableView.reloadData()
-							}
+					fireDatabaseService.RetrieveMediaList(location: location, completion: { [weak self] mediaList in
+						DispatchQueue.main.async {
+							self?.mediaList[location] = mediaList
+							group.leave()
 						}
 					})
 				}
-				else
-				{
-					locationCounter += 1
-					if locationCounter == locationCount
-					{
-						DispatchQueue.main.async {
-							self.removeSpinner()
-							self.tableView.reloadData()
-						}
-					}
-				}
+			}
+			group.notify(queue: .main) { [weak self] in
+				self?.removeSpinner()
+				self?.tableView.reloadData()
 			}
 		}
 		else

@@ -1,7 +1,7 @@
 import UIKit
 import Photos
 import PhotosUI
-import Firebase
+@preconcurrency import Firebase
 
 class AddReportViewController: UIViewController {
 
@@ -192,8 +192,8 @@ class AddReportViewController: UIViewController {
         view.backgroundColor = .black
         setupLayout()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         let tapDismiss = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapDismiss.cancelsTouchesInView = false
@@ -452,7 +452,7 @@ class AddReportViewController: UIViewController {
         if let image = businessImage {
             let identifier = UUID().uuidString
             businessPhotoFileName = identifier + ".JPG"
-            if let imageData = UIImageJPEGRepresentation(image, 1.0) {
+            if let imageData = image.jpegData(compressionQuality: 1.0) {
                 let uploadRef = FireStorage.shared.mediaReference.child(businessPhotoFileName)
                 uploadRef.putData(imageData, metadata: nil) { _, error in
                     if let error = error { print(error) }
@@ -484,36 +484,45 @@ class AddReportViewController: UIViewController {
 
         showSpinner()
         reference.setValue(parameters) { [weak self] error, _ in
-            guard let self = self else { return }
-            if error != nil {
-                self.hideSpinner()
-                AlertController.showAlert(self, title: "Upload Failure", message: "The report failed to upload. Please try again later.")
-                return
-            }
-            if hasMedia {
-                self.uploadSelectedMedia(reference: reference) { uploadError in
+            Task { @MainActor in
+                guard let self = self else { return }
+                if error != nil {
                     self.hideSpinner()
-                    if uploadError != nil {
-                        self.resetForm()
-                        AlertController.showAlert(self, title: "Media Upload Error", message: "Unable to upload selected media. Please try uploading through My Reports.")
-                    } else {
-                        self.resetForm()
-                        AlertController.showAlert(self, title: "Successful Upload", message: "The report was successfully uploaded. You can now search for it under the Search screen.")
-                    }
+                    AlertController.showAlert(self, title: "Upload Failure", message: "The report failed to upload. Please try again later.")
+                    return
                 }
-            } else {
-                self.hideSpinner()
-                self.resetForm()
-                AlertController.showAlert(self, title: "Successful Upload", message: "The report was successfully uploaded. You can now search for it under the Search screen.")
+                if hasMedia {
+                    self.uploadSelectedMedia(reference: reference) { [weak self] uploadError in
+                        Task { @MainActor in
+                            guard let self = self else { return }
+                            self.hideSpinner()
+                            if uploadError != nil {
+                                self.resetForm()
+                                AlertController.showAlert(self, title: "Media Upload Error", message: "Unable to upload selected media. Please try uploading through My Reports.")
+                            } else {
+                                self.resetForm()
+                                AlertController.showAlert(self, title: "Successful Upload", message: "The report was successfully uploaded. You can now search for it under the Search screen.")
+                            }
+                        }
+                    }
+                } else {
+                    self.hideSpinner()
+                    self.resetForm()
+                    AlertController.showAlert(self, title: "Successful Upload", message: "The report was successfully uploaded. You can now search for it under the Search screen.")
+                }
             }
         }
     }
 
-    private func uploadSelectedMedia(reference: DatabaseReference, completion: @escaping (Error?) -> Void) {
-        let assets = selectedAssets
-        let assetCount = assets.count
+    private final class UploadProgress: @unchecked Sendable {
         var completedCount = 0
         var errorCount = 0
+    }
+
+    private func uploadSelectedMedia(reference: DatabaseReference, completion: @Sendable @escaping (Error?) -> Void) {
+        let assets = selectedAssets
+        let assetCount = assets.count
+        let progress = UploadProgress()
         let manager = PHImageManager.default()
 
         for asset in assets {
@@ -526,28 +535,28 @@ class AddReportViewController: UIViewController {
                 options.isNetworkAccessAllowed = true
                 manager.requestImageDataAndOrientation(for: asset, options: options) { data, _, _, _ in
                     guard let data = data else {
-                        errorCount += 1
-                        completedCount += 1
-                        if errorCount == assetCount {
+                        progress.errorCount += 1
+                        progress.completedCount += 1
+                        if progress.errorCount == assetCount {
                             FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
-                                if completedCount == assetCount { completion(nil) }
+                                if progress.completedCount == assetCount { completion(nil) }
                             }
                         }
                         return
                     }
                     FireStorage.shared.mediaReference.child(fileName).putData(data, metadata: nil) { _, error in
                         if error != nil {
-                            errorCount += 1
-                            completedCount += 1
-                            if errorCount == assetCount {
+                            progress.errorCount += 1
+                            progress.completedCount += 1
+                            if progress.errorCount == assetCount {
                                 FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
-                                    if completedCount == assetCount { completion(nil) }
+                                    if progress.completedCount == assetCount { completion(nil) }
                                 }
                             }
                         } else {
-                            completedCount += 1
+                            progress.completedCount += 1
                             FireDatabaseService.shared.AddMediaToReference(reference: reference, media: fileName) {
-                                if completedCount == assetCount { completion(nil) }
+                                if progress.completedCount == assetCount { completion(nil) }
                             }
                         }
                     }
@@ -559,35 +568,35 @@ class AddReportViewController: UIViewController {
                 manager.requestAVAsset(forVideo: asset, options: options) { avAsset, _, _ in
                     guard let urlAsset = avAsset as? AVURLAsset,
                           let videoData = try? Data(contentsOf: urlAsset.url) else {
-                        errorCount += 1
-                        completedCount += 1
-                        if errorCount == assetCount {
+                        progress.errorCount += 1
+                        progress.completedCount += 1
+                        if progress.errorCount == assetCount {
                             FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
-                                if completedCount == assetCount { completion(nil) }
+                                if progress.completedCount == assetCount { completion(nil) }
                             }
                         }
                         return
                     }
                     FireStorage.shared.mediaReference.child(fileName).putData(videoData, metadata: nil) { _, error in
                         if error != nil {
-                            errorCount += 1
-                            completedCount += 1
-                            if errorCount == assetCount {
+                            progress.errorCount += 1
+                            progress.completedCount += 1
+                            if progress.errorCount == assetCount {
                                 FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
-                                    if completedCount == assetCount { completion(nil) }
+                                    if progress.completedCount == assetCount { completion(nil) }
                                 }
                             }
                         } else {
-                            completedCount += 1
+                            progress.completedCount += 1
                             FireDatabaseService.shared.AddMediaToReference(reference: reference, media: fileName) {
-                                if completedCount == assetCount { completion(nil) }
+                                if progress.completedCount == assetCount { completion(nil) }
                             }
                         }
                     }
                 }
             default:
-                completedCount += 1
-                if completedCount == assetCount { completion(nil) }
+                progress.completedCount += 1
+                if progress.completedCount == assetCount { completion(nil) }
             }
         }
     }
@@ -596,17 +605,17 @@ class AddReportViewController: UIViewController {
 
     private func showSpinner() {
         let spinner = SpinnerViewController()
-        addChildViewController(spinner)
+        addChild(spinner)
         spinner.view.frame = view.bounds
         view.addSubview(spinner.view)
-        spinner.didMove(toParentViewController: self)
+        spinner.didMove(toParent: self)
         spinnerView = spinner
     }
 
     private func hideSpinner() {
-        spinnerView?.willMove(toParentViewController: nil)
+        spinnerView?.willMove(toParent: nil)
         spinnerView?.view.removeFromSuperview()
-        spinnerView?.removeFromParentViewController()
+        spinnerView?.removeFromParent()
         spinnerView = nil
     }
 
@@ -631,7 +640,7 @@ class AddReportViewController: UIViewController {
     // MARK: - Keyboard
 
     @objc private func keyboardWillShow(_ notification: Notification) {
-        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         let inset = frame.height - view.safeAreaInsets.bottom
         scrollView.contentInset.bottom = inset
         scrollView.verticalScrollIndicatorInsets.bottom = inset
@@ -697,11 +706,11 @@ extension AddReportViewController: PHPickerViewControllerDelegate {
 // MARK: - UIImagePickerControllerDelegate
 
 extension AddReportViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
 
         if picker.sourceType == .camera {
-            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            if let image = info[.originalImage] as? UIImage {
                 UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
                 if let asset = fetchLatestAsset() {
                     selectedAssets.append(asset)
@@ -710,7 +719,7 @@ extension AddReportViewController: UIImagePickerControllerDelegate, UINavigation
                 }
             }
         } else {
-            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            if let image = info[.originalImage] as? UIImage {
                 businessImage = image
                 businessPhotoImageView.image = image
                 businessPhotoImageView.contentMode = .scaleAspectFill

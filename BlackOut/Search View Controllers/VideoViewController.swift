@@ -35,7 +35,7 @@ class VideoViewController: UIViewController {
         avpController = controller
 
 		do {
-			try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+			try AVAudioSession.sharedInstance().setCategory(.playback)
 		} catch {
 			print("Unable to set audio session category to playback.")
 		}

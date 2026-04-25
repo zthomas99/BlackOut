@@ -62,36 +62,30 @@ class SearchViewController:UIViewController, UITableViewDelegate, UITextFieldDel
         {
         case "city" :
 			let search = searchFunctions.formatCitySearch(searchText: searchText.text!, stateShortName: stateShortName)
-			FireDatabaseService.shared.RetireveLocations(search: search, searchType: searchType, completion: {
-				(locations)
-				in
-				
-				self.locationTableViewController?.locations = locations
-				self.locationTableViewController?.isFirstSearch = false
-				self.locationTableViewController?.downloadReports()
-				
+			FireDatabaseService.shared.RetireveLocations(search: search, searchType: searchType, completion: { [weak self] locations in
+				Task { @MainActor in
+					self?.locationTableViewController?.locations = locations
+					self?.locationTableViewController?.isFirstSearch = false
+					self?.locationTableViewController?.downloadReports()
+				}
 			})
         case "state" :
 			let search = searchFunctions.formaatStateSearch(searchText: searchText.text!)
-			FireDatabaseService.shared.RetireveLocations(search: search, searchType: searchType, completion: {
-				(locations)
-				in
-				
-				self.locationTableViewController?.locations = locations
-				self.locationTableViewController?.isFirstSearch = false
-				self.locationTableViewController?.downloadReports()
-				
+			FireDatabaseService.shared.RetireveLocations(search: search, searchType: searchType, completion: { [weak self] locations in
+				Task { @MainActor in
+					self?.locationTableViewController?.locations = locations
+					self?.locationTableViewController?.isFirstSearch = false
+					self?.locationTableViewController?.downloadReports()
+				}
 			})
          case "zipCode" :
 		   let search = searchFunctions.formatZipSearch(searchText: searchText.text!, stateShortName: stateShortName)
-		   FireDatabaseService.shared.RetireveLocations(search: search, searchType: searchType, completion: {
-			(locations)
-			in
-			
-			self.locationTableViewController?.locations = locations
-			self.locationTableViewController?.isFirstSearch = false
-			self.locationTableViewController?.downloadReports()
-			
+		   FireDatabaseService.shared.RetireveLocations(search: search, searchType: searchType, completion: { [weak self] locations in
+			Task { @MainActor in
+				self?.locationTableViewController?.locations = locations
+				self?.locationTableViewController?.isFirstSearch = false
+				self?.locationTableViewController?.downloadReports()
+			}
 		})
         case "invalid" :
             AlertController.showAlert(self, title: "Invalid Search", message: "The entry is an invalid search. \nPlease enter a zip code or city and select one of the returned options in view")

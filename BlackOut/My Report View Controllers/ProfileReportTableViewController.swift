@@ -94,11 +94,11 @@ class ProfileReportTableViewController: UITableViewController {
     }
     
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return UITableViewAutomaticDimension
+		return UITableView.automaticDimension
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return UITableViewAutomaticDimension
+		return UITableView.automaticDimension
 	}
 	
 	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -151,26 +151,23 @@ class ProfileReportTableViewController: UITableViewController {
 	@objc func RefreshTable()
 	{
 		let fireDatabaseService = FireDatabaseService()
-		fireDatabaseService.RetrieveReports(withUser: username!, completion: {
-			(reports)
-			in
-			self.reports = reports
-			if self.reports.count > 0
-			{
-				FireDatabaseService.shared.RetrieveCommentMetadata(withReports: reports, completion: {
-					(data)
-					
-					in
-					self.commentStatMap = data
-					DispatchQueue.main.async {
-						self.refresh?.endRefreshing()
-						self.tableView.reloadData()
-					}
-				})
-			}
-			else
-			{
-				DispatchQueue.main.async {
+		fireDatabaseService.RetrieveReports(withUser: username!, completion: { [weak self] reports in
+			Task { @MainActor in
+				guard let self = self else { return }
+				self.reports = reports
+				if self.reports.count > 0
+				{
+					FireDatabaseService.shared.RetrieveCommentMetadata(withReports: reports, completion: { [weak self] data in
+						Task { @MainActor in
+							guard let self = self else { return }
+							self.commentStatMap = data
+							self.refresh?.endRefreshing()
+							self.tableView.reloadData()
+						}
+					})
+				}
+				else
+				{
 					self.refresh?.endRefreshing()
 					self.tableView.reloadData()
 				}

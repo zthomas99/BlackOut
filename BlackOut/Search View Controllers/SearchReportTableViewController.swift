@@ -71,7 +71,7 @@ class SearchReportTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-     return   UITableViewAutomaticDimension
+     return   UITableView.automaticDimension
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return reports.count
@@ -105,7 +105,7 @@ class SearchReportTableViewController: UITableViewController {
 		{
 			cell.datePostedLabel.text = dateFormatter.string(from: reports[indexPath.row].date)
 		}
-		cell.separatorInset = UIEdgeInsetsMake(20, 20, 20, 20)
+		cell.separatorInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         return cell
     }
 

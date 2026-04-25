@@ -11,7 +11,7 @@ import UIKit
 class SpinnerViewController: UIViewController {
 
 	@IBOutlet weak var blurView: UIVisualEffectView!
-	var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+	var spinner = UIActivityIndicatorView(style: .large)
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
