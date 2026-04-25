@@ -60,7 +60,6 @@
 		EE030AE7238CB26500AF2183 /* video.png in Resources */ = {isa = PBXBuildFile; fileRef = EE483374238B5C29002920F3 /* video.png */; };
 		EE030AE8238CB26500AF2183 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = EE48337A238B5C7B002920F3 /* flag.png */; };
 		EE030AE9238CB26C00AF2183 /* SolidWhiteLaunchScreenFade.gif in Resources */ = {isa = PBXBuildFile; fileRef = EE483373238B5C1B002920F3 /* SolidWhiteLaunchScreenFade.gif */; };
-		EE030AEC238DE75200AF2183 /* AddSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE030AEB238DE75200AF2183 /* AddSegmentControl.swift */; };
 		EE07D4CC2F92D92700A5AC88 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE07D4CB2F92D92700A5AC88 /* CommentsViewModel.swift */; };
 		EE07D4CF2F92D9B700A5AC88 /* CommentsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE07D4CE2F92D9B700A5AC88 /* CommentsCoordinator.swift */; };
 		EE07D4D12F92D9BE00A5AC88 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE07D4D02F92D9BE00A5AC88 /* SearchCoordinator.swift */; };
@@ -96,13 +95,9 @@
 		EE482FB624A6D90E001F03BB /* FireDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF39921790858000FC219 /* FireDatabaseService.swift */; };
 		EE482FB824A6FB17001F03BB /* CurrentUserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE482FB724A6FB17001F03BB /* CurrentUserStatus.swift */; };
 		EE483358238AED53002920F3 /* IncidentDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE483357238AED53002920F3 /* IncidentDetailsTableViewController.swift */; };
-		EE483364238B5846002920F3 /* BusinessPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE483363238B5846002920F3 /* BusinessPhotoViewController.swift */; };
-		EE483368238B589A002920F3 /* MediaSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE483367238B589A002920F3 /* MediaSelectViewController.swift */; };
-		EE48336A238B58C3002920F3 /* StoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE483369238B58C3002920F3 /* StoryViewController.swift */; };
 		EE486A1F24A95D700000018E /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE486A1E24A95D700000018E /* UIImageViewExtension.swift */; };
 		EE486A2124AC09210000018E /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE486A2024AC09210000018E /* DateExtension.swift */; };
 		EE486A2424AD58990000018E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE486A2324AD58990000018E /* StoreKit.framework */; };
-		EE486A2724AD90310000018E /* AddSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE486A2624AD90310000018E /* AddSearchViewController.swift */; };
 		EE486A2924AD90490000018E /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE486A2824AD90490000018E /* NotificationHandler.swift */; };
 		EE48A86A2464C10B0050D949 /* AdviceComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE48A8692464C10B0050D949 /* AdviceComment.swift */; };
 		EE48A86C2464CB560050D949 /* ReplyComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE48A86B2464CB560050D949 /* ReplyComment.swift */; };
@@ -160,6 +155,7 @@
 		EED509D1239492AC0014A345 /* DKPickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED509D0239492AC0014A345 /* DKPickViewController.swift */; };
 		EED509D9239763710014A345 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED509D8239763710014A345 /* UIButtonExtension.swift */; };
 		EED509DD2399D1DA0014A345 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED509DC2399D1DA0014A345 /* VideoViewController.swift */; };
+		EEE3DD812F9D15FE006F3D69 /* AddReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE3DD802F9D15FE006F3D69 /* AddReportViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -236,7 +232,6 @@
 		EE0216B824A011720035A78B /* MyReportPicSelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReportPicSelectTableViewCell.swift; sourceTree = "<group>"; };
 		EE0216BA24A169570035A78B /* NoMediaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoMediaTableViewCell.swift; sourceTree = "<group>"; };
 		EE0216BC24A171040035A78B /* LocalMediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMediaCollectionViewCell.swift; sourceTree = "<group>"; };
-		EE030AEB238DE75200AF2183 /* AddSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSegmentControl.swift; sourceTree = "<group>"; };
 		EE07D4CB2F92D92700A5AC88 /* CommentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		EE07D4CE2F92D9B700A5AC88 /* CommentsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsCoordinator.swift; sourceTree = "<group>"; };
 		EE07D4D02F92D9BE00A5AC88 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
@@ -270,9 +265,6 @@
 		EE478E7123805F4F0048A191 /* FlagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagViewController.swift; sourceTree = "<group>"; };
 		EE482FB724A6FB17001F03BB /* CurrentUserStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserStatus.swift; sourceTree = "<group>"; };
 		EE483357238AED53002920F3 /* IncidentDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncidentDetailsTableViewController.swift; sourceTree = "<group>"; };
-		EE483363238B5846002920F3 /* BusinessPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessPhotoViewController.swift; sourceTree = "<group>"; };
-		EE483367238B589A002920F3 /* MediaSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSelectViewController.swift; sourceTree = "<group>"; };
-		EE483369238B58C3002920F3 /* StoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewController.swift; sourceTree = "<group>"; };
 		EE483373238B5C1B002920F3 /* SolidWhiteLaunchScreenFade.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SolidWhiteLaunchScreenFade.gif; sourceTree = "<group>"; };
 		EE483374238B5C29002920F3 /* video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video.png; sourceTree = "<group>"; };
 		EE483375238B5C37002920F3 /* default_bus_Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_bus_Add.png; sourceTree = "<group>"; };
@@ -284,7 +276,6 @@
 		EE486A1E24A95D700000018E /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		EE486A2024AC09210000018E /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		EE486A2324AD58990000018E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		EE486A2624AD90310000018E /* AddSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSearchViewController.swift; sourceTree = "<group>"; };
 		EE486A2824AD90490000018E /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 		EE48A8692464C10B0050D949 /* AdviceComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceComment.swift; sourceTree = "<group>"; };
 		EE48A86B2464CB560050D949 /* ReplyComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyComment.swift; sourceTree = "<group>"; };
@@ -348,6 +339,7 @@
 		EED509D0239492AC0014A345 /* DKPickViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DKPickViewController.swift; sourceTree = "<group>"; };
 		EED509D8239763710014A345 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		EED509DC2399D1DA0014A345 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		EEE3DD802F9D15FE006F3D69 /* AddReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReportViewController.swift; sourceTree = "<group>"; };
 		F476B7275A8488B79DCCF4D3 /* Pods-BlackOutTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackOutTests.release.xcconfig"; path = "Target Support Files/Pods-BlackOutTests/Pods-BlackOutTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -491,7 +483,6 @@
 		EE030AEA238DE72400AF2183 /* Custom Segmented Control */ = {
 			isa = PBXGroup;
 			children = (
-				EE030AEB238DE75200AF2183 /* AddSegmentControl.swift */,
 			);
 			path = "Custom Segmented Control";
 			sourceTree = "<group>";
@@ -519,14 +510,11 @@
 			isa = PBXGroup;
 			children = (
 				B3AE5A4B216A950400605635 /* AddViewController.swift */,
-				EE486A2624AD90310000018E /* AddSearchViewController.swift */,
-				EE483369238B58C3002920F3 /* StoryViewController.swift */,
-				EE483363238B5846002920F3 /* BusinessPhotoViewController.swift */,
-				EE483367238B589A002920F3 /* MediaSelectViewController.swift */,
 				EED509D0239492AC0014A345 /* DKPickViewController.swift */,
 				EE9362F7248316960037FB84 /* CustomCamera.swift */,
 				EE4559A023CADE9700C17621 /* EstablishmentViewController.swift */,
 				EE0216AA249FC0DA0035A78B /* SpinnerViewController.swift */,
+				EEE3DD802F9D15FE006F3D69 /* AddReportViewController.swift */,
 			);
 			path = "Add View Controllers";
 			sourceTree = "<group>";
@@ -999,13 +987,11 @@
 				EEC3125323B28B0F00841A94 /* LocationTableViewController.swift in Sources */,
 				EE84FBAE23D56E2700EAA89B /* UIViewControllerExtension.swift in Sources */,
 				EE4399D624943F7700356307 /* User.swift in Sources */,
-				EE48336A238B58C3002920F3 /* StoryViewController.swift in Sources */,
 				EE84FBB223D5F89400EAA89B /* LeftToRightTransition.swift in Sources */,
 				24EDF39A21790858000FC219 /* FireDatabaseService.swift in Sources */,
 				EE4399DF2495313800356307 /* ProfileReportTitleCell.swift in Sources */,
 				EE94E76124982D8600B271E0 /* NavigationTableViewCell.swift in Sources */,
 				B372DC5B216013870085EAA9 /* SearchViewController.swift in Sources */,
-				EE030AEC238DE75200AF2183 /* AddSegmentControl.swift in Sources */,
 				EE4399E1249561D400356307 /* CommentStat.swift in Sources */,
 				EE0216BB24A169580035A78B /* NoMediaTableViewCell.swift in Sources */,
 				EE478E7223805F4F0048A191 /* FlagViewController.swift in Sources */,
@@ -1026,10 +1012,10 @@
 				EE486A1F24A95D700000018E /* UIImageViewExtension.swift in Sources */,
 				EE07D4CF2F92D9B700A5AC88 /* CommentsCoordinator.swift in Sources */,
 				EE4399D92494866900356307 /* ProfileReportTableViewController.swift in Sources */,
-				EE483368238B589A002920F3 /* MediaSelectViewController.swift in Sources */,
 				EE478E7023805F100048A191 /* FlagTableViewController.swift in Sources */,
 				EE9362F8248316960037FB84 /* CustomCamera.swift in Sources */,
 				243F80BA217FF44D003F8D21 /* PhoneDetector.swift in Sources */,
+				EEE3DD812F9D15FE006F3D69 /* AddReportViewController.swift in Sources */,
 				B3AE5A4C216A950400605635 /* AddViewController.swift in Sources */,
 				243921D421CC4C71001E1D46 /* TermsViewController.swift in Sources */,
 				EE60F8DD23C1BCD90058EE4C /* UIViewExtension.swift in Sources */,
@@ -1049,7 +1035,6 @@
 				EE45599B23C97E1D00C17621 /* PlacesViewController.swift in Sources */,
 				EE94E76324983DF900B271E0 /* ProfileReportCell.swift in Sources */,
 				EE4559A123CADE9700C17621 /* EstablishmentViewController.swift in Sources */,
-				EE486A2724AD90310000018E /* AddSearchViewController.swift in Sources */,
 				EE486A2924AD90490000018E /* NotificationHandler.swift in Sources */,
 				B32DE0B5214F0C8E00803776 /* SignUpViewController.swift in Sources */,
 				B32DE08721487EF400803776 /* LoginViewController.swift in Sources */,
@@ -1075,7 +1060,6 @@
 				2439760B2187D02A00B43866 /* SearchReportTableViewController.swift in Sources */,
 				EE94E76924999BF600B271E0 /* BlockedCell.swift in Sources */,
 				243D89B921A1C58B002D66AB /* PasswordResetViewController.swift in Sources */,
-				EE483364238B5846002920F3 /* BusinessPhotoViewController.swift in Sources */,
 				EE48A8892468C1690050D949 /* AddAdviceTableViewController.swift in Sources */,
 				2439760D2187ECB900B43866 /* SnapToReports.swift in Sources */,
 			);

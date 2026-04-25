@@ -128,10 +128,10 @@ class SearchViewController:UIViewController, UITableViewDelegate, UITextFieldDel
 	}
 	
     //MARK: - Set Battery and Time to White
-    /*override var preferredStatusBarStyle: UIStatusBarStyle
+    override var preferredStatusBarStyle: UIStatusBarStyle
     {
         return .lightContent
-    }*/
+    }
     
 	func sendSearchInfo(place: String, state: String) {
 		stateShortName = state

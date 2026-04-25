@@ -58,7 +58,7 @@
                             </containerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Smy-6j-kbH"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="tfv-3z-OSo" firstAttribute="leading" secondItem="Smy-6j-kbH" secondAttribute="leading" id="6QQ-3D-pjS"/>
                             <constraint firstItem="JNr-xY-HC9" firstAttribute="trailing" secondItem="Smy-6j-kbH" secondAttribute="trailing" id="Hfo-6G-Mse"/>
@@ -309,7 +309,7 @@
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="tlf-TJ-V5f" customClass="SearchReportTableViewController" customModule="BlackOut" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="120" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" id="2WM-dK-ycy">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1058"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1049"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" systemColor="scrollViewTexturedBackgroundColor"/>

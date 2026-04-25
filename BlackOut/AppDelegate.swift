@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
 				let notficationHandler = NotificationsHandler(application: application)
 
-        configureAppearance()
+        //configureAppearance() // Legacy appearance — Liquid Glass on iOS 26 derives item tint from the background behind the tab bar
 
         if let placesAPIKey = Bundle.main.object(forInfoDictionaryKey: "GooglePlacesAPIKey") as? String,
            !placesAPIKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
