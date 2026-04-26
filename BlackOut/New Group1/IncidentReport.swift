@@ -16,7 +16,7 @@ struct IncidentReport : Hashable
     let businessName: String
     let descriptionMessage: String
 	let reportTitle : String
-    let businessLoaction: String
+    let businessLocation: String
     let businessPhoto: String
     let username: String
 	let replyCount : Int
@@ -57,7 +57,7 @@ struct IncidentReport : Hashable
         self.username = username
         self.businessPhoto = businessPhoto
 		self.replyCount = replyCount
-        self.businessLoaction = businessLocation
+        self.businessLocation = businessLocation
         self.incidentMedia = incidentMedia
         self.businessCity = businessCity
         self.state = state

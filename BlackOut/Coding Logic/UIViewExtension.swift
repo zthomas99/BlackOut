@@ -97,10 +97,15 @@ extension UITextField
 	
 	@IBInspectable var placeHolderColor: UIColor? {
         get {
-            return self.placeHolderColor
+            guard let attributed = self.attributedPlaceholder,
+                  attributed.length > 0,
+                  let color = attributed.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor else {
+                return nil
+            }
+            return color
         }
         set {
-			self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[NSAttributedString.Key.foregroundColor: newValue!])
+			self.attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor: newValue ?? UIColor.lightGray])
         }
     }
 	

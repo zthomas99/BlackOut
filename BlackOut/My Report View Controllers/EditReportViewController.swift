@@ -40,18 +40,16 @@ class EditReportViewController: UIViewController, UITextViewDelegate {
 	
 	func editDescription()
 	{
+		guard let report = report else { return }
 		let newText = txtViewReport.text
-		if  newText != report!.descriptionMessage
+		if  newText != report.descriptionMessage
 		{
-			if newText!.count < 20
-			{
+			guard let text = newText, text.count >= 20 else {
 				AlertController.showAlert(self, title: "Minimum Length Not Met", message: "The description message is to short, please enter more details.")
+				return
 			}
-			else
-			{
-				let fireDatabaseService = FireDatabaseService()
-				fireDatabaseService.SetReportDescription(reportID: report!.postId, description: txtViewReport.text)
-			}
+			let fireDatabaseService = FireDatabaseService()
+			fireDatabaseService.setReportDescription(reportID: report.postId, description: text)
 		}
 	}
 	
@@ -65,18 +63,12 @@ class EditReportViewController: UIViewController, UITextViewDelegate {
 		if spinnerView == nil
 		{
 			spinnerView = SpinnerViewController()
-			self.addChild(spinnerView!)
-			spinnerView!.view.frame = self.view.frame
-			self.view.addSubview(spinnerView!.view)
-			spinnerView?.didMove(toParent: self)
 		}
-		else
-		{
-			self.addChild(spinnerView!)
-			spinnerView!.view.frame = self.view.frame
-			self.view.addSubview(spinnerView!.view)
-			spinnerView?.didMove(toParent: self)
-		}
+		guard let spinner = spinnerView else { return }
+		self.addChild(spinner)
+		spinner.view.frame = self.view.frame
+		self.view.addSubview(spinner.view)
+		spinner.didMove(toParent: self)
 	}
 
 	func removeSpinner()
@@ -93,13 +85,13 @@ class EditReportViewController: UIViewController, UITextViewDelegate {
 	func updateVideos()
 	{
 		createSpinner()
-		if picView != nil
+		if let picView = picView, let report = report
 		{
-			if (picView?.selectedAssets.count)! > 0
+			if picView.selectedAssets.count > 0
 			{
-				let ref = FireDatabaseService.shared.incidentReference.child(report!.postId)
+				let ref = FireDatabaseService.shared.incidentReference.child(report.postId)
 				let fireStorage = FireStorage()
-				fireStorage.UploadSelectedPhotos(reference: ref, pickerController: picView!, completion: { [weak self] error in
+				fireStorage.UploadSelectedPhotos(reference: ref, pickerController: picView, completion: { [weak self] error in
 					Task { @MainActor in
 						guard let self = self else { return }
 						if error == nil {

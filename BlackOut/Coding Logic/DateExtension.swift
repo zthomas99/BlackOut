@@ -18,15 +18,17 @@ extension Date{
 			return agoString
 		} else {
 			let calendar = Calendar.current
-			let minuteAgo = calendar.date(byAdding: .minute, value: -1, to: Date())
-			let hourAgo = calendar.date(byAdding: .hour, value: -1, to: Date())
+			guard let minuteAgo = calendar.date(byAdding: .minute, value: -1, to: Date()),
+				  let hourAgo = calendar.date(byAdding: .hour, value: -1, to: Date()) else {
+				return ""
+			}
 			
-			if minuteAgo! < self
+			if minuteAgo < self
 			{
 				let diff = Calendar.current.dateComponents([.second], from: self, to: Date()).second ?? 0
 				return "\(diff) seconds ago"
 			}
-			else if hourAgo! < self
+			else if hourAgo < self
 			{
 				let diff = Calendar.current.dateComponents([.minute], from: self, to: Date()).minute ?? 0
 				return "\(diff) minutes ago"

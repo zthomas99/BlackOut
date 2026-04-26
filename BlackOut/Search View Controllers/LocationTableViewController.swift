@@ -177,7 +177,7 @@ class LocationTableViewController: UITableViewController {
 				{
 					group.enter()
 					let fireDatabaseService = FireDatabaseService()
-					fireDatabaseService.RetrieveMediaList(location: location, completion: { [weak self] mediaList in
+					fireDatabaseService.retrieveMediaList(location: location, completion: { [weak self] mediaList in
 						DispatchQueue.main.async {
 							self?.mediaList[location] = mediaList
 							group.leave()

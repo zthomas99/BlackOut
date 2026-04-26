@@ -538,7 +538,7 @@ class AddReportViewController: UIViewController {
                         progress.errorCount += 1
                         progress.completedCount += 1
                         if progress.errorCount == assetCount {
-                            FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
+                            FireDatabaseService.shared.insertNoMediaChild(reference: reference) {
                                 if progress.completedCount == assetCount { completion(nil) }
                             }
                         }
@@ -549,13 +549,13 @@ class AddReportViewController: UIViewController {
                             progress.errorCount += 1
                             progress.completedCount += 1
                             if progress.errorCount == assetCount {
-                                FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
+                                FireDatabaseService.shared.insertNoMediaChild(reference: reference) {
                                     if progress.completedCount == assetCount { completion(nil) }
                                 }
                             }
                         } else {
                             progress.completedCount += 1
-                            FireDatabaseService.shared.AddMediaToReference(reference: reference, media: fileName) {
+                            FireDatabaseService.shared.addMediaToReference(reference: reference, media: fileName) {
                                 if progress.completedCount == assetCount { completion(nil) }
                             }
                         }
@@ -571,7 +571,7 @@ class AddReportViewController: UIViewController {
                         progress.errorCount += 1
                         progress.completedCount += 1
                         if progress.errorCount == assetCount {
-                            FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
+                            FireDatabaseService.shared.insertNoMediaChild(reference: reference) {
                                 if progress.completedCount == assetCount { completion(nil) }
                             }
                         }
@@ -582,13 +582,13 @@ class AddReportViewController: UIViewController {
                             progress.errorCount += 1
                             progress.completedCount += 1
                             if progress.errorCount == assetCount {
-                                FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
+                                FireDatabaseService.shared.insertNoMediaChild(reference: reference) {
                                     if progress.completedCount == assetCount { completion(nil) }
                                 }
                             }
                         } else {
                             progress.completedCount += 1
-                            FireDatabaseService.shared.AddMediaToReference(reference: reference, media: fileName) {
+                            FireDatabaseService.shared.addMediaToReference(reference: reference, media: fileName) {
                                 if progress.completedCount == assetCount { completion(nil) }
                             }
                         }

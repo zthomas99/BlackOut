@@ -9,9 +9,9 @@ import Foundation
 import FirebaseAuth
 
 protocol CommentsViewModelServicing {
-    func RetrieveBlockedUsers(completion: @Sendable @escaping ([String]) -> Void)
-    func AddBlockedUser(username: String, completion: @Sendable @escaping (Error?) -> Void)
-    func SetVoters(postId: String, adviceId: String, upVoters: [String], downVoters:[String], completion: @Sendable @escaping (Error?) -> Void)
+    func retrieveBlockedUsers(completion: @Sendable @escaping ([String]) -> Void)
+    func addBlockedUser(username: String, completion: @Sendable @escaping (Error?) -> Void)
+    func setVoters(postId: String, adviceId: String, upVoters: [String], downVoters:[String], completion: @Sendable @escaping (Error?) -> Void)
 }
 
 extension FireDatabaseService: CommentsViewModelServicing {}
@@ -37,11 +37,11 @@ final class CommentsViewModel: @unchecked Sendable {
     }
 
     func retrieveBlockedUsers(completion: @Sendable @escaping ([String]) -> Void) {
-        databaseService.RetrieveBlockedUsers(completion: completion)
+        databaseService.retrieveBlockedUsers(completion: completion)
     }
 
     func addBlockedUser(username: String, completion: @Sendable @escaping (Error?) -> Void) {
-        databaseService.AddBlockedUser(username: username, completion: completion)
+        databaseService.addBlockedUser(username: username, completion: completion)
     }
 
     func currentUserId() -> String? {
@@ -77,7 +77,7 @@ final class CommentsViewModel: @unchecked Sendable {
     func setVoters(postId: String, advice: Advice, completion: @Sendable @escaping (Error?) -> Void) {
         let newUpVoters = advice.upVoters ?? []
         let newDownVoters = advice.downVoters ?? []
-        databaseService.SetVoters(postId: postId, adviceId: advice.id, upVoters: newUpVoters, downVoters: newDownVoters, completion: completion)
+        databaseService.setVoters(postId: postId, adviceId: advice.id, upVoters: newUpVoters, downVoters: newDownVoters, completion: completion)
     }
 
     func retrieveAdvice(postId: String, adviceId: String, blockedUsers: [String], completion: @Sendable @escaping (Advice?) -> Void) {

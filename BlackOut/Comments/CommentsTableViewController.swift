@@ -144,7 +144,7 @@ class CommentsTableViewController: UITableViewController, UIPopoverPresentationC
 	
 			//design cell border.
 
-			let voteCount = advices[index].upVoters!.count - advices[index].downVoters!.count
+			let voteCount = (advices[index].upVoters?.count ?? 0) - (advices[index].downVoters?.count ?? 0)
 			
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateStyle = .medium
@@ -177,11 +177,15 @@ class CommentsTableViewController: UITableViewController, UIPopoverPresentationC
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let section = (indexPath.section - 1)
 		let row = indexPath.row
-		let reply : Reply = (advices[section].replies?[row])!
+		guard let reply = advices[section].replies?[row] else {
+			return UITableViewCell()
+		}
 		
 		if !reply.hasReply
 		{
-			let cell = (tableView.dequeueReusableCell(withIdentifier: "ReplyCell", for: indexPath) as? ReplyCell)!
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyCell", for: indexPath) as? ReplyCell else {
+				return UITableViewCell()
+			}
 			// Configure the cell...
 			cell.SetUpCell(cellReply: reply, commentTableViewController: self, forIndex: IndexPath(row: row, section: section) )
 			cell.StyleCell()
@@ -268,12 +272,12 @@ class CommentsTableViewController: UITableViewController, UIPopoverPresentationC
 		else if (segue.identifier == "ShowReplyReply")
 		{
 			replyReplyTableViewController = segue.destination as? AddReplyTableViewController
-			replyReplyTableViewController!.reply = selectedForReply
-			replyReplyTableViewController!.postId = postId
-			replyReplyTableViewController!.advice = commentAdvice
-			replyReplyTableViewController!.isReplyToAdvice = false
-			replyReplyTableViewController!.instanceOfCommentTableViewController = self
-			replyReplyTableViewController!.tag = selectedSection
+			replyReplyTableViewController?.reply = selectedForReply
+			replyReplyTableViewController?.postId = postId
+			replyReplyTableViewController?.advice = commentAdvice
+			replyReplyTableViewController?.isReplyToAdvice = false
+			replyReplyTableViewController?.instanceOfCommentTableViewController = self
+			replyReplyTableViewController?.tag = selectedSection
 		}
 		else if (segue.identifier == "ShowUserReports")
 		{
@@ -297,12 +301,12 @@ class CommentsTableViewController: UITableViewController, UIPopoverPresentationC
 	func ShowAddReply(sender: Any)
 	{
 		lockScrollPos = tableView.contentOffset.y
-		let indexPath = sender as? IndexPath
-		let reply = advices[indexPath!.section].replies![indexPath!.row]
+		guard let indexPath = sender as? IndexPath,
+			  let reply = advices[indexPath.section].replies?[indexPath.row] else { return }
 		
-		selectedSection = indexPath?.section
+		selectedSection = indexPath.section
 		selectedForReply = reply
-		commentAdvice = advices[indexPath!.section]
+		commentAdvice = advices[indexPath.section]
 		commentsCoordinator.showReplyReply(from: self)
 	}
 	
@@ -329,25 +333,26 @@ class CommentsTableViewController: UITableViewController, UIPopoverPresentationC
 	{
 		//Get Location info of the subReply
 		tableView.isScrollEnabled = false
-		let button = sender as? UIButton
-		let row = button!.tag
-		let section = Int((button?.accessibilityIdentifier)!)
-		let indexPath = IndexPath(row: row, section: section!)
+		guard let button = sender as? UIButton,
+			  let sectionStr = button.accessibilityIdentifier,
+			  let section = Int(sectionStr) else { return }
+		let row = button.tag
+		let indexPath = IndexPath(row: row, section: section)
 		
 		//Retrieve subReply and get source ID
-		let subReply = advices[indexPath.section].replies![indexPath.row]
+		guard let subReply = advices[indexPath.section].replies?[indexPath.row] else { return }
 		let sourceId = (subReply.quoteId)
 		
 		//Check to see if sourc cell is mapped
 		//If so retrieve content view and perform segue
-		if replyMap[sourceId] != nil
+		if let sourceComment = replyMap[sourceId]
 		{
 			let totalHeight = tableView.contentSize.height + offset
 			dimBackView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: totalHeight)
 			animateIn(desiredView: dimBackView, alpha: 0.7)
 			
-			popUpTextView.text = replyMap[sourceId]?.comment
-			let username = replyMap[sourceId]!.user
+			popUpTextView.text = sourceComment.comment
+			let username = sourceComment.user
 			lblQuoteUser.text = "@\(username ?? "unknown")"
 			print("Comment character count : \(String(describing: replyMap[sourceId]?.comment.count))")
 			let popHeight = resizeSubViews(viewer: popUpView)
@@ -388,8 +393,9 @@ class CommentsTableViewController: UITableViewController, UIPopoverPresentationC
 		{
 			let blockUserAction = UIAlertAction(title: "Block \(String(describing: popUpUser ?? "unknown"))", style: .default, handler: {(action: UIAlertAction!) -> Void
 				in
-					self.blockedUsers.append(self.popUpUser!)
-					self.commentsViewModel.addBlockedUser(username: self.popUpUser!, completion: {
+					guard let user = self.popUpUser else { return }
+					self.blockedUsers.append(user)
+					self.commentsViewModel.addBlockedUser(username: user, completion: {
 						(error)
 						in
 						if error == nil
@@ -409,10 +415,10 @@ class CommentsTableViewController: UITableViewController, UIPopoverPresentationC
 		
 		userOptionSheet.addAction(cancelAction)
 		
-		if let userOptionSheet = userOptionSheet.popoverPresentationController {
-			userOptionSheet.sourceView = sender as! UIButton
-			userOptionSheet.sourceRect = CGRect(x: (button?.bounds.midX)!, y: ((button?.bounds.minY)! + 5), width: 0, height: 0)
-			userOptionSheet.permittedArrowDirections = .down
+		if let popover = userOptionSheet.popoverPresentationController, let button = button {
+			popover.sourceView = button
+			popover.sourceRect = CGRect(x: button.bounds.midX, y: button.bounds.minY + 5, width: 0, height: 0)
+			popover.permittedArrowDirections = .down
 		}
 		
 		self.present(userOptionSheet,animated: true, completion: nil)

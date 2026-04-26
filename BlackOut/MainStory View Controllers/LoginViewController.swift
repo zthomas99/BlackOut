@@ -51,7 +51,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 				return
 			}
 			let fireDatabaseService = FireDatabaseService()
-			fireDatabaseService.RetrieveCurrentUser(completion: { [weak self] error in
+			fireDatabaseService.retrieveCurrentUser(completion: { [weak self] error in
 				Task { @MainActor in
 					guard let self = self else { return }
 					if error != nil

@@ -13,16 +13,16 @@ private final class MockCommentsService: CommentsViewModelServicing {
     var capturedUpVoters: [String]?
     var capturedDownVoters: [String]?
 
-    func RetrieveBlockedUsers(completion: @escaping ([String]) -> Void) {
+    func retrieveBlockedUsers(completion: @escaping ([String]) -> Void) {
         completion(blockedUsersToReturn)
     }
 
-    func AddBlockedUser(username: String, completion: @escaping (Error?) -> Void) {
+    func addBlockedUser(username: String, completion: @escaping (Error?) -> Void) {
         capturedBlockedUsername = username
         completion(addBlockedUserError)
     }
 
-    func SetVoters(postId: String, adviceId: String, upVoters: [String], downVoters: [String], completion: @escaping (Error?) -> Void) {
+    func setVoters(postId: String, adviceId: String, upVoters: [String], downVoters: [String], completion: @escaping (Error?) -> Void) {
         capturedPostId = postId
         capturedAdviceId = adviceId
         capturedUpVoters = upVoters

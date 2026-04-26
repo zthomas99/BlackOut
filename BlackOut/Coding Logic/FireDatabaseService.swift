@@ -21,6 +21,11 @@ class FireDatabaseService: @unchecked Sendable {
 		init(_ value: T) { self.value = value }
 	}
 	
+	private func parseUsername(from email: String?) -> String? {
+		guard let email = email, let atRange = email.range(of: "@") else { return nil }
+		return String(email[email.startIndex..<atRange.lowerBound])
+	}
+	
 	let incidentReference = Database.database().reference().child("incidents")
 	let locationReference = db.collection("locations")
 	let commentReference = db.collection("comments")
@@ -29,7 +34,7 @@ class FireDatabaseService: @unchecked Sendable {
 	
 	//MARK: - Location Search Functions
 	
-	func RetireveLocations(search: String, searchType: String, completion: @Sendable @escaping ([LocationReport]) -> ()) {
+	func retrieveLocations(search: String, searchType: String, completion: @Sendable @escaping ([LocationReport]) -> ()) {
 		let field: String
 		switch searchType {
 		case "city": field = "businessCity"
@@ -44,10 +49,12 @@ class FireDatabaseService: @unchecked Sendable {
 			.getDocuments { locationSnapshot, err in
 				if let err = err {
 					print("Error getting documents for \(searchType) search: \(err)")
+					completion([])
 					return
 				}
 				DispatchQueue.main.async {
-					guard let locationReportSnap = LocationSnapHelper(with: locationSnapshot!) else {
+					guard let locationSnapshot = locationSnapshot,
+						  let locationReportSnap = LocationSnapHelper(with: locationSnapshot) else {
 						completion([])
 						return
 					}
@@ -58,13 +65,13 @@ class FireDatabaseService: @unchecked Sendable {
 	
 	//MARK: - Edit Report Functions
 	
-	func SetReportDescription(reportID: String, description:String)
+	func setReportDescription(reportID: String, description:String)
 	{
 		incidentReference.child(reportID).updateChildValues(["descriptionMessage" : description])
 	}
 	//MARK: - Profile Report Functions
 	
-	func RetrieveReports(withUser user:String, completion: @Sendable @escaping ([IncidentReport]) ->())
+	func retrieveReports(withUser user:String, completion: @Sendable @escaping ([IncidentReport]) ->())
 	{
 		var reports = [IncidentReport]()
 		incidentReference.queryOrdered(byChild: "username").queryEqual(toValue: user).observeSingleEvent(of: .value, with:
@@ -86,7 +93,7 @@ class FireDatabaseService: @unchecked Sendable {
 		})
 	}
 	
-	func RetrieveCommentMetadata(withReports reports:[IncidentReport], completion: @Sendable @escaping ([String : CommentMetadata]) ->())
+	func retrieveCommentMetadata(withReports reports:[IncidentReport], completion: @Sendable @escaping ([String : CommentMetadata]) ->())
 	{
 		let state = Box((count: 0, map: [String: CommentMetadata]()))
 		for report in reports
@@ -116,10 +123,9 @@ class FireDatabaseService: @unchecked Sendable {
 	}
 	
 	//MARK: - User Functions
-	func AddUserAccount(user: User)
+	func addUserAccount(user: User)
 	{
-		let range = user.email!.range(of: "@")
-		let username = user.email![(user.email!.startIndex)..<range!.lowerBound]
+		guard let username = parseUsername(from: user.email) else { return }
 	
 		let blockedUsers = [String]()
 		userReference.document(user.uid).setData(["userId" : user.uid,
@@ -127,7 +133,7 @@ class FireDatabaseService: @unchecked Sendable {
 												  "blockedUsers" : blockedUsers])
 	}
 	
-	func UpdateTokens(userId: String, data: String, completion: @Sendable @escaping (_ error:Error?) -> ())
+	func updateTokens(userId: String, data: String, completion: @Sendable @escaping (_ error:Error?) -> ())
 	{
 		userReference.document(userId).setData(["fcmTokens": FieldValue.arrayUnion([data])], merge: true){
 			(error)
@@ -145,7 +151,7 @@ class FireDatabaseService: @unchecked Sendable {
 		}
 	}
 	
-	func RemoveToken(userId: String, data: String, completion: @Sendable @escaping (_ error:Error?) -> ())
+	func removeToken(userId: String, data: String, completion: @Sendable @escaping (_ error:Error?) -> ())
 	{
 		userReference.document(userId).setData(["fcmTokens": FieldValue.arrayRemove([data])], merge: true){
 			(error)
@@ -163,71 +169,80 @@ class FireDatabaseService: @unchecked Sendable {
 		}
 	}
 	
-	func RetrieveCurrentUser(completion: @Sendable @escaping (_ error:Error?) ->())
+	func retrieveCurrentUser(completion: @Sendable @escaping (_ error:Error?) ->())
 	{
-		let userID = CurrentUserStatus.shared.userId
+		guard let userID = CurrentUserStatus.shared.userId else {
+			completion(nil)
+			return
+		}
 		let user = CurrentUserStatus.shared.user
-		self.userReference.document(userID!).getDocument(completion: {
+		self.userReference.document(userID).getDocument(completion: { [weak self]
 			(snapshot, error)
 			in
-			if error == nil
+			if let error = error {
+				completion(error)
+				return
+			}
+			guard let snapshot = snapshot else {
+				completion(nil)
+				return
+			}
+			if snapshot.exists
 			{
-				if snapshot!.exists
+				let userSnap = SnapToUserAccount.init(with: snapshot)
+				if userSnap?.currentUser != nil
 				{
-					let userSnap = SnapToUserAccount.init(with: snapshot!)
-					if userSnap?.currentUser != nil
-					{
-						UserAccount.shared = userSnap?.currentUser
-						completion(error)
-					}
-					else
-					{
-						let range = user?.email?.range(of: "@")
-						let username = user?.email![(user?.email!.startIndex)!..<range!.lowerBound]
-						UserAccount.shared?.id = user?.uid
-						UserAccount.shared?.username = String(username!)
-						completion(error)
-					}
+					UserAccount.shared = userSnap?.currentUser
+					completion(nil)
 				}
 				else
 				{
-					let range = user?.email?.range(of: "@")
-					let username = user?.email![(user?.email!.startIndex)!..<range!.lowerBound]
+					let username = self?.parseUsername(from: user?.email)
 					UserAccount.shared?.id = user?.uid
-					UserAccount.shared?.username = String(username!)
-					self.AddUserAccount(user: user!)
-					completion(error)
+					UserAccount.shared?.username = username
+					completion(nil)
 				}
 			}
 			else
 			{
-				completion(error)
+				let username = self?.parseUsername(from: user?.email)
+				UserAccount.shared?.id = user?.uid
+				UserAccount.shared?.username = username
+				if let user = user {
+					self?.addUserAccount(user: user)
+				}
+				completion(nil)
 			}
 		})
 		
 	}
 	// MARK: - Block User Functions
-	func RetrieveBlockedUsers(completion: @Sendable @escaping ([String]) -> ())
+	func retrieveBlockedUsers(completion: @Sendable @escaping ([String]) -> ())
 	{
-		let userId = Auth.auth().currentUser?.uid
-		userReference.document(userId!).getDocument(completion: {
+		guard let userId = Auth.auth().currentUser?.uid else {
+			completion([])
+			return
+		}
+		userReference.document(userId).getDocument(completion: {
 			(snapshot, err)
 			in
-			if err != nil
+			if let err = err
 			{
-				print("Failed to retrieve blocked users for user with id : \(String(describing: userId)) error : \(String(describing: err))")
+				print("Failed to retrieve blocked users for user with id : \(userId) error : \(err)")
 				completion([])
+				return
 			}
 
-			if (snapshot?.exists)!
-			{
-				let blockedUsers = snapshot?.data()?["blockedUsers"] as? [String] ?? []
-				completion(blockedUsers)
+			guard let snapshot = snapshot, snapshot.exists else {
+				completion([])
+				return
 			}
+			let blockedUsers = snapshot.data()?["blockedUsers"] as? [String] ?? []
+			completion(blockedUsers)
 		})
 	}
 	
-		func AddBlockedUser(username: String, completion: @Sendable @escaping (Error?) -> Void)
+		func addBlockedUser(username: String, completion: @Sendable @escaping (Error?) -> Void)
 		{
 			let currentUserId = String(describing: Auth.auth().currentUser?.uid ?? "")
 			let blockedRef = userReference.document(currentUserId)
@@ -250,9 +265,9 @@ class FireDatabaseService: @unchecked Sendable {
 			}
 			else
 			{
-				var newBlockedUsers = blockedUsers
-				newBlockedUsers?.append(username)
-				transaction.setData(["blockedUsers": newBlockedUsers!], forDocument: blockedRef, merge: true)
+				var newBlockedUsers = blockedUsers ?? []
+				newBlockedUsers.append(username)
+				transaction.setData(["blockedUsers": newBlockedUsers], forDocument: blockedRef, merge: true)
 				return nil
 			}
 		})
@@ -271,7 +286,7 @@ class FireDatabaseService: @unchecked Sendable {
 			}
 		}
 		
-		func UnblockUsers(username: String, completion: @Sendable @escaping (Error?) -> Void)
+		func unblockUsers(username: String, completion: @Sendable @escaping (Error?) -> Void)
 		{
 			let currentUserID = String(describing: Auth.auth().currentUser?.uid ?? "")
 			let blockedRef = userReference.document(currentUserID)
@@ -287,12 +302,12 @@ class FireDatabaseService: @unchecked Sendable {
 			}
 			
 			var blockedUsers = userDoc.data()?["blockedUsers"] as? [String]
-			let index = blockedUsers?.firstIndex(of: username)
-			if index! > -1
-			{
-				blockedUsers?.remove(at: index!)
-				transaction.setData(["blockedUsers" : blockedUsers!], forDocument: blockedRef)
+			guard let index = blockedUsers?.firstIndex(of: username) else {
 				return nil
+			}
+			blockedUsers?.remove(at: index)
+			if let blockedUsers = blockedUsers {
+				transaction.setData(["blockedUsers" : blockedUsers], forDocument: blockedRef)
 			}
 			return nil
 		})
@@ -311,9 +326,9 @@ class FireDatabaseService: @unchecked Sendable {
 			}
 		}
 		//MARK: - Comment Functions
-		func SubmitReply(postId: String, comment: String, advice: Advice, completion: @Sendable @escaping (Error?) -> Void)
+		func submitReply(postId: String, comment: String, advice: Advice, completion: @Sendable @escaping (Error?) -> Void)
 		{
-			let user : String = (Auth.auth().currentUser?.displayName)!
+			guard let user = Auth.auth().currentUser?.displayName else { return }
 			let date  = String(describing: Date())
 			commentReference.document(postId).collection("Advices").document(advice.id).collection("Replies").addDocument(data:
 				
@@ -345,8 +360,8 @@ class FireDatabaseService: @unchecked Sendable {
 					}
 						else
 						{
-							self.IncrementReplyCount(postId: postId)
-							self.IncrementAdviceCommentCount(postId: postId, adviceId: advice.id, completion: {
+							self.incrementReplyCount(postId: postId)
+							self.incrementAdviceCommentCount(postId: postId, adviceId: advice.id, completion: {
 								completion(nil)
 							})
 						}
@@ -355,9 +370,9 @@ class FireDatabaseService: @unchecked Sendable {
 			}
 		}
 		
-		func SubmitReplyToReply(postId: String, comment: String, advice: Advice, reply: Reply, completion: @Sendable @escaping (Error?) -> Void)
+		func submitReplyToReply(postId: String, comment: String, advice: Advice, reply: Reply, completion: @Sendable @escaping (Error?) -> Void)
 		{
-			let user : String = (Auth.auth().currentUser?.displayName)!
+			guard let user = Auth.auth().currentUser?.displayName else { return }
 			let date  = String(describing: Date())
 			commentReference.document(postId).collection("Advices").document(advice.id).collection("Replies").addDocument(data:
 				
@@ -378,8 +393,8 @@ class FireDatabaseService: @unchecked Sendable {
 				}
 				else
 				{
-					self.IncrementReplyCount(postId: postId)
-					self.IncrementAdviceCommentCount(postId: postId, adviceId: advice.id, completion: {
+					self.incrementReplyCount(postId: postId)
+					self.incrementAdviceCommentCount(postId: postId, adviceId: advice.id, completion: {
 						completion(nil)
 					})
 					
@@ -387,16 +402,16 @@ class FireDatabaseService: @unchecked Sendable {
 			}
 		}
 	
-	func SubmitAdvice(postId: String, comment : String) -> Any?
+	func submitAdvice(postId: String, comment : String) -> Any?
 	{
 		let upVoters = [String]()
 		let downVoters = [String]()
-		let user = Auth.auth().currentUser?.displayName
+		guard let user = Auth.auth().currentUser?.displayName else { return nil }
 		let date = String(describing : Date())
 		var error : Any?
 		//create data to pass to the FirebaseStore
 		commentReference.document(postId).collection("Advices").addDocument(data:
-			["username" : user!,
+			["username" : user,
 			 "date"     : date,
 			 "hasReply" : false,
 			 "comment"  : comment,
@@ -413,14 +428,14 @@ class FireDatabaseService: @unchecked Sendable {
 			}
 			else
 			{
-				self.IncrementReplyCount(postId: postId)
+				self.incrementReplyCount(postId: postId)
 			}
 			
 		}
 		return error
 	}
 	
-	func IncrementAdviceCommentCount(postId: String, adviceId: String, completion: @Sendable @escaping () -> Void)
+	func incrementAdviceCommentCount(postId: String, adviceId: String, completion: @Sendable @escaping () -> Void)
 	{
 		let adviceRef = commentReference.document(postId).collection("Advices").document(adviceId)
 		
@@ -462,7 +477,7 @@ class FireDatabaseService: @unchecked Sendable {
 		}
 	}
 	
-	func IncrementReplyCount(postId : String)
+	func incrementReplyCount(postId : String)
 	{
 		let postRef = incidentReference.child(postId)
 		postRef.runTransactionBlock({(currentData : MutableData) -> TransactionResult in
@@ -487,7 +502,7 @@ class FireDatabaseService: @unchecked Sendable {
 		}
 	}
 	
-		func SetVoters(postId: String, adviceId: String, upVoters: [String], downVoters:[String], completion: @Sendable @escaping (Error?) -> Void)
+		func setVoters(postId: String, adviceId: String, upVoters: [String], downVoters:[String], completion: @Sendable @escaping (Error?) -> Void)
 		{
 			
 			let adviceRef = commentReference.document(postId).collection("Advices").document(adviceId)
@@ -512,7 +527,7 @@ class FireDatabaseService: @unchecked Sendable {
 		}
 	
 	//MARK: - Media Functions
-	func RetrieveMediaList(location: LocationReport, completion: @Sendable @escaping ([String]) -> ())
+	func retrieveMediaList(location: LocationReport, completion: @Sendable @escaping ([String]) -> ())
 	{
 		let state = Box((counter: 0, list: [String]()))
 		let reportCount = location.incidentReports.count
@@ -534,12 +549,14 @@ class FireDatabaseService: @unchecked Sendable {
 					}
 					else
 					{
-						if snapshot!.exists
+						if let snapshot = snapshot, snapshot.exists,
+						   let mediaArry = snapshot.data()?["media"] as? [String : [String]]
 						{
-							let mediaArry = snapshot!.data()?["media"] as! [String : [String]]
 							for media in mediaArry.values
 							{
-								state.value.list.append(media[0])
+								if let first = media.first {
+									state.value.list.append(first)
+								}
 							}
 
 							state.value.counter += 1
@@ -562,7 +579,7 @@ class FireDatabaseService: @unchecked Sendable {
 		}
 	}
 
-	func RetrieveMediaLists(locations: [LocationReport], completion: @Sendable @escaping ([String: [String]]) -> ())
+	func retrieveMediaLists(locations: [LocationReport], completion: @Sendable @escaping ([String: [String]]) -> ())
 	{
 		let locationCount = locations.count
 		let outerState = Box((locationCounter: 0, mediaList: [String: [String]]()))
@@ -595,13 +612,15 @@ class FireDatabaseService: @unchecked Sendable {
 							}
 							else
 							{
-								if snapshot!.exists
+								if let snapshot = snapshot, snapshot.exists,
+								   let mediaArry = snapshot.data()?["media"] as? [String : [String]]
 								{
-									let mediaArry = snapshot!.data()?["media"] as! [String : [String]]
 									var fileList = [String]()
 									for media in mediaArry.values
 									{
-										fileList.append(media[0])
+										if let first = media.first {
+											fileList.append(first)
+										}
 									}
 									outerState.value.mediaList[location.postId] = fileList
 									reportState.value += 1
@@ -629,7 +648,7 @@ class FireDatabaseService: @unchecked Sendable {
 			}
 		}
 	}
-		func InsertNoMediaChild(reference : DatabaseReference, completion: @Sendable @escaping () -> ())
+		func insertNoMediaChild(reference : DatabaseReference, completion: @Sendable @escaping () -> ())
 		{
 			let noMediaParam = ["NoMedia" : true]
 			reference.setValue(noMediaParam)
@@ -647,13 +666,12 @@ class FireDatabaseService: @unchecked Sendable {
 			}
 		}
 		
-		func AddMediaToReference(reference:DatabaseReference, media: String, completion: @Sendable @escaping () ->())
+		func addMediaToReference(reference:DatabaseReference, media: String, completion: @Sendable @escaping () ->())
 		{
 			reference.child("incidentMedia").childByAutoId().observeSingleEvent(of: .value, with: {(snapshot) in
 				
-				if snapshot.exists()
+				if snapshot.exists(), let mediaArr = snapshot.value as? [String]
 				{
-					let mediaArr : [String] = snapshot.value as! [String]
 					var newMediaArr : [String] = []
 					newMediaArr.append(contentsOf: mediaArr)
 					newMediaArr.append(media)

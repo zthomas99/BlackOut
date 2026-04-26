@@ -40,13 +40,13 @@ open class CustomCamera: UIImagePickerController,  UIImagePickerControllerDelega
     // MARK: - UIImagePickerControllerDelegate methods
     
     open func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let mediaType = info[.mediaType] as! String
+        guard let mediaType = info[.mediaType] as? String else { return }
 
         if mediaType == kUTTypeImage as String {
-            let image = info[.originalImage] as! UIImage
+            guard let image = info[.originalImage] as? UIImage else { return }
             self.didFinishCapturingImage?(image)
         } else if mediaType == kUTTypeMovie as String {
-            let videoURL = info[.mediaURL] as! URL
+            guard let videoURL = info[.mediaURL] as? URL else { return }
             self.didFinishCapturingVideo?(videoURL)
         }
     }

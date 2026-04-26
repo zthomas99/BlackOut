@@ -25,7 +25,7 @@ class IncidentDetailsTableViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         CompanyNameLabel.text = incident?.businessName
-        addressLabel.text = incident?.businessLoaction
+        addressLabel.text = incident?.businessLocation
         incidentDescription.text = incident?.descriptionMessage
         incidentUsername.text = incident?.username
 		lblReportTitle.text = incident?.reportTitle.uppercased()

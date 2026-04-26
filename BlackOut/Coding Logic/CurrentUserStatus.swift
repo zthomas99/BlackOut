@@ -13,14 +13,15 @@ public class CurrentUserStatus: @unchecked Sendable
 	static let  shared = CurrentUserStatus()
 	var user : User?
 	var userId : String?
+	private var authStateHandle: AuthStateDidChangeListenerHandle?
 	
 	init() {
-		Auth.auth().addStateDidChangeListener({
+		authStateHandle = Auth.auth().addStateDidChangeListener({ [weak self]
 			(auth, user)
 			in
 			
-			self.user = auth.currentUser
-			self.userId = auth.currentUser?.uid
+			self?.user = auth.currentUser
+			self?.userId = auth.currentUser?.uid
 			
 		})
 	}

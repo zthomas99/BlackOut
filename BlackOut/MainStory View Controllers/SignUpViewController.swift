@@ -85,7 +85,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 return
             }
 			let fireDatbaseService = FireDatabaseService()
-			fireDatbaseService.AddUserAccount(user: user!.user)
+			fireDatbaseService.addUserAccount(user: user!.user)
             self.sendEmailVerifcation(createdUser: user!.user)
             if let range = txtEmail.range(of: "@")
             {

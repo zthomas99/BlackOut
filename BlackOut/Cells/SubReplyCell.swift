@@ -71,7 +71,7 @@ class SubReplyCell: UITableViewCell {
 	}
 	
 	@IBAction func ReplyButtonTapped(_ sender: Any) {
-		let section = Int(self.accessibilityIdentifier!)!
+		guard let identifier = self.accessibilityIdentifier, let section = Int(identifier) else { return }
 		instanceOfCommentTableView?.ShowAddReply(sender: IndexPath(row: self.tag, section: section))
 	}
 	

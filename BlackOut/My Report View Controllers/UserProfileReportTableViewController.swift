@@ -29,13 +29,13 @@ class UserProfileReportTableViewController: UITableViewController {
 			 username = "unknown"
 		 }
 		 let fireDatabaseService = FireDatabaseService()
-		 fireDatabaseService.RetrieveReports(withUser: username!, completion: { [weak self] reports in
+		 fireDatabaseService.retrieveReports(withUser: username!, completion: { [weak self] reports in
 			 Task { @MainActor in
 				 guard let self = self else { return }
 				 self.reports = reports
 				 if self.reports.count > 0
 				 {
-					 FireDatabaseService.shared.RetrieveCommentMetadata(withReports: reports, completion: { [weak self] data in
+					 FireDatabaseService.shared.retrieveCommentMetadata(withReports: reports, completion: { [weak self] data in
 						 Task { @MainActor in
 							 guard let self = self else { return }
 							 self.commentStatMap = data

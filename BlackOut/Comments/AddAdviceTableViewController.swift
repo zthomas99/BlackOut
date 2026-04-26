@@ -37,7 +37,7 @@ class AddAdviceTableViewController: UITableViewController {
 
 	@IBAction func SendButtonWasTapped(_ sender: Any) {
 		let fireDatabaseService = FireDatabaseService()
-		let err = fireDatabaseService.SubmitAdvice(postId: postId!, comment: txtCommentView.text)
+		let err = fireDatabaseService.submitAdvice(postId: postId!, comment: txtCommentView.text)
 		if err != nil
 		{
 			let error : Error = err as! Error

@@ -40,29 +40,30 @@ class ReplyCell: UITableViewCell {
 	
 	func StyleCell()
 	{
-		lblUsername.text = selectReply?.user
+		guard let selectReply = selectReply else { return }
+		lblUsername.text = selectReply.user
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateStyle = .medium
 		dateFormatter.timeZone = .none
 		dateFormatter.locale = Locale(identifier: "en_US")
 		
 		let calendar = Calendar.current
-		if calendar.isDate(selectReply!.date, inSameDayAs: Date())
+		if calendar.isDate(selectReply.date, inSameDayAs: Date())
 		{
-			lblDate.text = Date().timeAgo(compare: selectReply!.date)
+			lblDate.text = Date().timeAgo(compare: selectReply.date)
 		}
 		else
 		{
-			lblDate.text = dateFormatter.string(from: (selectReply?.date)!)
+			lblDate.text = dateFormatter.string(from: selectReply.date)
 		}
 
-		textViewComment.text = selectReply?.comment
+		textViewComment.text = selectReply.comment
 	}
 	
 	//MARK: - Protocol Delegate
 	@objc func PresentAddReplyController()
 	{
-		let section = Int(self.accessibilityIdentifier!)!
+		guard let identifier = self.accessibilityIdentifier, let section = Int(identifier) else { return }
 		instanceOfCommentTableVewControler?.ShowAddReply(sender: IndexPath(row: self.tag, section: section))
 	}
 	

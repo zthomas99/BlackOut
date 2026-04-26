@@ -280,7 +280,7 @@ class FireStorage: @unchecked Sendable {
 							progress.errorCount += 1
 							progress.completedCount += 1
 							if progress.errorCount == assetCount {
-								FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
+								FireDatabaseService.shared.insertNoMediaChild(reference: reference) {
 									if progress.completedCount == assetCount {
 										Task { @MainActor in pickerController.deselectAll() }
 										completion(error)
@@ -289,7 +289,7 @@ class FireStorage: @unchecked Sendable {
 							}
 						} else {
 							progress.completedCount += 1
-							FireDatabaseService.shared.AddMediaToReference(reference: reference, media: fileName) {
+							FireDatabaseService.shared.addMediaToReference(reference: reference, media: fileName) {
 								if progress.completedCount == assetCount {
 									Task { @MainActor in pickerController.deselectAll() }
 									completion(error)
@@ -310,7 +310,7 @@ class FireStorage: @unchecked Sendable {
 							progress.errorCount += 1
 							progress.completedCount += 1
 							if progress.errorCount == assetCount {
-								FireDatabaseService.shared.InsertNoMediaChild(reference: reference) {
+								FireDatabaseService.shared.insertNoMediaChild(reference: reference) {
 									if progress.completedCount == assetCount {
 										Task { @MainActor in pickerController.deselectAll() }
 										completion(error)
@@ -319,7 +319,7 @@ class FireStorage: @unchecked Sendable {
 							}
 						} else {
 							progress.completedCount += 1
-							FireDatabaseService.shared.AddMediaToReference(reference: reference, media: fileName) {
+							FireDatabaseService.shared.addMediaToReference(reference: reference, media: fileName) {
 								if progress.completedCount == assetCount {
 									Task { @MainActor in pickerController.deselectAll() }
 									completion(error)
