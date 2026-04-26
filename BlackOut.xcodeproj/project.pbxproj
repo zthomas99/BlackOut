@@ -153,6 +153,11 @@
 		EED509D9239763710014A345 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED509D8239763710014A345 /* UIButtonExtension.swift */; };
 		EED509DD2399D1DA0014A345 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED509DC2399D1DA0014A345 /* VideoViewController.swift */; };
 		EEE3DD812F9D15FE006F3D69 /* AddReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE3DD802F9D15FE006F3D69 /* AddReportViewController.swift */; };
+		EEE3DD842F9EC152006F3D69 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE3DD832F9EC152006F3D69 /* UserService.swift */; };
+		EEE3DD862F9EC159006F3D69 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE3DD852F9EC159006F3D69 /* LocationService.swift */; };
+		EEF737DC2F9EC1DC0092A9E4 /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737DB2F9EC1DC0092A9E4 /* CommentService.swift */; };
+		EEF737DE2F9EC1F10092A9E4 /* MediaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737DD2F9EC1F10092A9E4 /* MediaService.swift */; };
+		EEF737E02F9EC2230092A9E4 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737DF2F9EC2230092A9E4 /* ReportService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -334,6 +339,11 @@
 		EED509D8239763710014A345 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		EED509DC2399D1DA0014A345 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		EEE3DD802F9D15FE006F3D69 /* AddReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReportViewController.swift; sourceTree = "<group>"; };
+		EEE3DD832F9EC152006F3D69 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		EEE3DD852F9EC159006F3D69 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		EEF737DB2F9EC1DC0092A9E4 /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
+		EEF737DD2F9EC1F10092A9E4 /* MediaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaService.swift; sourceTree = "<group>"; };
+		EEF737DF2F9EC2230092A9E4 /* ReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportService.swift; sourceTree = "<group>"; };
 		F476B7275A8488B79DCCF4D3 /* Pods-BlackOutTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackOutTests.release.xcconfig"; path = "Target Support Files/Pods-BlackOutTests/Pods-BlackOutTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -552,6 +562,7 @@
 				EE482FB724A6FB17001F03BB /* CurrentUserStatus.swift */,
 				EE486A1E24A95D700000018E /* UIImageViewExtension.swift */,
 				EE486A2024AC09210000018E /* DateExtension.swift */,
+				EEE3DD822F9EC12A006F3D69 /* Services */,
 			);
 			path = "Coding Logic";
 			sourceTree = "<group>";
@@ -685,6 +696,18 @@
 				EE94E76A2499D93900B271E0 /* SlideInSegue.swift */,
 			);
 			path = Segues;
+			sourceTree = "<group>";
+		};
+		EEE3DD822F9EC12A006F3D69 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EEE3DD832F9EC152006F3D69 /* UserService.swift */,
+				EEE3DD852F9EC159006F3D69 /* LocationService.swift */,
+				EEF737DB2F9EC1DC0092A9E4 /* CommentService.swift */,
+				EEF737DD2F9EC1F10092A9E4 /* MediaService.swift */,
+				EEF737DF2F9EC2230092A9E4 /* ReportService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -999,6 +1022,8 @@
 				EE85057C24A1A81E00CF2394 /* LocationSearch.swift in Sources */,
 				EE486A1F24A95D700000018E /* UIImageViewExtension.swift in Sources */,
 				EE07D4CF2F92D9B700A5AC88 /* CommentsCoordinator.swift in Sources */,
+				EEE3DD842F9EC152006F3D69 /* UserService.swift in Sources */,
+				EEF737DE2F9EC1F10092A9E4 /* MediaService.swift in Sources */,
 				EE4399D92494866900356307 /* ProfileReportTableViewController.swift in Sources */,
 				EE478E7023805F100048A191 /* FlagTableViewController.swift in Sources */,
 				EE9362F8248316960037FB84 /* CustomCamera.swift in Sources */,
@@ -1015,6 +1040,7 @@
 				EE48A893246E41500050D949 /* PostCell.swift in Sources */,
 				EED509DD2399D1DA0014A345 /* VideoViewController.swift in Sources */,
 				EE07D4CC2F92D92700A5AC88 /* CommentsViewModel.swift in Sources */,
+				EEE3DD862F9EC159006F3D69 /* LocationService.swift in Sources */,
 				EE48A88B2468CB080050D949 /* AddReplyTableViewController.swift in Sources */,
 				B32DE0BD2157E59000803776 /* AlertController.swift in Sources */,
 				EE77242D23CD3AE300B8CCA0 /* StoryViewExtension.swift in Sources */,
@@ -1026,6 +1052,7 @@
 				EE486A2924AD90490000018E /* NotificationHandler.swift in Sources */,
 				B32DE0B5214F0C8E00803776 /* SignUpViewController.swift in Sources */,
 				B32DE08721487EF400803776 /* LoginViewController.swift in Sources */,
+				EEF737DC2F9EC1DC0092A9E4 /* CommentService.swift in Sources */,
 				EE0216B724A011510035A78B /* MyReportInfoTableViewCell.swift in Sources */,
 				24397613218BE11A00B43866 /* IncidentViewController.swift in Sources */,
 				24EDF3982178F6CA000FC219 /* IncidentReport.swift in Sources */,
@@ -1039,6 +1066,7 @@
 				EE94E7652499980E00B271E0 /* BlockedAccountTableViewController.swift in Sources */,
 				B32DE08521487EF400803776 /* AppDelegate.swift in Sources */,
 				EE64FFCF2490A7DB00F6C99F /* Comment.swift in Sources */,
+				EEF737E02F9EC2230092A9E4 /* ReportService.swift in Sources */,
 				EEC3125923BAEB7C00841A94 /* LocationSnapHelper.swift in Sources */,
 				EE1144F32481EFA7009FD79F /* SubReplyCell.swift in Sources */,
 				EE27147B2F9670A4007C6FE4 /* SceneDelegate.swift in Sources */,
