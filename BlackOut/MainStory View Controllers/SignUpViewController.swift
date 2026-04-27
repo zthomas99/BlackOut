@@ -84,8 +84,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 AlertController.showAlert(self, title: "Error", message: error!.localizedDescription)
                 return
             }
-			let fireDatbaseService = FireDatabaseService()
-			fireDatbaseService.addUserAccount(user: user!.user)
+			UserService.shared.addUserAccount(user: user!.user)
             self.sendEmailVerifcation(createdUser: user!.user)
             if let range = txtEmail.range(of: "@")
             {

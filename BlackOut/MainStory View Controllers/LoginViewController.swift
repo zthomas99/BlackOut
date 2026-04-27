@@ -50,8 +50,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 				self.showLoginAlert(title: "Email Verification failure", message: "Email for this user has yet been verified. Would you like to resend the email verficiation?")
 				return
 			}
-			let fireDatabaseService = FireDatabaseService()
-			fireDatabaseService.retrieveCurrentUser(completion: { [weak self] error in
+			UserService.shared.retrieveCurrentUser(completion: { [weak self] error in
 				Task { @MainActor in
 					guard let self = self else { return }
 					if error != nil

@@ -25,7 +25,7 @@ class SearchViewController:UIViewController, UITableViewDelegate, UITextFieldDel
 	let searchFunctions = LocationSearch()
 	
     //Fire Database field
-    var database:FireDatabaseService?
+    var database:LocationService?
     
     var reports = [IncidentReport]()
     var stateShortName : String = ""
@@ -62,7 +62,7 @@ class SearchViewController:UIViewController, UITableViewDelegate, UITextFieldDel
         {
         case "city" :
 			let search = searchFunctions.formatCitySearch(searchText: searchText.text!, stateShortName: stateShortName)
-			FireDatabaseService.shared.retrieveLocations(search: search, searchType: searchType, completion: { [weak self] locations in
+			LocationService.shared.retrieveLocations(search: search, searchType: searchType, completion: { [weak self] locations in
 				Task { @MainActor in
 					self?.locationTableViewController?.locations = locations
 					self?.locationTableViewController?.isFirstSearch = false
@@ -71,7 +71,7 @@ class SearchViewController:UIViewController, UITableViewDelegate, UITextFieldDel
 			})
         case "state" :
 			let search = searchFunctions.formaatStateSearch(searchText: searchText.text!)
-			FireDatabaseService.shared.retrieveLocations(search: search, searchType: searchType, completion: { [weak self] locations in
+			LocationService.shared.retrieveLocations(search: search, searchType: searchType, completion: { [weak self] locations in
 				Task { @MainActor in
 					self?.locationTableViewController?.locations = locations
 					self?.locationTableViewController?.isFirstSearch = false
@@ -80,7 +80,7 @@ class SearchViewController:UIViewController, UITableViewDelegate, UITextFieldDel
 			})
          case "zipCode" :
 		   let search = searchFunctions.formatZipSearch(searchText: searchText.text!, stateShortName: stateShortName)
-		   FireDatabaseService.shared.retrieveLocations(search: search, searchType: searchType, completion: { [weak self] locations in
+		   LocationService.shared.retrieveLocations(search: search, searchType: searchType, completion: { [weak self] locations in
 			Task { @MainActor in
 				self?.locationTableViewController?.locations = locations
 				self?.locationTableViewController?.isFirstSearch = false

@@ -38,7 +38,7 @@ class SearchReportTableViewController: UITableViewController {
         guard let incidents = incidents else { return }
         for incident in incidents
         {
-            FireDatabaseService.shared.incidentReference.child(incident).observeSingleEvent(of: .value)
+            ReportService.shared.incidentReference.child(incident).observeSingleEvent(of: .value)
             {
                 (snapshot, err) in
                 

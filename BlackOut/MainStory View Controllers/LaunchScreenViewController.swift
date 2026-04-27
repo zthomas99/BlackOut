@@ -28,7 +28,7 @@ class LaunchScreenViewController: UIViewController {
 			}
 			else
 			{
-				FireDatabaseService.shared.retrieveCurrentUser(completion: {
+				UserService.shared.retrieveCurrentUser(completion: {
 					(error)
 					in
 					

@@ -16,7 +16,7 @@ final class CommentService: CommentServicing, @unchecked Sendable {
 	static let shared = CommentService()
 	private let db = Firestore.firestore()
 	private let incidentReference: DatabaseReference
-	private let commentReference: CollectionReference
+	let commentReference: CollectionReference
 
 	private init() {
 		incidentReference = Database.database().reference().child("incidents")

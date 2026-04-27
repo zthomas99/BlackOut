@@ -176,8 +176,7 @@ class LocationTableViewController: UITableViewController {
 				if location.hasMediaFiles
 				{
 					group.enter()
-					let fireDatabaseService = FireDatabaseService()
-					fireDatabaseService.retrieveMediaList(location: location, completion: { [weak self] mediaList in
+					MediaService.shared.retrieveMediaList(location: location, completion: { [weak self] mediaList in
 						DispatchQueue.main.async {
 							self?.mediaList[location] = mediaList
 							group.leave()

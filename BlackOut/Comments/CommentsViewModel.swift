@@ -27,11 +27,11 @@ final class CommentsViewModel: @unchecked Sendable {
     }
 
     private let databaseService: CommentsViewModelServicing
-    private let firestoreService: FireDatabaseService
+    private let firestoreService: CommentService
     private let syncLock = NSLock()
 
     init(databaseService: CommentsViewModelServicing = FireDatabaseService.shared,
-         firestoreService: FireDatabaseService = FireDatabaseService.shared) {
+         firestoreService: CommentService = CommentService.shared) {
         self.databaseService = databaseService
         self.firestoreService = firestoreService
     }

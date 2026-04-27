@@ -70,8 +70,7 @@ class AddReplyTableViewController: UITableViewController {
 		
 		if isReplyToAdvice
 		{
-			let firebaseDatabaseService = FireDatabaseService()
-			firebaseDatabaseService.submitReply(postId: postId, comment: replyTextView.text, advice: advice!, completion: { [weak self] error in
+			CommentService.shared.submitReply(postId: postId, comment: replyTextView.text, advice: advice!, completion: { [weak self] error in
 				Task { @MainActor in
 					guard let self = self else { return }
 					if let error = error
@@ -87,8 +86,7 @@ class AddReplyTableViewController: UITableViewController {
 			})
 		}
 		else {
-			let fireDatabaseService = FireDatabaseService()
-			fireDatabaseService.submitReplyToReply(postId: postId, comment: replyTextView.text, advice: advice!, reply: reply!, completion: { [weak self] error in
+			CommentService.shared.submitReplyToReply(postId: postId, comment: replyTextView.text, advice: advice!, reply: reply!, completion: { [weak self] error in
 				Task { @MainActor in
 					guard let self = self else { return }
 					if let error = error

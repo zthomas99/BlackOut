@@ -12,7 +12,7 @@ protocol ReportServicing {
 final class ReportService: ReportServicing, @unchecked Sendable {
 	static let shared = ReportService()
 	private let db = Firestore.firestore()
-	private let incidentReference: DatabaseReference
+	let incidentReference: DatabaseReference
 	private let commentReference: CollectionReference
 
 	private final class Box<T>: @unchecked Sendable {

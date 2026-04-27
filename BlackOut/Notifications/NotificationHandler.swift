@@ -46,7 +46,7 @@ class NotificationsHandler: NSObject, MessagingDelegate, UNUserNotificationCente
 			} else if let token = token{
 				if !(UserAccount.shared?.fcmTokens.contains(token))!
 				{
-					FireDatabaseService.shared.updateTokens(userId: user.uid, data: token, completion: {
+					UserService.shared.updateTokens(userId: user.uid, data: token, completion: {
 						(error)
 						in
 						if let error = error
@@ -75,7 +75,7 @@ class NotificationsHandler: NSObject, MessagingDelegate, UNUserNotificationCente
 				print("Error fetching remote messaging token: \(error)")
 			}
 			else if let token = token {
-				FireDatabaseService.shared.removeToken(userId: user.uid, data: token, completion: {
+				UserService.shared.removeToken(userId: user.uid, data: token, completion: {
 					(error)
 					in
 					if let error = error

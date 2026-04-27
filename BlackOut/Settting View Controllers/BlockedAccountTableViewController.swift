@@ -19,8 +19,7 @@ class BlockedAccountTableViewController: UITableViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		let fireDatabaseService = FireDatabaseService()
-		fireDatabaseService.retrieveBlockedUsers(completion: { [weak self] users in
+		UserService.shared.retrieveBlockedUsers(completion: { [weak self] users in
 			Task { @MainActor in
 				self?.blockedUsers = users
 				self?.tableView.reloadData()
@@ -89,8 +88,7 @@ class BlockedAccountTableViewController: UITableViewController {
 		let button = sender as? UIButton
 		let index = button!.tag
 		let user = blockedUsers[index]
-		let fireDatabaseService = FireDatabaseService()
-		fireDatabaseService.unblockUsers(username: user, completion: { [weak self] error in
+		UserService.shared.unblockUsers(username: user, completion: { [weak self] error in
 			Task { @MainActor in
 				if error == nil
 				{

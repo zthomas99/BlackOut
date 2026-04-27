@@ -48,8 +48,7 @@ class EditReportViewController: UIViewController, UITextViewDelegate {
 				AlertController.showAlert(self, title: "Minimum Length Not Met", message: "The description message is to short, please enter more details.")
 				return
 			}
-			let fireDatabaseService = FireDatabaseService()
-			fireDatabaseService.setReportDescription(reportID: report.postId, description: text)
+			ReportService.shared.setReportDescription(reportID: report.postId, description: text)
 		}
 	}
 	
@@ -89,7 +88,7 @@ class EditReportViewController: UIViewController, UITextViewDelegate {
 		{
 			if picView.selectedAssets.count > 0
 			{
-				let ref = FireDatabaseService.shared.incidentReference.child(report.postId)
+				let ref = ReportService.shared.incidentReference.child(report.postId)
 				let fireStorage = FireStorage()
 				fireStorage.UploadSelectedPhotos(reference: ref, pickerController: picView, completion: { [weak self] error in
 					Task { @MainActor in

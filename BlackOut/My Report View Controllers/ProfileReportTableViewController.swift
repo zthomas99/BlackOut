@@ -150,14 +150,13 @@ class ProfileReportTableViewController: UITableViewController {
 
 	@objc func RefreshTable()
 	{
-		let fireDatabaseService = FireDatabaseService()
-		fireDatabaseService.retrieveReports(withUser: username!, completion: { [weak self] reports in
+		ReportService.shared.retrieveReports(withUser: username!, completion: { [weak self] reports in
 			Task { @MainActor in
 				guard let self = self else { return }
 				self.reports = reports
 				if self.reports.count > 0
 				{
-					FireDatabaseService.shared.retrieveCommentMetadata(withReports: reports, completion: { [weak self] data in
+					ReportService.shared.retrieveCommentMetadata(withReports: reports, completion: { [weak self] data in
 						Task { @MainActor in
 							guard let self = self else { return }
 							self.commentStatMap = data
