@@ -6,7 +6,7 @@ import Foundation
 protocol CommentServicing {
 	func submitReply(postId: String, comment: String, advice: Advice, completion: @Sendable @escaping (Error?) -> Void)
 	func submitReplyToReply(postId: String, comment: String, advice: Advice, reply: Reply, completion: @Sendable @escaping (Error?) -> Void)
-	func submitAdvice(postId: String, comment: String) -> Any?
+	func submitAdvice(postId: String, comment: String, completion: @Sendable @escaping (Error?) -> Void)
 	func incrementAdviceCommentCount(postId: String, adviceId: String, completion: @Sendable @escaping () -> Void)
 	func incrementReplyCount(postId: String)
 	func setVoters(postId: String, adviceId: String, upVoters: [String], downVoters: [String], completion: @Sendable @escaping (Error?) -> Void)
@@ -36,13 +36,12 @@ final class CommentService: CommentServicing, @unchecked Sendable {
 			"hasReply": false
 		]) { err in
 			if let err = err {
-				print("Failed to add reply due to the following error \(err)")
 				completion(err)
 			} else {
 				let adviceRef = self.commentReference.document(postId).collection("Advices").document(advice.id)
 				adviceRef.updateData(["hasReply": true]) { err in
 					if let err = err {
-						print("Failed to update has reply for the following advice \(advice.id)  due to the following error \(err)")
+						completion(err)
 					} else {
 						self.incrementReplyCount(postId: postId)
 						self.incrementAdviceCommentCount(postId: postId, adviceId: advice.id, completion: {
@@ -66,7 +65,6 @@ final class CommentService: CommentServicing, @unchecked Sendable {
 			"hasReply": true
 		]) { err in
 			if let err = err {
-				print("Failed to add reply due to the following error \(err)")
 				completion(err)
 			} else {
 				self.incrementReplyCount(postId: postId)
@@ -77,12 +75,11 @@ final class CommentService: CommentServicing, @unchecked Sendable {
 		}
 	}
 
-	func submitAdvice(postId: String, comment: String) -> Any? {
+	func submitAdvice(postId: String, comment: String, completion: @Sendable @escaping (Error?) -> Void) {
 		let upVoters = [String]()
 		let downVoters = [String]()
-		guard let user = Auth.auth().currentUser?.displayName else { return nil }
+		guard let user = Auth.auth().currentUser?.displayName else { return }
 		let date = String(describing: Date())
-		var error: Any?
 		commentReference.document(postId).collection("Advices").addDocument(data: [
 			"username": user,
 			"date": date,
@@ -93,13 +90,12 @@ final class CommentService: CommentServicing, @unchecked Sendable {
 			"downVoters": downVoters
 		]) { err in
 			if let err = err {
-				error = err
-				print("Failed to add advice due to the following error : \(err)")
+				completion(err)
 			} else {
 				self.incrementReplyCount(postId: postId)
+				completion(nil)
 			}
 		}
-		return error
 	}
 
 	func incrementAdviceCommentCount(postId: String, adviceId: String, completion: @Sendable @escaping () -> Void) {
@@ -123,12 +119,7 @@ final class CommentService: CommentServicing, @unchecked Sendable {
 			transaction.updateData(["commentCount": oldCount + 1], forDocument: adviceRef)
 			return nil
 		}) { object, error in
-			if let error = error {
-				print("Transaction increment advice comment count failed : \(error)")
-			} else {
-				print("Transacation increment advice comment succeeded!")
-				completion()
-			}
+			completion()
 		}
 	}
 
@@ -144,9 +135,6 @@ final class CommentService: CommentServicing, @unchecked Sendable {
 			}
 			return TransactionResult.success(withValue: currentData)
 		}) { error, committed, snapshot in
-			if let error = error {
-				print(error.localizedDescription)
-			}
 		}
 	}
 
@@ -156,13 +144,7 @@ final class CommentService: CommentServicing, @unchecked Sendable {
 			transaction.updateData(["upVoters": upVoters, "downVoters": downVoters], forDocument: adviceRef)
 			return nil
 		}) { object, error in
-			if let error = error {
-				print("Update Voters Transaction Failed: \(error)")
-				completion(error)
-			} else {
-				print("Update Voters Transaction successfully committed!")
-				completion(nil)
-			}
+			completion(error)
 		}
 	}
 }

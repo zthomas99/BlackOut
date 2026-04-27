@@ -29,8 +29,7 @@ final class LocationService: LocationServicing, @unchecked Sendable {
 
 		locationReference.whereField(field, isEqualTo: search)
 			.getDocuments { locationSnapshot, err in
-				if let err = err {
-					print("Error getting documents for \(searchType) search: \(err)")
+				if err != nil {
 					completion([])
 					return
 				}

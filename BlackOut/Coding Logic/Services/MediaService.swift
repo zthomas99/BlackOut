@@ -30,9 +30,8 @@ final class MediaService: MediaServicing, @unchecked Sendable {
 		for report in location.incidentReports {
 			let reportRef = locationReference.document(location.postId).collection("reports").document(report)
 			reportRef.getDocument { snapshot, err in
-				if let err = err {
+				if err != nil {
 					state.value.counter += 1
-					print("There was an error in querying the documents for the following post id  : \(location.postId) error : \(err)")
 					if reportCount == state.value.counter {
 						completion(state.value.list)
 					}
@@ -69,12 +68,11 @@ final class MediaService: MediaServicing, @unchecked Sendable {
 				for report in location.incidentReports {
 					let reportRef = locationReference.document(location.postId).collection("reports").document(report)
 					reportRef.getDocument { snapshot, err in
-						if let err = err {
+						if err != nil {
 							reportState.value += 1
 							if reportState.value == reportCount {
 								outerState.value.locationCounter += 1
 							}
-							print("There was an error in querying the documents for the following post id  : \(location.postId) error : \(err)")
 							if outerState.value.locationCounter == locationCount {
 								completion(outerState.value.mediaList)
 							}
@@ -111,11 +109,7 @@ final class MediaService: MediaServicing, @unchecked Sendable {
 	func insertNoMediaChild(reference: DatabaseReference, completion: @Sendable @escaping () -> ()) {
 		let noMediaParam = ["NoMedia": true]
 		reference.setValue(noMediaParam) { error, ref in
-			if error != nil {
-				print("Failed to set no media reference for the following reasons: \(String(describing: error))")
-			} else {
-				completion()
-			}
+			completion()
 		}
 	}
 
@@ -129,21 +123,13 @@ final class MediaService: MediaServicing, @unchecked Sendable {
 					newMediaArr.remove(at: 0)
 				}
 				reference.child("incidentMedia").childByAutoId().setValue(newMediaArr) { error, ref in
-					if error != nil {
-						print("Failed to set media reference for the following media item \(media)")
-					} else {
-						completion()
-					}
+					completion()
 				}
 			} else {
 				var newMediaArr: [String] = []
 				newMediaArr.append(media)
 				reference.child("incidentMedia").childByAutoId().setValue(newMediaArr) { error, ref in
-					if error != nil {
-						print("Failed to set media reference for the following media item \(media) : error - \(String(describing: error))")
-					} else {
-						completion()
-					}
+					completion()
 				}
 			}
 		})

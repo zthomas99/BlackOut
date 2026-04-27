@@ -51,7 +51,7 @@ struct CommentsViewModelTests {
     @Test
     func applyUpVote_movesUserFromDownToUp() {
         let service = MockCommentsService()
-        let sut = CommentsViewModel(databaseService: service, firestoreService: FireDatabaseService.shared)
+        let sut = CommentsViewModel(databaseService: service, firestoreService: CommentService.shared)
         var advice = makeAdvice(upVoters: [], downVoters: ["u1"])
 
         sut.applyUpVote(to: &advice, userId: "u1")
@@ -63,7 +63,7 @@ struct CommentsViewModelTests {
     @Test
     func applyDownVote_movesUserFromUpToDown() {
         let service = MockCommentsService()
-        let sut = CommentsViewModel(databaseService: service, firestoreService: FireDatabaseService.shared)
+        let sut = CommentsViewModel(databaseService: service, firestoreService: CommentService.shared)
         var advice = makeAdvice(upVoters: ["u1"], downVoters: [])
 
         sut.applyDownVote(to: &advice, userId: "u1")
@@ -76,7 +76,7 @@ struct CommentsViewModelTests {
     func retrieveBlockedUsers_forwardsServiceResponse() async {
         let service = MockCommentsService()
         service.blockedUsersToReturn = ["one", "two"]
-        let sut = CommentsViewModel(databaseService: service, firestoreService: FireDatabaseService.shared)
+        let sut = CommentsViewModel(databaseService: service, firestoreService: CommentService.shared)
 
         var result: [String] = []
         sut.retrieveBlockedUsers { users in
@@ -91,7 +91,7 @@ struct CommentsViewModelTests {
         let service = MockCommentsService()
         let expectedError = NSError(domain: "test", code: 1)
         service.addBlockedUserError = expectedError
-        let sut = CommentsViewModel(databaseService: service, firestoreService: FireDatabaseService.shared)
+        let sut = CommentsViewModel(databaseService: service, firestoreService: CommentService.shared)
 
         var completionError: Error?
         sut.addBlockedUser(username: "target") { error in
@@ -106,7 +106,7 @@ struct CommentsViewModelTests {
     @Test
     func setVoters_forwardsAdviceDataToService() {
         let service = MockCommentsService()
-        let sut = CommentsViewModel(databaseService: service, firestoreService: FireDatabaseService.shared)
+        let sut = CommentsViewModel(databaseService: service, firestoreService: CommentService.shared)
         let advice = makeAdvice(upVoters: ["up"], downVoters: ["down"])
 
         sut.setVoters(postId: "post-1", advice: advice) { _ in }

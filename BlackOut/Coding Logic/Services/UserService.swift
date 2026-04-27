@@ -39,18 +39,12 @@ final class UserService: UserServicing, @unchecked Sendable {
 
 	func updateTokens(userId: String, data: String, completion: @Sendable @escaping (_ error: Error?) -> ()) {
 		userReference.document(userId).setData(["fcmTokens": FieldValue.arrayUnion([data])], merge: true) { error in
-			if let error = error {
-				print("failed to update user fcm tokens due to the following error: \(error)")
-			}
 			completion(error)
 		}
 	}
 
 	func removeToken(userId: String, data: String, completion: @Sendable @escaping (_ error: Error?) -> ()) {
 		userReference.document(userId).setData(["fcmTokens": FieldValue.arrayRemove([data])], merge: true) { error in
-			if let error = error {
-				print("failed to update user fcm tokens due to the following error: \(error)")
-			}
 			completion(error)
 		}
 	}
@@ -99,8 +93,7 @@ final class UserService: UserServicing, @unchecked Sendable {
 			return
 		}
 		userReference.document(userId).getDocument { snapshot, err in
-			if let err = err {
-				print("Failed to retrieve blocked users for user with id : \(userId) error : \(err)")
+			if err != nil {
 				completion([])
 				return
 			}
@@ -136,13 +129,7 @@ final class UserService: UserServicing, @unchecked Sendable {
 				return nil
 			}
 		}) { object, error in
-			if let error = error {
-				print("Update Voters Transaction Failed: \(error)")
-				completion(error)
-			} else {
-				print("Update Voters Transaction successfully committed!")
-				completion(nil)
-			}
+			completion(error)
 		}
 	}
 
@@ -167,13 +154,7 @@ final class UserService: UserServicing, @unchecked Sendable {
 			}
 			return nil
 		}) { object, error in
-			if let error = error {
-				print("Update Voters Transaction Failed: \(error)")
-				completion(error)
-			} else {
-				print("Update Voters Transaction successfully committed!")
-				completion(nil)
-			}
+			completion(error)
 		}
 	}
 }

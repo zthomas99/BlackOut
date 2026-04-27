@@ -30,34 +30,32 @@ final class ReportService: ReportServicing, @unchecked Sendable {
 	}
 
 	func retrieveReports(withUser user: String, completion: @Sendable @escaping ([IncidentReport]) -> ()) {
-		var reports = [IncidentReport]()
 		incidentReference.queryOrdered(byChild: "username").queryEqual(toValue: user).observeSingleEvent(of: .value, with: { snapshot in
-			if snapshot.exists() {
-				guard let snapConverter = SnapToReports(with: snapshot) else {
-					print("Failed to convert snapshot to incident reports for user : \(user)")
-					completion(reports)
-					return
-				}
-				reports = snapConverter.reports
-				completion(reports)
+			guard snapshot.exists(),
+				  let snapConverter = SnapToReports(with: snapshot) else {
+				completion([])
+				return
 			}
+			completion(snapConverter.reports)
 		})
 	}
 
 	func retrieveCommentMetadata(withReports reports: [IncidentReport], completion: @Sendable @escaping ([String: CommentMetadata]) -> ()) {
+		guard !reports.isEmpty else {
+			completion([:])
+			return
+		}
 		let state = Box((count: 0, map: [String: CommentMetadata]()))
 		for report in reports {
 			commentReference.document(report.postId).getDocument { snapshot, error in
-				if error != nil {
-					print("Failed to retrive document for report with id \(report.postId)")
-				} else {
+				if error == nil {
 					let adviceCount = snapshot?.data()?["adviceCount"] as? Int ?? 0
 					let commentCount = snapshot?.data()?["commentCount"] as? Int ?? 0
-					state.value.count += 1
 					state.value.map[report.postId] = CommentMetadata(adviceCount: adviceCount, commentCount: commentCount)
-					if state.value.count == reports.count {
-						completion(state.value.map)
-					}
+				}
+				state.value.count += 1
+				if state.value.count == reports.count {
+					completion(state.value.map)
 				}
 			}
 		}

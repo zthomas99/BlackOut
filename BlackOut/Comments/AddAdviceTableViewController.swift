@@ -36,16 +36,16 @@ class AddAdviceTableViewController: UITableViewController {
     }
 
 	@IBAction func SendButtonWasTapped(_ sender: Any) {
-		let err = CommentService.shared.submitAdvice(postId: postId!, comment: txtCommentView.text)
-		if err != nil
-		{
-			let error : Error = err as! Error
-			AlertController.showAlert(self, title: "Failure to submit advice", message: "Failed to submit advice with the following error \(error)")
-		}
-		else
-		{
-			instanceOfCommentTableViewController?.Reload()
-			self.dismiss(animated: true, completion: nil)
+		CommentService.shared.submitAdvice(postId: postId!, comment: txtCommentView.text) { [weak self] error in
+			Task { @MainActor in
+				guard let self = self else { return }
+				if let error = error {
+					AlertController.showAlert(self, title: "Failure to submit advice", message: "Failed to submit advice with the following error \(error)")
+				} else {
+					self.instanceOfCommentTableViewController?.Reload()
+					self.dismiss(animated: true, completion: nil)
+				}
+			}
 		}
 	}
 	

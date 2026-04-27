@@ -78,8 +78,8 @@ class FireDatabaseService: @unchecked Sendable {
 		CommentService.shared.submitReplyToReply(postId: postId, comment: comment, advice: advice, reply: reply, completion: completion)
 	}
 
-	func submitAdvice(postId: String, comment: String) -> Any? {
-		return CommentService.shared.submitAdvice(postId: postId, comment: comment)
+	func submitAdvice(postId: String, comment: String, completion: @Sendable @escaping (Error?) -> Void) {
+		CommentService.shared.submitAdvice(postId: postId, comment: comment, completion: completion)
 	}
 
 	func incrementAdviceCommentCount(postId: String, adviceId: String, completion: @Sendable @escaping () -> Void) {

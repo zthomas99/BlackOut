@@ -84,8 +84,7 @@ final class CommentsViewModel: @unchecked Sendable {
         firestoreService.commentReference.document(postId).collection("Advices").document(adviceId).getDocument(completion: {
             (document, error)
             in
-            if let err = error {
-                print("Failed to retrieve advice for post id \(postId) with error \(err)")
+            if error != nil {
                 completion(nil)
                 return
             }
@@ -119,8 +118,7 @@ final class CommentsViewModel: @unchecked Sendable {
         firestoreService.commentReference.document(postId).collection("Advices").getDocuments {
             (snapshot, error)
             in
-            if let err = error {
-                print("Failed to retrieve advices for post id \(postId) with error \(err)")
+            if error != nil {
                 completion([])
                 return
             }
@@ -175,8 +173,7 @@ final class CommentsViewModel: @unchecked Sendable {
         replyReference.getDocuments() {
             (snapshot, err)
             in
-            if let err = err {
-                print("Failed to retrieve reply documents with the following error \(err)")
+            if err != nil {
                 completion([])
                 return
             }
