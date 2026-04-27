@@ -107,7 +107,7 @@ This project is proprietary software. All rights reserved by FervorWare.
 ## Contact
 
 - **Developer**: Zacch Thomas
-- **Email**: [Your Email]
+- **Email**: timonious99@gmail.com
 - **GitHub**: [https://github.com/zthomas99/BlackOut](https://github.com/zthomas99/BlackOut)
 
 ## Screenshots
@@ -115,7 +115,7 @@ This project is proprietary software. All rights reserved by FervorWare.
 ## Screenshots
 
 ### Login Screen
-![Login Screen](login.png)
+![Login Screen](Login.png)
 
 ### Incident Report Submission
 ![Report Submission](Add.png)
