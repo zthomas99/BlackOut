@@ -112,7 +112,16 @@ This project is proprietary software. All rights reserved by FervorWare.
 
 ## Screenshots
 
-(Add screenshots here if available)
+## Screenshots
+
+### Login Screen
+![Login Screen](login.png)
+
+### Incident Report Submission
+![Report Submission](Add.png)
+
+### Sign Up
+![Sign Up](SignUp.png)
 
 ## Version History
 
