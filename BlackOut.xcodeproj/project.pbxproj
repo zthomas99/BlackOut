@@ -158,6 +158,11 @@
 		EEF737DC2F9EC1DC0092A9E4 /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737DB2F9EC1DC0092A9E4 /* CommentService.swift */; };
 		EEF737DE2F9EC1F10092A9E4 /* MediaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737DD2F9EC1F10092A9E4 /* MediaService.swift */; };
 		EEF737E02F9EC2230092A9E4 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737DF2F9EC2230092A9E4 /* ReportService.swift */; };
+		EEF737E22F9FA5930092A9E4 /* AdviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737E12F9FA5930092A9E4 /* AdviceTests.swift */; };
+		EEF737E42F9FA5A10092A9E4 /* IncidentReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737E32F9FA5A10092A9E4 /* IncidentReportTests.swift */; };
+		EEF737E62F9FA5AE0092A9E4 /* LocationReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737E52F9FA5AE0092A9E4 /* LocationReportTests.swift */; };
+		EEF737E82F9FA5B60092A9E4 /* UserAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737E72F9FA5B60092A9E4 /* UserAccountTests.swift */; };
+		EEF737EA2F9FA5C80092A9E4 /* VoteLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF737E92F9FA5C80092A9E4 /* VoteLogicTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -344,6 +349,11 @@
 		EEF737DB2F9EC1DC0092A9E4 /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		EEF737DD2F9EC1F10092A9E4 /* MediaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaService.swift; sourceTree = "<group>"; };
 		EEF737DF2F9EC2230092A9E4 /* ReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportService.swift; sourceTree = "<group>"; };
+		EEF737E12F9FA5930092A9E4 /* AdviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceTests.swift; sourceTree = "<group>"; };
+		EEF737E32F9FA5A10092A9E4 /* IncidentReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncidentReportTests.swift; sourceTree = "<group>"; };
+		EEF737E52F9FA5AE0092A9E4 /* LocationReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationReportTests.swift; sourceTree = "<group>"; };
+		EEF737E72F9FA5B60092A9E4 /* UserAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountTests.swift; sourceTree = "<group>"; };
+		EEF737E92F9FA5C80092A9E4 /* VoteLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteLogicTests.swift; sourceTree = "<group>"; };
 		F476B7275A8488B79DCCF4D3 /* Pods-BlackOutTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackOutTests.release.xcconfig"; path = "Target Support Files/Pods-BlackOutTests/Pods-BlackOutTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -417,7 +427,6 @@
 				EE94E76C2499D94200B271E0 /* Segues */,
 				EE4399D72494861D00356307 /* My Report View Controllers */,
 				EE48A87D246621440050D949 /* Comments */,
-				EE030AEA238DE72400AF2183 /* Custom Segmented Control */,
 				EE483371238B5BEA002920F3 /* Images */,
 				EE483370238B5B07002920F3 /* Cells */,
 				EE48336F238B5AB7002920F3 /* Search View Controllers */,
@@ -456,6 +465,11 @@
 				B32DE0B62156EF0000803776 /* GoogleService-Info.plist */,
 				B32DE09B21487F0300803776 /* Info.plist */,
 				EE07D4D22F92DAC600A5AC88 /* CommentsViewModelTests.swift */,
+				EEF737E12F9FA5930092A9E4 /* AdviceTests.swift */,
+				EEF737E32F9FA5A10092A9E4 /* IncidentReportTests.swift */,
+				EEF737E52F9FA5AE0092A9E4 /* LocationReportTests.swift */,
+				EEF737E72F9FA5B60092A9E4 /* UserAccountTests.swift */,
+				EEF737E92F9FA5C80092A9E4 /* VoteLogicTests.swift */,
 			);
 			path = BlackOutTests;
 			sourceTree = "<group>";
@@ -481,13 +495,6 @@
 				4B3C4291DC39A3841F31BA01 /* Pods-BlackOutUITests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		EE030AEA238DE72400AF2183 /* Custom Segmented Control */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Custom Segmented Control";
 			sourceTree = "<group>";
 		};
 		EE07D4CD2F92D9AE00A5AC88 /* Coordinators */ = {
@@ -1085,7 +1092,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEF737E22F9FA5930092A9E4 /* AdviceTests.swift in Sources */,
+				EEF737E42F9FA5A10092A9E4 /* IncidentReportTests.swift in Sources */,
+				EEF737E82F9FA5B60092A9E4 /* UserAccountTests.swift in Sources */,
+				EEF737EA2F9FA5C80092A9E4 /* VoteLogicTests.swift in Sources */,
 				EE07D4D32F92DAC600A5AC88 /* CommentsViewModelTests.swift in Sources */,
+				EEF737E62F9FA5AE0092A9E4 /* LocationReportTests.swift in Sources */,
 				B32DE09A21487F0300803776 /* BlackOutTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
