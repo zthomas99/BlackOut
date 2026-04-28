@@ -112,8 +112,6 @@ This project is proprietary software. All rights reserved by FervorWare.
 
 ## Screenshots
 
-## Screenshots
-
 ### Login Screen
 ![Login Screen](Login.png)
 
